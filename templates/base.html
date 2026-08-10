@@ -2,12 +2,41 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>GameGame</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href={% static "css/line-awesome.min.css" %}>
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href={% static "css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href={% static "css/owl.carousel.css" %}>
+    <link rel="stylesheet" href={% static "css/magnific-popup.css" %}>
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href={% static "css/style.css" %}>
+    <link rel="stylesheet" href={% static "css/skin-demo-19.css" %}>
+    <link rel="stylesheet" href={% static "css/demos/demo-19.css" %}>
   </head>
 <body>
     {% include 'partials/_topbar.html' %}
     {% include 'partials/_navbar.html' %}
     {% block content %} {% endblock %}
     {% include 'partials/_footer.html' %}
+
+    <!-- Plugins JS File -->
+    <script src={% static "js/jquery.min.js" %}></script>
+    <script src={% static "js/bootstrap.bundle.min.js" %}></script>
+    <script src={% static "js/jquery.hoverIntent.min.js" %}></script>
+    <script src={% static "js/jquery.waypoints.min.js" %}></script>
+    <script src={% static "js/superfish.min.js" %}></script>
+    <script src={% static "js/owl.carousel.min.js" %}></script>
+    <script src={% static "js/bootstrap-input-spinner.js" %}></script>
+    <script src={% static "js/jquery.magnific-popup.min.js" %}></script>
+    <!-- Main JS File -->
+    <script src={% static "js/main.js" %}></script>
+    <script src={% static "js/demos/demo-19.js" %}></script>
 </body>
-  </html>
+</html>

@@ -47,6 +47,7 @@ DJANGO_APPS = [
 LOCAL_APPS = [
     "pages.apps.PagesConfig",
     "accounts.apps.AccountsConfig",
+    "recommendations.apps.RecommendationsConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -147,3 +148,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 INTERNAL_IPS = ["127.0.0.1",]
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.SUCCESS: 'success'
+}

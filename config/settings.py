@@ -42,12 +42,14 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 LOCAL_APPS = [
     "pages.apps.PagesConfig",
     "accounts.apps.AccountsConfig",
     "recommendations.apps.RecommendationsConfig",
+    "genres.apps.GenresConfig",
 ]
 
 THIRD_PARTY_APPS = [

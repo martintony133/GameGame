@@ -42,6 +42,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 LOCAL_APPS = [
@@ -49,6 +50,8 @@ LOCAL_APPS = [
     "accounts.apps.AccountsConfig",
     "news.apps.NewsConfig",
     "community.apps.CommunityConfig",
+    "recommendations.apps.RecommendationsConfig",
+    "genres.apps.GenresConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -149,3 +152,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 INTERNAL_IPS = ["127.0.0.1",]
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.SUCCESS: 'success'
+}

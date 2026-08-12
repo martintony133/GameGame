@@ -1,0 +1,11 @@
+<div id="comment-list">
+    {% for comment in comments %}
+        <div style="border-bottom: 1px solid #eee; padding: 10px 0;">
+            <p><strong>{{ comment.author.username }}</strong>:</p>
+            <p>{{ comment.content }}</p>
+            <small style="color: gray;">{{ comment.created_at|date:"Y-m-d H:i" }}</small>
+        </div>
+    {% empty %}
+        <p id="no-comment">No comments yet. Be the first to share your thoughts!</p>
+    {% endfor %}
+</div>

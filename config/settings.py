@@ -47,6 +47,8 @@ DJANGO_APPS = [
 LOCAL_APPS = [
     "pages.apps.PagesConfig",
     "accounts.apps.AccountsConfig",
+    "news.apps.NewsConfig",
+    "community.apps.CommunityConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -93,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'gamegame',
         'USER' : 'postgres',
-        'PASSWORD' : '123456',
+        'PASSWORD' : '950256',
         'HOST' : 'localhost',
         'PORT' : '5432',
     }

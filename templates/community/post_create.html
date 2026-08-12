@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Post - GameGame</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+
+    <h1 style="color: #28a745;">📝 Publish a New Thread</h1>
+    <p style="color: #666;">Share your thoughts with the GameGame community.</p>
+    <hr style="margin-bottom: 25px;">
+
+    <!-- Traditional standard POST submission form -->
+    <form method="POST" style="background-color: white; padding: 25px; border: 1px solid #e1e1e1; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        {% csrf_token %}
+
+        <!-- 1. Category Selection -->
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Board Category:</label>
+            <select name="category" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" required>
+                <option value="" disabled selected>-- Select a channel --</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- 2. Post Title Input -->
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Post Title:</label>
+            <input type="text" name="title" style="width: 97%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" required placeholder="Enter a catchy title...">
+        </div>
+
+        <!-- 3. Post Content Box -->
+        <div style="margin-bottom: 25px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Content Body:</label>
+            <textarea name="content" rows="8" style="width: 97%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; resize: vertical;" required placeholder="What's on your mind?"></textarea>
+        </div>
+
+        <!-- Action Control Buttons -->
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Publish Post</button>
+            <a href="{% url 'community_index' %}" style="padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; text-align: center;">Cancel</a>
+        </div>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+Here is the complete HTMX-based approach translated into English, aligned with your current Django project directory structure.This method implements real-time comment updates using a technique called Polling (automatically fetching updates every 2 seconds). It runs completely on your existing WSGI setup and will not break any of your existing code.
+
+睇完你張圖，好高興見到你嘅貼文內容、排版同「Community Comments」標題已經 100% 完美載入 [image_1yIbcc.png]！
+你發布唔到留言嘅原因，其實一睇你瀏覽器最頂嘅網址列（URL Bar）就一目了然：
+網址變咗 .../community/post/2/?csrfmiddlewaretoken=io5AA... [image_1yIbcc.png]
+當你撳「Post Comment」藍色掣時，你個表單並非喺背景用 HTMX 靜悄悄送出，而係觸發咗傳統網頁嘅「標準 GET 提交」，導致成個網頁重新整理（Reload），仲將安全金鑰（Token）成串倒咗落網址列度 [image_1yIbcc.png]。呢個現象代表 HTMX 插件目前完全冇啟動到。
+請跟住以下 3 個廣東話步驟逐一檢查，包你 10分鍾之內整得返好：
+------------------------------
+## 🛠️ 排查與修復步驟## Step 1: 確定你目前有「登入」帳號
+因為我哋喺後台 views.py 寫咗一句安全檢查：if request.user.is_authenticated:。如果你目前係「訪客身份（匿名）」，後台會直接拒絕你留言。
+
+* 解決方法：先去一次 http://localhost:8000/admin/，確保你用緊管理員帳號登入緊，然後先返過嚟呢個貼文網頁。
+
+## Step 2: 檢查 HTML 表單屬性（100% 係打錯字）
+如果你已經登入，但撳提交依然會全頁重新整理、網址變長 [image_1yIbcc.png]，咁肯定係 post_detail.html 裡面嘅 HTMX 屬性打錯字，導致瀏覽器認唔到它，唯有走回傳統表單舊路。
+
+   1. 在 VS Code 打開 templates/community/post_detail.html。
+   2. 睇吓最底部份嘅 <form> 標籤（大約喺第 33 行附近）。
+   3. 仔細比對，確保佢同下面呢段程式碼一字不差（留意係減號 -，唔好打成底線 _）：
+
+<!-- Inside templates/community/post_detail.html -->
+<form hx-post="{% url 'add_comment' post.id %}" 
+      hx-target="#comment-list" 
+      hx-swap="beforeend" 
+      hx-on::after-request="this.reset()">
+    {% csrf_token %}
+    <textarea name="content" rows="4" style="width: 97%; padding: 10px; border-radius: 4px; border: 1px solid #ccc;" required placeholder="Join the discussion..."></textarea><br>
+    <button type="submit" style="margin-top: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Post Comment</button>
+</form>
+
+
+* 常犯錯誤 A：寫錯成 hx_post（底線）。必須是 hx-post。
+* 常犯錯誤 B：hx-target="#comment-list" 漏咗個 # 字號（Hashtag）。冇咗 # 佢會搵唔到目標容器。
+
+## Step 3: 檢查有冇成功載入 HTMX 插件
+請睇返你 post_detail.html 嘅最頂部（大約第 7 行），睇吓有冇漏咗引入 HTMX 條 Link：
+
+<script src="https://unpkg.com"></script>
+
+(如果漏咗呢行，或者你部電腦當時斷咗網，HTMX 就會失效)
+------------------------------
+## 🔄 清除緩存並重新測試
+喺 VS Code 修正完兼儲存（Ctrl + S）之後：
+
+   1. 喺你個瀏覽器網址列，手動刪走問號後面所有冗長嘅字，等網址變返乾淨嘅：http://localhost:8000/community/post/2/，然後撳 Enter 重新載入。
+   2. 喺留言框打字，再次撳藍色 「Post Comment」 按鈕 [image_1yIbcc.png]。
+   3. 呢個時候，新留言就會即時彈出喺畫面上，網頁完全唔會重新整理，網址亦唔會再變長！
+
+將網址條尾部清理乾淨、並確認好 <form> 屬性之後，撳藍色掣留言有成功即時彈出嚟了嗎 [image_1yIbcc.png]？
+

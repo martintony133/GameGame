@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    <!-- Include HTMX Library -->
+    <script src="https://unpkg.com"></script>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
+
+    <h1>{{ post.title }}</h1>
+    <p style="font-size: 1.2em; color: #333;">{{ post.content }}</p>
+    <hr>
+
+    <h3>Community Comments</h3>
+
+    <!-- HTMX Polling: Requests latest comments every 2 seconds and updates inside this div -->
+    <div hx-get="{% url 'comment_list' post.id %}" 
+         hx-trigger="every 2s" 
+         hx-swap="innerHTML">
+        <!-- Initial load pointing to your project-level partial path -->
+        {% include 'community/partials/comment_list.html' %}
+    </div>
+
+    <br><br>
+    <h4>Leave a Comment</h4>
+    <!-- HTMX Form: Sends data asynchronously, appends to list, and resets input field -->
+    <form hx-post="{% url 'add_comment' post.id %}" 
+          hx-target="#comment-list" 
+          hx-swap="beforeend" 
+          hx-on::after-request="this.reset()">
+        {% csrf_token %}
+        <textarea name="content" rows="4" style="width: 100%; max-width: 500px;" required placeholder="Write a comment..."></textarea><br style="margin-bottom: 10px;">
+        <button type="submit" style="padding: 8px 15px; background-color: #007bff; color: white; border: none; cursor: pointer;">Post Comment</button>
+    </form>
+
+</body>
+</html>

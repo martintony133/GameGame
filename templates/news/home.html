@@ -68,18 +68,19 @@
                                 <p>There is currently no news content.</p>
                             {% endfor %}
 
-                            {% for item in news %}
+                            {% comment %} {% for item in news %} {% endcomment %}
                             <article class="entry entry-list">
                                 <div class="row align-items-center">
                                     <div class="col-md-5">
                                         <figure class="entry-media entry-video">
-                                            <a href={% url 'news:post' %}>
-                                                {% if item.photo_2 %}
+                                            {% comment %} <a href={% url 'news:post' %}> {% endcomment %}
+                                                {% comment %} {% if item.photo_2 %}
                                                     <img src={{item.photo_2.url}} alt={{item.title}}>
-                                                {% endif %}
+                                                {% endif %} {% endcomment %}
                                             </a>
                                         </figure><!-- End .entry-media -->
                                     </div><!-- End .col-md-5 -->
+
 
                                     <div class="col-md-7">
                                         <div class="entry-body">

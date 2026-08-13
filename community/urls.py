@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = "community"
+
 urlpatterns = [
     # Main Portal: Targets http://localhost:8000/community/
     path('', views.community_index_view, name='community_index'),

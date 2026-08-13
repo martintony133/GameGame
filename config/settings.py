@@ -43,6 +43,7 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django_rename_app',
 ]
 
 LOCAL_APPS = [

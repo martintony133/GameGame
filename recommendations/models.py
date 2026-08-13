@@ -2,23 +2,24 @@ from django.db import models
 from multiselectfield import MultiSelectField
 
 # Create your models here.
-class RecommendGame(models.Model):
-    
-    GAME_TYPE_CHOICES = [
-        ('Action', 'Action'),
-        ('RPG', 'RPG'),
-        ('Multiplayer', 'Multiplayer'),
-        ('Casual','Casual'),
-        ('Dating Sims','Dating Sims'),
-        ('Tower Defense','Tower Defense'),
-        ('Indie','Indie'),
-        ('Sports','Sports'),
-        ('Strategy','Strategy'),
-        ('Racing','Racing'),
-        ('Space','Space'),
-        ('Horror','Horror'),
-        ('Sci-Fi & Cyberpunk','Sci-Fi & Cyberpunk'),
-    ]
+
+GAME_TYPE_CHOICES = [
+    ('Action', 'Action'),
+    ('RPG', 'RPG'),
+    ('Multiplayer', 'Multiplayer'),
+    ('Casual','Casual'),
+    ('Dating Sims','Dating Sims'),
+    ('Tower Defense','Tower Defense'),
+    ('Indie','Indie'),
+    ('Sports','Sports'),
+    ('Strategy','Strategy'),
+    ('Racing','Racing'),
+    ('Space','Space'),
+    ('Horror','Horror'),
+    ('Sci-Fi & Cyberpunk','Sci-Fi & Cyberpunk'),
+]
+
+class RecommendedGame(models.Model):
 
     RANK_TYPE_CHOICES = [
         ('Free Rank','Free Rank'),

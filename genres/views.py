@@ -15,8 +15,3 @@ def product(request, product_id):
         single_game = get_object_or_404(Genre, pk=product_id)
         context = {'item': single_game}
         return render(request,'genres/product.html', context)
-
-def product2(request, product_id):
-        single_game = get_object_or_404(Genre, pk=product_id)
-        context = {'item': single_game}
-        return render(request,'genres/product2.html', context)

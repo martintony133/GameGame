@@ -5,5 +5,4 @@ app_name = "genres"
 urlpatterns = [
     path('home/', views.genre, name='genre'),
     path('product/<int:product_id>/', views.product, name='product'),
-    path('product2/<int:product_id>/', views.product2, name='product2'),
 ]

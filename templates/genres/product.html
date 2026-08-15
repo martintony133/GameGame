@@ -105,7 +105,7 @@
                                         {{item.short_description}}
                                     </div><!-- End .product-content -->
 
-                                    <div class="details-filter-row details-row-size">
+                                    {% comment %} <div class="details-filter-row details-row-size">
                                         <label>Color:</label>
 
                                         <div class="product-nav product-nav-thumbs">
@@ -116,21 +116,21 @@
                                                 <img src="assets/images/products/single/2-thumb.jpg" alt="product desc">
                                             </a>
                                         </div><!-- End .product-nav -->
-                                    </div><!-- End .details-filter-row -->
+                                    </div><!-- End .details-filter-row --> {% endcomment %}
 
                                     <div class="details-filter-row details-row-size">
-                                        <label for="size">Size:</label>
+                                        <label for="platform">Platform:</label>
                                         <div class="select-custom">
-                                            <select name="size" id="size" class="form-control">
-                                                <option value="#" selected="selected">Select a size</option>
-                                                <option value="s">Small</option>
-                                                <option value="m">Medium</option>
-                                                <option value="l">Large</option>
-                                                <option value="xl">Extra Large</option>
+                                            <select name="platform" id="platform" class="form-control">
+                                                <option value="#" selected="selected">Select a platform</option>
+                                                <option value="PC">PC</option>
+                                                <option value="Console">Console</option>
+                                                <option value="PS5">PlayStation 5</option>
+                                                <option value="XBOX">XBOX</option>
+                                                <option value="SWITCH">Nintendo Switch</option>
+                                                <option value="MOBILE">Mobile</option>
                                             </select>
                                         </div><!-- End .select-custom -->
-
-                                        <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
                                     </div><!-- End .details-filter-row -->
 
                                     <div class="details-filter-row details-row-size">
@@ -142,27 +142,29 @@
 
                                     <div class="product-details-action">
                                         <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-
-                                        <div class="details-action-wrapper">
-                                            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
-                                        </div><!-- End .details-action-wrapper -->
+                                        {% comment %} <div class="details-action-wrapper">
+                                            <a href="#" class="btn-cart btn-product" title="Wishlist"><span>Add to Wishlist</span></a>
+                                        </div><!-- End .details-action-wrapper --> {% endcomment %}
                                     </div><!-- End .product-details-action -->
 
                                     <div class="product-details-footer">
                                         <div class="product-cat">
                                             <span>Category:</span>
-                                            <a href="#">Women</a>,
-                                            <a href="#">Dresses</a>,
-                                            <a href="#">Yellow</a>
-                                        </div><!-- End .product-cat -->
+                                            {% if item.game_type %}
+                                                {% for g_type in item.game_type %}
+                                                    <a href="#" class="genre-tag">{{ g_type }}</a>{% if not forloop.last %}, {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                <a href="#">Uncategorized</a>
+                                            {% endif %}
+                                        </div><!-- End .product-cat -->                                     
 
                                         <div class="social-icons social-icons-sm">
                                             <span class="social-label">Share:</span>
-                                            <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                                            <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                                            <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                                            <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                            <a href="https://www.facebook.com/login/?locale=zh_HK" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                            <a href="https://x.com/" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                            <a href="https://www.instagram.com/accounts/login/" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                            <a href="https://www.pinterest.com/login/" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
                                         </div>
                                     </div><!-- End .product-details-footer -->
                                 </div><!-- End .product-details -->
@@ -176,10 +178,10 @@
                                 <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Additional information</a>
+                                <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">System Requirements</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
+                                <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Refunds</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
@@ -195,28 +197,37 @@
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
                                 <div class="product-desc-content">
-                                    <h3>Information</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. </p>
-
-                                    <h3>Fabric & care</h3>
-                                    <ul>
-                                        <li>Faux suede fabric</li>
-                                        <li>Gold tone metal hoop handles.</li>
-                                        <li>RI branding</li>
-                                        <li>Snake print trim interior </li>
-                                        <li>Adjustable cross body strap</li>
-                                        <li> Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>
-                                    </ul>
-
-                                    <h3>Size</h3>
-                                    <p>one size</p>
+                                    <h3>Minimum:</h3>
+                                    <p class="sys-req-text">Requires a 64-bit processor and operating system
+                                    OS: Windows 11
+                                    Processor: Intel Core i3-8100 /AMD Ryzen3 3100
+                                    Memory: 8 GB RAM
+                                    Graphics: Nvidia GeForce GTX 650 [1 GB] /AMD Radeon R9 270 [2 GB]
+                                    DirectX: Version 12
+                                    Network: Broadband Internet connection
+                                    Storage: 9 GB available space
+                                    Additional Notes: Estimated performance: 1080p/60fps with graphics settings at "Low". Framerate might drop in graphics-intensive scenes.
+                                    </p>                                   
+                                    <br>
+                                    <h3>Recommended:</h3>
+                                    <p class="sys-req-text">Requires a 64-bit processor and operating system
+                                    OS: Windows 11
+                                    Processor: Intel Core i5-8400 /AMD Ryzen5 3600
+                                    Memory: 8 GB RAM
+                                    Graphics: Nvidia GeForce GTX 760 [2 GB] /AMD Radeon R9 280X [3 GB] /Intel                                   Arc A310 [4 GB]
+                                    DirectX: Version 12
+                                    Network: Broadband Internet connection
+                                    Storage: 9 GB available space
+                                    Additional Notes: Estimated performance: 1080p/60fps with graphics                                  settings at "High". Framerate might drop in graphics-intensive scenes.                                  Windows 10 (Version 1809 or later) and a 4GB VRAM GPU (graphics board or                            video card) are required for DirectX 12 API.
+                                    </p>
                                 </div><!-- End .product-desc-content -->
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
                                 <div class="product-desc-content">
-                                    <h3>Delivery & returns</h3>
-                                    <p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our <a href="#">Delivery information</a><br>
-                                    We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our <a href="#">Returns information</a></p>
+                                    <h3>GameGame Refunds</h3>
+                                    <p>You can request a refund for nearly any purchase on GameGame—for any reason. Maybe your PC doesn't meet the hardware requirements; maybe you bought a game by mistake; maybe you played the title for an hour and just didn't like it.
+                                    It doesn't matter. GameGame will, upon request via our helpdesk, issue a refund for any reason, if the request is made within the required return period, and, in the case of games, if the title has been played for less than two hours.
+                                    </p>
                                 </div><!-- End .product-desc-content -->
                             </div><!-- .End .tab-pane -->
                             <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
@@ -234,10 +245,10 @@
                                                 <span class="review-date">6 days ago</span>
                                             </div><!-- End .col -->
                                             <div class="col">
-                                                <h4>Good, perfect size</h4>
+                                                <h4>Recommended</h4>
 
                                                 <div class="review-content">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores assumenda asperiores facilis porro reprehenderit animi culpa atque blanditiis commodi perspiciatis doloremque, possimus, explicabo, autem fugit beatae quae voluptas!</p>
+                                                    <p>This game goes hard, the gameplay mechanic of "Maintenance in Progress. The game is not available during this time." is really innovative!!</p>
                                                 </div><!-- End .review-content -->
 
                                                 <div class="review-action">
@@ -260,10 +271,10 @@
                                                 <span class="review-date">5 days ago</span>
                                             </div><!-- End .col -->
                                             <div class="col">
-                                                <h4>Very good</h4>
+                                                <h4>Recommended</h4>
 
                                                 <div class="review-content">
-                                                    <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum blanditiis laudantium iste amet. Cum non voluptate eos enim, ab cumque nam, modi, quas iure illum repellendus, blanditiis perspiciatis beatae!</p>
+                                                    <p>Every single frame of this game looks like a painting. You can tell the developers didn't just rush this out—every hidden corner, every line of dialogue, and every environmental detail feels meticulously hand-crafted with pure love."</p>
                                                 </div><!-- End .review-content -->
 
                                                 <div class="review-action">
@@ -509,80 +520,6 @@
             </div><!-- End .page-content -->
         </main><!-- End .main -->
 
-        <footer class="footer">
-        	<div class="footer-middle">
-	            <div class="container">
-	            	<div class="row">
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget widget-about">
-	            				<img src="assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
-	            				<p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
-
-	            				<div class="social-icons">
-	            					<a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
-	            					<a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
-	            				</div><!-- End .soial-icons -->
-	            			</div><!-- End .widget about-widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
-
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget">
-	            				<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
-
-	            				<ul class="widget-list">
-	            					<li><a href="about.html">About Molla</a></li>
-	            					<li><a href="#">How to shop on Molla</a></li>
-	            					<li><a href="#">FAQ</a></li>
-	            					<li><a href="contact.html">Contact us</a></li>
-	            					<li><a href="login.html">Log in</a></li>
-	            				</ul><!-- End .widget-list -->
-	            			</div><!-- End .widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
-
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget">
-	            				<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
-
-	            				<ul class="widget-list">
-	            					<li><a href="#">Payment Methods</a></li>
-	            					<li><a href="#">Money-back guarantee!</a></li>
-	            					<li><a href="#">Returns</a></li>
-	            					<li><a href="#">Shipping</a></li>
-	            					<li><a href="#">Terms and conditions</a></li>
-	            					<li><a href="#">Privacy Policy</a></li>
-	            				</ul><!-- End .widget-list -->
-	            			</div><!-- End .widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
-
-	            		<div class="col-sm-6 col-lg-3">
-	            			<div class="widget">
-	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
-
-	            				<ul class="widget-list">
-	            					<li><a href="#">Sign In</a></li>
-	            					<li><a href="cart.html">View Cart</a></li>
-	            					<li><a href="#">My Wishlist</a></li>
-	            					<li><a href="#">Track My Order</a></li>
-	            					<li><a href="#">Help</a></li>
-	            				</ul><!-- End .widget-list -->
-	            			</div><!-- End .widget -->
-	            		</div><!-- End .col-sm-6 col-lg-3 -->
-	            	</div><!-- End .row -->
-	            </div><!-- End .container -->
-	        </div><!-- End .footer-middle -->
-
-	        <div class="footer-bottom">
-	        	<div class="container">
-	        		<p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p><!-- End .footer-copyright -->
-	        		<figure class="footer-payments">
-	        			<img src="assets/images/payments.png" alt="Payment methods" width="272" height="20">
-	        		</figure><!-- End .footer-payments -->
-	        	</div><!-- End .container -->
-	        </div><!-- End .footer-bottom -->
-        </footer><!-- End .footer -->
     </div><!-- End .page-wrapper -->
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
@@ -593,7 +530,7 @@
                 <div class="col-6">
                     <figure class="product-media">
                         <a href="product.html">
-                            <img src="assets/images/products/sticky/product-1.jpg" alt="Product image">
+                            <img src={{item.photo_main.url}} alt="Product image">
                         </a>
                     </figure><!-- End .product-media -->
                     <h4 class="product-title"><a href="product.html">{{item.title}}</a></h4><!-- End .product-title -->
@@ -609,7 +546,7 @@
 
                     <div class="product-details-action">
                         <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                        <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                        {% comment %} <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a> {% endcomment %}
                     </div><!-- End .product-details-action -->
                 </div><!-- End .col-6 -->
             </div><!-- End .row -->

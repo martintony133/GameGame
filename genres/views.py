@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Genre
 from django.core.paginator import Paginator
 
@@ -10,3 +10,13 @@ def genre(request):
         genres_page = paginator.get_page(page_number)
         context = {'genres' : genres_page}
         return render(request,'genres/home.html', context)
+
+def product(request, product_id):
+        single_game = get_object_or_404(Genre, pk=product_id)
+        context = {'item': single_game}
+        return render(request,'genres/product.html', context)
+
+def product2(request, product_id):
+        single_game = get_object_or_404(Genre, pk=product_id)
+        context = {'item': single_game}
+        return render(request,'genres/product2.html', context)

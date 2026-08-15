@@ -10,7 +10,7 @@ class GenreAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     list_per_page = 20
     fieldsets = [
-        ('Information',{'fields': ('title', 'game_type', 'platform', 'price', 'is_free', 'stars', 'status_tag', 'reviews_count')}),
+        ('Information',{'fields': ('title', 'game_type', 'description', 'short_description', 'platform', 'price', 'is_free', 'stars', 'status_tag', 'reviews_count')}),
         ('Main Photo',{'fields':('photo_main',)}),
         ('Other Photo',{'classes':('collapse',),
         'fields':('photo_1','photo_2','photo_3','photo_4','photo_5','photo_6')})

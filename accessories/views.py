@@ -20,7 +20,7 @@ def accessory(request):
         'accessories': accessories_page,
         }
         # Renders your accessories homepage template
-        return render(request, 'Accessories/home.html', context)
+        return render(request, 'accessories/home.html', context)
 
 
 def product(request, product_id):
@@ -37,4 +37,4 @@ def product(request, product_id):
         'accessory': single_accessory,
         }
         # Renders your accessory detail page template
-        return render(request, 'Accessories/single.html', context)
+        return render(request, 'accessories/single.html', context)

@@ -132,6 +132,13 @@
                                             </div><!-- End .row -->
                                         </div><!-- End .megamenu megamenu-md -->
                     </li>
+<!--Accessories-->
+                                    <li>
+                                        <a href={% url 'accessories:home' %} class="sf-with-ul">Accessories</a>
+                                        <ul>
+                                            <li><a href={% url 'accessories:home' %} >Home</a></li>
+                                        </ul>
+                                    </li>
 <!--Recommendations-->
                                     <li {% if request.resolver_match.app_name == 'recommendations' %} class="active" {% else %} class="nav-item mr-3" {% endif %}>
                                         <a href={% url "recommendations:recommendation" %} class="sf-with-ul">Recommendations</a>
@@ -226,27 +233,7 @@
                                             </li>
                                         </ul>
                                     </li>
-<!--elements-->
-                                    {% comment %} <li>
-                                        <a href="elements-list.html" class="sf-with-ul">Elements</a>
 
-                                        <ul>
-                                            <li><a href="elements-products.html">Products</a></li>
-                                            <li><a href="elements-typography.html">Typography</a></li>
-                                            <li><a href="elements-titles.html">Titles</a></li>
-                                            <li><a href="elements-banners.html">Banners</a></li>
-                                            <li><a href="elements-product-category.html">Product Category</a></li>
-                                            <li><a href="elements-video-banners.html">Video Banners</a></li>
-                                            <li><a href="elements-buttons.html">Buttons</a></li>
-                                            <li><a href="elements-accordions.html">Accordions</a></li>
-                                            <li><a href="elements-tabs.html">Tabs</a></li>
-                                            <li><a href="elements-testimonials.html">Testimonials</a></li>
-                                            <li><a href="elements-blog-posts.html">Blog Posts</a></li>
-                                            <li><a href="elements-portfolio.html">Portfolio</a></li>
-                                            <li><a href="elements-cta.html">Call to Action</a></li>
-                                            <li><a href="elements-icon-boxes.html">Icon Boxes</a></li>
-                                        </ul>
-                                    </li> {% endcomment %}
                                 </ul><!-- End .menu -->
                             </nav><!-- End .main-nav -->
                         </div><!-- End .header-center -->

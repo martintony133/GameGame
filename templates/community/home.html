@@ -1,27 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>GameGame Community Portal</title>
 </head>
-<body style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; color: #333;">
 
+<body>
     <!-- 1. Header & Navigation Hub -->
-    <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #007bff; padding-bottom: 15px; margin-bottom: 30px;">
-        <div>
-            <h1 style="margin: 0; color: #007bff;">🎮 GameGame Community</h1>
-            <p style="margin: 5px 0 0 0; color: #666;">Explore categories, join threads, and chat simultaneously.</p>
+    <header style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;">
+    <!-- 頂部背景區塊 -->
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg'); width: 100%; padding: 40px 0;">
+        <div class="container">
+            <h1>GameGame Community</h1>
+            <p style="margin: 5px 0 0; color: #666;">Explore categories, join threads, and chat simultaneously.</p>
+            
+            <!-- 將個掣擺喺 container 入面，跟喺文字下面 -->
+            <div style="margin-top: 20px;">
+                <a href="{% url 'community:post_create' %}" style="padding: 10px 15px; background-color: #333333; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+                    + Create New Post
+                </a>
+            </div>
         </div>
-        <!-- Proactive placeholder button to handle future post creation forms -->
-        <div>
-            <a href="{% url 'post_create' %}" style="padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">+ Create New Post</a>
-        </div>
-    </header>
+    </div>
+</header>
+
 
     <!-- 2. Main Live Post Feed Section -->
     <main>
-        <h3 style="margin-bottom: 20px;">🌐 All Discussion Threads</h3>
+        <h3 style="margin-bottom: 20px;">&emsp;All Discussion Threads</h3>
 
         <div id="global-feed">
             {% for post in posts %}
@@ -35,7 +44,7 @@
 
                     <!-- Clickable Title: Hyperlinks user directly into the detailed thread -->
                     <h2 style="margin: 0 0 10px 0; font-size: 1.5em;">
-                        <a href="{% url 'post_detail' post.id %}" style="text-decoration: none; color: #007bff; hover: underline;">
+                        <a href="{% url 'community:post_detail' post.id %}" style="text-decoration: none; hover: underline;">
                             {{ post.title }}
                         </a>
                     </h2>
@@ -70,3 +79,4 @@
 
 </body>
 </html>
+{% endblock %}

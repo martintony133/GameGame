@@ -27,7 +27,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-5">
                                         <figure class="entry-media">
-                                            <a href={% url 'news:post' %}>
+                                            <a href="{% url 'news:post' item.id %}">
                                                 {% if item.photo_1 %}
                                                     <img src={{item.photo_1.url}} alt={{item.title}}>
                                                 {% endif %}
@@ -47,7 +47,7 @@
                                             </div><!-- End .entry-meta -->
 
                                             <h2 class="entry-title">
-                                                <a href={% url 'news:post' %}>
+                                                <a href="{% url 'news:post' item.id %}">
                                                 {{item.title}}
                                                 </a>
                                             </h2><!-- End .entry-title -->
@@ -67,208 +67,6 @@
                             {% empty %}
                                 <p>There is currently no news content.</p>
                             {% endfor %}
-
-                            {% comment %} {% for item in news %} {% endcomment %}
-                            <article class="entry entry-list">
-                                <div class="row align-items-center">
-                                    <div class="col-md-5">
-                                        <figure class="entry-media entry-video">
-                                            {% comment %} <a href={% url 'news:post' %}> {% endcomment %}
-                                                {% comment %} {% if item.photo_2 %}
-                                                    <img src={{item.photo_2.url}} alt={{item.title}}>
-                                                {% endif %} {% endcomment %}
-                                            </a>
-                                        </figure><!-- End .entry-media -->
-                                    </div><!-- End .col-md-5 -->
-
-
-                                    <div class="col-md-7">
-                                        <div class="entry-body">
-                                            <div class="entry-meta">
-                                                <span class="entry-author">
-                                                    by <a href="#">{{ news.author }}</a>
-                                                </span>
-                                                <span class="meta-separator">|</span>
-                                                <a href="#">{{ news.date|date:"b d, Y" }}</a>
-                                                <span class="meta-separator">|</span>
-                                            </div><!-- End .entry-meta -->
-
-                                            <h2 class="entry-title">
-                                                <a href="single.html">{{ news.title }}</a>
-                                            </h2><!-- End .entry-title -->
-
-                                            <div class="entry-cats">
-                                                in <a href="#">{{ news.theme }}</a>
-                                            </div><!-- End .entry-cats -->
-
-                                            <div class="entry-content">
-                                                <p>{{ news.content|truncatewords:100 }}</p>
-                                                <a href="#" class="read-more">Continue Reading</a>
-                                            </div><!-- End .entry-content -->
-                                        </div><!-- End .entry-body -->
-                                    </div><!-- End .col-md-7 -->
-                                </div><!-- End .row -->
-                            </article><!-- End .entry -->
-
-                            <article class="entry entry-list">
-                                <div class="row align-items-center">
-                                    <div class="col-md-5">
-                                        <figure class="entry-media">
-                                            <div class="owl-carousel owl-simple owl-light owl-nav-inside" data-toggle="owl">
-                                                <a href="#">
-                                                    <img src={% static "images/listing/post-3.jpg" %} alt="image desc">
-                                                </a>
-                                                <a href="#">
-                                                    <img src={% static "images/listing/post-1.jpg" %} alt="image desc">
-                                                </a>
-                                            </div><!-- End .owl-carousel -->
-                                        </figure><!-- End .entry-media -->
-                                    </div><!-- End .col-md-5 -->
-
-                                    <div class="col-md-7">
-                                        <div class="entry-body">
-                                            <div class="entry-meta">
-                                                <span class="entry-author">
-                                                    by <a href="#">John Doe</a>
-                                                </span>
-                                                <span class="meta-separator">|</span>
-                                                <a href="#">Nov 17, 2018</a>
-                                                <span class="meta-separator">|</span>
-                                            </div><!-- End .entry-meta -->
-
-                                            <h2 class="entry-title">
-                                                <a href="single.html">Utaliquam sollicitudin leo.</a>
-                                            </h2><!-- End .entry-title -->
-
-                                            <div class="entry-cats">
-                                                in <a href="#">Lifestyle</a>,
-                                                <a href="#">Shopping</a>
-                                            </div><!-- End .entry-cats -->
-
-                                            <div class="entry-content">
-                                                <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas ... </p>
-                                                <a href="single.html" class="read-more">Continue Reading</a>
-                                            </div><!-- End .entry-content -->
-                                        </div><!-- End .entry-body -->
-                                    </div><!-- End .col-md-7 -->
-                                </div><!-- End .row -->
-                            </article><!-- End .entry -->
-
-                            <article class="entry entry-list">
-                                <div class="row align-items-center">
-                                    <div class="col-md-5">
-                                        <figure class="entry-media">
-                                            <a href="#">
-                                                <img src={% static "images/listing/post-4.jpg" %} alt="image desc">
-                                            </a>
-                                        </figure><!-- End .entry-media -->
-                                    </div><!-- End .col-md-5 -->
-
-                                    <div class="col-md-7">
-                                        <div class="entry-body">
-                                            <div class="entry-meta">
-                                                <span class="entry-author">
-                                                    by <a href="#">Jane Doe</a>
-                                                </span>
-                                                <span class="meta-separator">|</span>
-                                                <a href="#">Nov 12, 2018</a>
-                                                <span class="meta-separator">|</span>
-                                            </div><!-- End .entry-meta -->
-
-                                            <h2 class="entry-title">
-                                                <a href="single.html">Fusce pellentesque suscipit.</a>
-                                            </h2><!-- End .entry-title -->
-
-                                            <div class="entry-cats">
-                                                in <a href="#">Travel</a>
-                                            </div><!-- End .entry-cats -->
-
-                                            <div class="entry-content">
-                                                <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas auguae, eu vulputate magna eros eu erat. Aliquam erat volutpat eget felis ... </p>
-                                                <a href="single.html" class="read-more">Continue Reading</a>
-                                            </div><!-- End .entry-content -->
-                                        </div><!-- End .entry-body -->
-                                    </div><!-- End .col-md-7 -->
-                                </div><!-- End .row -->
-                            </article><!-- End .entry -->
-
-                            <article class="entry entry-list">
-                                <div class="row align-items-center">
-                                    <div class="col-md-5">
-                                        <figure class="entry-media">
-                                            <a href="#">
-                                                <img src={% static "images/listing/post-5.jpg" %} alt="image desc">
-                                            </a>
-                                        </figure><!-- End .entry-media -->
-                                    </div><!-- End .col-md-5 -->
-
-                                    <div class="col-md-7">
-                                        <div class="entry-body">
-                                            <div class="entry-meta">
-                                                <span class="entry-author">
-                                                    by <a href="#">John Doe</a>
-                                                </span>
-                                                <span class="meta-separator">|</span>
-                                                <a href="#">Nov 11, 2018</a>
-                                                <span class="meta-separator">|</span>
-                                            </div><!-- End .entry-meta -->
-
-                                            <h2 class="entry-title">
-                                                <a href="single.html">Donec nec justo eget felis facilisis  fermentum.</a>
-                                            </h2><!-- End .entry-title -->
-
-                                            <div class="entry-cats">
-                                                in <a href="#">Hobbies</a>
-                                            </div><!-- End .entry-cats -->
-
-                                            <div class="entry-content">
-                                                <p>Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus. Phasellus ultrices nulla quis nibh. Quisque lectus. Donec consectetuer ligula vulputate sem ...</p>
-                                                <a href="single.html" class="read-more">Continue Reading</a>
-                                            </div><!-- End .entry-content -->
-                                        </div><!-- End .entry-body -->
-                                    </div><!-- End .col-md-7 -->
-                                </div><!-- End .row -->
-                            </article><!-- End .entry -->
-
-                            <article class="entry entry-list">
-                                <div class="row align-items-center">
-                                    <div class="col-md-5">
-                                        <figure class="entry-media">
-                                            <a href="#">
-                                                <img src={% static "images/listing/post-6.jpg" %} alt="image desc">
-                                            </a>
-                                        </figure><!-- End .entry-media -->
-                                    </div><!-- End .col-md-5 -->
-
-                                    <div class="col-md-7">
-                                        <div class="entry-body">
-                                            <div class="entry-meta">
-                                                <span class="entry-author">
-                                                    by <a href="#">Hans Doe</a>
-                                                </span>
-                                                <span class="meta-separator">|</span>
-                                                <a href="#">Nov 10, 2018</a>
-                                                <span class="meta-separator">|</span>
-                                            </div><!-- End .entry-meta -->
-
-                                            <h2 class="entry-title">
-                                                <a href="single.html">Quisque volutpat mattiseros.</a>
-                                            </h2><!-- End .entry-title -->
-
-                                            <div class="entry-cats">
-                                                in <a href="#">Travel</a>,
-                                                <a href="#">Hobbies</a>
-                                            </div><!-- End .entry-cats -->
-
-                                            <div class="entry-content">
-                                                <p>Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus. Phasellus ultrices nulla quis nibh. Quisque lectus. Donec consectetuer ...</p>
-                                                <a href="single.html" class="read-more">Continue Reading</a>
-                                            </div><!-- End .entry-content -->
-                                        </div><!-- End .entry-body -->
-                                    </div><!-- End .col-md-7 -->
-                                </div><!-- End .row -->
-                            </article><!-- End .entry -->
-
 
                 			<nav aria-label="Page navigation">
 							    <ul class="pagination">

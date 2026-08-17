@@ -64,7 +64,7 @@ def post_create_view(request):
             content=content
         )
         # Smoothly send the user back to home.html to view their brand new entry card
-        return redirect('community_home')
+        return redirect('community:community_home')
 
     # GET request handler: feeds category variants down to form select dropdown choice options
     categories = CommunityCategory.objects.all()

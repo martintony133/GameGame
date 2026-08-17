@@ -53,6 +53,8 @@ LOCAL_APPS = [
     "community.apps.CommunityConfig",
     "recommendations.apps.RecommendationsConfig",
     "genres.apps.GenresConfig",
+    "devices.apps.DevicesConfig",
+    'accessories.apps.AccessoriesConfig',
 ]
 
 THIRD_PARTY_APPS = [

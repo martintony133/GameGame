@@ -23,35 +23,17 @@
                         <li class="breadcrumb-item active" aria-current="page">Default</li>
                     </ol>
 
-                    
-                    {% if genres.has_other_pages %}
                     <nav class="product-pager ml-auto" aria-label="Product">
-                        {% if genres.has_previous %}
-                        <a class="product-pager-link product-pager-prev" href="?page={{ genres.previous_page_number }}" aria-label="Previous">
+                        <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
                             <i class="icon-angle-left"></i>
                             <span>Prev</span>
                         </a>
-                        {% else %}
-                        <a class="product-pager-link product-pager-prev disabled" href="#" aria-label="Previous" tabindex="-1" style="opacity: 0.5; pointer-events: none;">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
-                        {% endif %}
 
-
-                        {% if genres.has_next %}
-                        <a class="product-pager-link product-pager-next" href="?page={{ genres.next_page_number }}" aria-label="Next">
+                        <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
                             <span>Next</span>
                             <i class="icon-angle-right"></i>
                         </a>
-                        {% else %}
-                        <a class="product-pager-link product-pager-next disabled" href="#" aria-label="Next" tabindex="-1" style="opacity: 0.5; pointer-events: none;">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
-                        {% endif %}
-                    </nav>
-                    {% endif %}
+                    </nav><!-- End .pager-nav -->
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
 
@@ -71,14 +53,14 @@
                                         </figure><!-- End .product-main-image -->
 
                                         <div class="product-image-gallery">
-                                            
+
                                             {% if item.photo_1 %}
                                             <a class="product-gallery-item active" href="#" 
                                             data-image="{{ item.photo_1.url }}" data-zoom-image="{{ item.photo_1.url }}"
                                             style="width: 100px; height: 100px; display: block;">
                                                 <img src="{{ item.photo_1.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
-
+                                            
                                             {% if item.photo_2 %}
                                             <a class="product-gallery-item active" href="#" 
                                             data-image="{{ item.photo_2.url }}" data-zoom-image="{{ item.photo_2.url }}"

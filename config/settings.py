@@ -52,10 +52,10 @@ LOCAL_APPS = [
     "news.apps.NewsConfig",
     "community.apps.CommunityConfig",
     "recommendations.apps.RecommendationsConfig",
-    #"genres.apps.GenresConfig",
     "games.apps.GamesConfig",
     "devices.apps.DevicesConfig",
     'accessories.apps.AccessoriesConfig',
+    'platforms.apps.PlatformsConfig',
 ]
 
 THIRD_PARTY_APPS = [

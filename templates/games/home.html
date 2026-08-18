@@ -97,7 +97,11 @@
                                                 {% endif %}
                                                 <a href="product.html">
                                                     <img src="{{game.photo_main.url}}" alt="Product image" class="product-image w-100 object-fit-cover"
+<<<<<<< HEAD
                                                     style="height: 370px;">
+=======
+                                                    style="height: 380px;">
+>>>>>>> origin/version3
                                                 </a>
 
                                                 <div class="product-action-vertical">
@@ -107,16 +111,27 @@
                                                 </div><!-- End .product-action-vertical -->
 
                                                 <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                </div><!-- End .product-action -->
+													<form action="{% url 'orders:cart_add' game.id %}" method="POST" style="width: 100%;">
+														{% csrf_token %}
+														<input type="hidden" name"quantity" value="1">
+														    <button type="button" onclick="addToCartAsync(this)" data-url="{% url "orders:cart_add" game.id %}"
+															class="btn-product btn-cart" style="border: none; background: none; width: 100%; cursor: pointer;">
+														        <span>add to cart</span>
+														    </button>
+														</form>
+												</div><!-- End .product-action -->
                                             </figure><!-- End .product-media -->
 
                                             <div class="product-body">
                                                 <div class="product-cat">
                                                     <a href="#">{{game.platform | join:", "}}</a>
                                                 </div><!-- End .product-cat -->
+<<<<<<< HEAD
                                                 <h3 class="product-title"><a href="{% url 'games:product' product_id=game.id %}">{{ game.title }}
 												</h3><!-- End .product-title -->
+=======
+                                                <h3 class="product-title"><a href="product.html">{{game.title}}</a></h3><!-- End .product-title -->
+>>>>>>> origin/version3
                                                 <div class="product-price">
                                                     {% if game.is_free %}Free {% else %}${{game.price}}{% endif %}</div><!-- End .product-price -->
                                                 <div class="ratings-container">

@@ -6,18 +6,34 @@
                         <div class="header-left">
                             <a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a>
                         </div><!-- End .header-left -->
-
+                        {% if user.is_authenticated %}
                         <div class="header-right">
                             <ul class="navbar-nav ml-auto d-flex flex-row align-items-center" style="gap: 15px; list-style: none; padding: 0; margin: 0:">
-                                <li class="nav-item">
-                                    <a href="#" data-toggle="modal">Sign in</a></li>
+                                <li {% if "/accounts/dashboard/" == request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+                                    <a class="nav-link" href={% url "accounts:dashboard" %}><i class="fas fa-user-plus"></i> Welcome {{user.username}}</a>
                                 </li>
-                                 <li class="nav-item">
-                                    <a href="#" data-toggle="modal">Sign up</a></li>
+                                
+                                <li class="nav-item mr-3">
+                                    <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"><i class="fas fa-user-plus"></i> Logout</a>
+                                    <form action="{% url "accounts:logout" %}" method="POST" id="logout">
+                                        {% csrf_token %}
+                                    <input type="hidden" />
+                                    </form>
                                 </li>
-                            </ul><!-- End .top-menu -->
-                        </div><!-- End .header-right -->
-
+                            </ul>
+                        </div>
+                        {% else %}
+                        <div class="header-right">
+                            <ul class="navbar-nav ml-auto d-flex flex-row align-items-center" style="gap: 15px; list-style: none; padding: 0; margin: 0:">
+                                <li {% if "/accounts/register/" == request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+                                    <a class="nav-link" href={% url "accounts:register" %}><i class="fas fa-user-plus"></i> Register</a>
+                                </li>
+                                <li {% if "/accounts/login/" == request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+                                    <a class="nav-link" href={% url "accounts:login" %}><i class="fas fa-sign-in-alt"></i> Login</a>
+                                </li>
+                            </ul>
+                        </div>                                                 
+                        {% endif %}
                     </div><!-- End .container -->
                 </div><!-- End .header-top -->
 
@@ -50,7 +66,7 @@
                         <div class="header-right">
                             <div class="header-dropdown-link">
                                 <div class="account">
-                                    <a href="dashboard.html" title="My account">
+                                    <a href={% if user.is_authenticated %}{% url "accounts:dashboard" %} {% else %} {% url "accounts:register" %} {% endif %} title="My account">
                                         <div class="icon">
                                             <i class="icon-user"></i>
                                         </div>
@@ -72,62 +88,57 @@
                                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                                         <div class="icon">
                                             <i class="icon-shopping-cart"></i>
-                                            <span class="cart-count">2</span>
+                                            <span class="cart-count">{{ cart | length }}</span>
                                         </div>
                                         <p>Cart</p>
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-cart-products">
+                                            {% for item in cart %}
                                             <div class="product">
                                                 <div class="product-cart-details">
                                                     <h4 class="product-title">
-                                                        <a href="product.html">Beige knitted elastic runner shoes</a>
+                                                        <a href="product.html">{{ item.product.title }}</a>
                                                     </h4>
 
-                                                    <span class="cart-product-info">
-                                                        <span class="cart-product-qty">1</span>
-                                                        x $84.00
-                                                    </span>
+                                                    <span class="cart-product-info" style="display: flex; flex-direction: column; gap: 5px;">
+                                                        <form action="{% url 'orders:cart_add' item.product.id %}" method="POST" 
+                                                        style="display: inline-flex; align-items: center; background: #f9f9f9; padding: 2px 6px; border-radius: 4px; border: 1px solid #e0e0e0; width: fit-content;">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="override" value="True">
+                                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="99"
+                                                            data-price="{{ item.price }}"
+                                                            onchange="changedropdownQty(this)"
+                                                            style="width: 35px; text-align: center; border: none; background: transparent; font-size: 13px; font-weight: 500;">
+
+                                                            
+                                                        </form>
+                                                        
+                                                    <span style="font-size: 12px; color: #777; margin-left: 5px;">Unit Price: ${{ item.price }}</span>
+                                                            
                                                 </div><!-- End .product-cart-details -->
 
                                                 <figure class="product-image-container">
                                                     <a href="product.html" class="product-image">
-                                                        <img src="assets/images/products/cart/product-1.jpg" alt="product">
+                                                        <img src="{{ item.product.photo_main.url }}" alt="product">
                                                     </a>
                                                 </figure>
-                                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                                <a href="#"  class="btn-remove" title="Remove Product" onclick="removeDropdownCartItem(this); return false;"
+                                                data-url="{% url 'orders:cart_remove' item.product.id %}"><i class="icon-close"></i>
+                                                </a>
                                             </div><!-- End .product -->
-
-                                            <div class="product">
-                                                <div class="product-cart-details">
-                                                    <h4 class="product-title">
-                                                        <a href="product.html">Blue utility pinafore denim dress</a>
-                                                    </h4>
-
-                                                    <span class="cart-product-info">
-                                                        <span class="cart-product-qty">1</span>
-                                                        x $76.00
-                                                    </span>
-                                                </div><!-- End .product-cart-details -->
-
-                                                <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="assets/images/products/cart/product-2.jpg" alt="product">
-                                                    </a>
-                                                </figure>
-                                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                            </div><!-- End .product -->
-                                        </div><!-- End .cart-product -->
+                                            {% endfor %}
+                                            </div><!-- End .cart-product -->
 
                                         <div class="dropdown-cart-total">
                                             <span>Total</span>
 
-                                            <span class="cart-total-price">$160.00</span>
+                                            <span class="cart-total-price">${{ cart.get_total_price }}</span>
                                         </div><!-- End .dropdown-cart-total -->
 
                                         <div class="dropdown-cart-action">
-                                            <a href="cart.html" class="btn btn-primary">View Cart</a>
+                                            <a href="{% url 'orders:order_create' %}" class="btn btn-primary">View Cart</a>
                                             <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
                                         </div><!-- End .dropdown-cart-total -->
                                     </div><!-- End .dropdown-menu -->
@@ -138,3 +149,143 @@
                 </div><!-- End .header-middle -->
             </header><!-- End .header -->
         </div>
+<script>
+// 確保加入購物車函數在全域可用
+window.addToCartAsync = function(element) {
+    const url = element.dataset.url;
+    
+    // 建立 FormData
+    const formData = new FormData();
+    formData.append('quantity', '1');
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            // 從 Django 預設在 Cookie 中的 csrftoken 讀取（免去在 HTML 帶 token）
+            'X-CSRFToken': getCookie('csrftoken'), 
+            'x-requested-with': 'XMLHttpRequest' // 完美對接你 views.py 的第 38 行
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            showCustomAlert('成功加入購物車！');
+            const cartCountElements = document.querySelectorAll('.cart-count'); // 假設你的數量用這個 class
+            cartCountElements.forEach(el => {
+            el.innerText = data.cart_count;
+            });
+
+            const totalElements = document.querySelectorAll('.dropdown-cart-total'); // 假設你的總金額用這個 class
+            totalElements.forEach(el => {
+            el.innerText = '$' + data.total_price;
+            });
+            setTimeout(() => {
+            location.reload();
+            }, 1000);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+};
+
+// 確保刪除購物車函數在全域可用（對應你最新圖片中的邏輯）
+window.removeDropdownCartItem = function(element) {
+    const url = element.dataset.url;
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'x-requested-with': 'XMLHttpRequest' // 完美對接你 views.py 的第 46 行
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // 成功後，直接在前端移除該商品的 HTML 節點（例如往上找 .product 元素）
+            element.closest('.product').remove();
+            alert('商品已移除');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+    location.reload();
+};
+
+// 輔助函數：用來自動獲取 Django 的 CSRF Cookie
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+window.changedropdownQty = function(inputElement) {
+    const form = inputElement.closest('form');
+    const url = form.action;
+    const formData = new FormData(form);
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'x-requested-with': 'XMLHttpRequest'
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // 1. 即時更新所有右上角及各處的購物車商品數量徽章
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.innerText = data.cart_count;
+            });
+
+            // 2. 即時更新所有的總金額 / 小計（涵蓋下拉選單與大畫面）
+            document.querySelectorAll('.cart-total-price, .dropdown-cart-total').forEach(el => {
+                el.innerText = '$' + data.total_price;
+            });
+
+            console.log('完全無重整，雙向即時同步成功！');
+            location.reload();        
+        }
+    })
+    .catch(error => console.error('Error:', error));
+};
+
+function showCustomAlert(message) {
+    // 檢查頁面上是否已經有提示框，沒有的話動態建立一個
+    let toast = document.getElementById('custom-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'custom-toast';
+        toast.style.cssText = `
+            position: fixed; top: 20px; right: 20px; z-index: 9999;
+            background: #333; color: #fff; padding: 12px 20px;
+            border-radius: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 14px; transition: opacity 0.5s ease;
+        `;
+        document.body.appendChild(toast);
+    }
+    
+    // 設定訊息文字
+    toast.innerText = message;
+    toast.style.opacity = '1';
+    toast.style.display = 'block';
+
+    // 2秒後自動淡出消失
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => { toast.style.display = 'none'; }, 500);
+    }, 2000);
+
+}
+
+</script>

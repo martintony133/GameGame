@@ -56,6 +56,7 @@ LOCAL_APPS = [
     "devices.apps.DevicesConfig",
     'accessories.apps.AccessoriesConfig',
     'platforms.apps.PlatformsConfig',
+    "orders.apps.OrdersConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -156,6 +157,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 INTERNAL_IPS = ["127.0.0.1",]
+CART_SESSION_ID = 'cart'
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',

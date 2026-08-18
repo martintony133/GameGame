@@ -55,8 +55,8 @@ LOCAL_APPS = [
     "games.apps.GamesConfig",
     "devices.apps.DevicesConfig",
     'accessories.apps.AccessoriesConfig',
-    'platforms.apps.PlatformsConfig',
     "orders.apps.OrdersConfig",
+    "advertisements.apps.AdvertisementsConfig",
 ]
 
 THIRD_PARTY_APPS = [

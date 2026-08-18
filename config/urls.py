@@ -24,7 +24,7 @@ urlpatterns = [
     path('',include("pages.urls", namespace='pages')),
     path("accounts/", include("accounts.urls", namespace='accounts')),
     path("recommendations/", include("recommendations.urls", namespace='recommendations')),
-    path("genres/", include("genres.urls")),
+    path("games/", include("games.urls")),
     path("devices/", include("devices.urls", namespace='devices')),
     path('admin/', admin.site.urls),
     path('news/', include('news.urls', namespace='news')),

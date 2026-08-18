@@ -114,41 +114,41 @@
                                                 <div class="product-cat">
                                                     <a href="#">{{accessory.platform | join:", "}}</a>
                                                 </div><!-- End .product-cat -->
-                                                <h3 class="product-title"><a href="{% url 'genres:product' product_id=genre.id %}">{{ genre.title }}
+                                                <h3 class="product-title"><a href="{% url 'games:product' product_id=game.id %}">{{ game.title }}
 												</h3><!-- End .product-title -->
                                                 <div class="product-price">
-                                                    {% if genre.is_free %}Free {% else %}${{genre.price}}{% endif %}</div><!-- End .product-price -->
+                                                    {% if game.is_free %}Free {% else %}${{game.price}}{% endif %}</div><!-- End .product-price -->
                                                 <div class="ratings-container">
                                                     <div class="ratings">
-                                                        <div class="ratings-val" style="width:{{genre.stars_percentage}}%;"></div><!-- End .ratings-val -->
+                                                        <div class="ratings-val" style="width:{{game.stars_percentage}}%;"></div><!-- End .ratings-val -->
                                                     </div><!-- End .ratings -->
-                                                    <span class="ratings-text">( {{genre.reviews_count}} Reviews )</span>
+                                                    <span class="ratings-text">( {{game.reviews_count}} Reviews )</span>
                                                 </div><!-- End .rating-container -->
 
                                                 <div class="product-nav product-nav-thumbs">
-                                                    {% if genre.photo_1 %}
-                                                    <a href="{{genre.photo_1.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{genre.photo_1.url}}" alt="Product image" class="product-image">
+                                                    {% if game.photo_1 %}
+                                                    <a href="{{game.photo_1.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
+                                                        <img src="{{game.photo_1.url}}" alt="Product image" class="product-image">
                                                     </a>{% endif %}
-                                                    {% if genre.photo_2 %}
-                                                    <a href="{{genre.photo_2.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{genre.photo_2.url}}" alt="Product image" class="product-image">
+                                                    {% if game.photo_2 %}
+                                                    <a href="{{game.photo_2.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
+                                                        <img src="{{game.photo_2.url}}" alt="Product image" class="product-image">
                                                     </a>{% endif %}
-                                                    {% if genre.photo_3 %}
-                                                    <a href="{{genre.photo_3.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{genre.photo_3.url}}" alt="Product image" class="product-image">
+                                                    {% if game.photo_3 %}
+                                                    <a href="{{game.photo_3.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
+                                                        <img src="{{game.photo_3.url}}" alt="Product image" class="product-image">
                                                     </a>{% endif %}
-                                                    {% if genre.photo_4 %}
-                                                    <a href="{{genre.photo_4.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{genre.photo_4.url}}" alt="Product image" class="product-image">
+                                                    {% if game.photo_4 %}
+                                                    <a href="{{game.photo_4.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
+                                                        <img src="{{game.photo_4.url}}" alt="Product image" class="product-image">
                                                     </a>{% endif %}
-                                                    {% if genre.photo_5 %}
-                                                    <a href="{{genre.photo_5.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{genre.photo_5.url}}" alt="Product image" class="product-image">
+                                                    {% if game.photo_5 %}
+                                                    <a href="{{game.photo_5.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
+                                                        <img src="{{game.photo_5.url}}" alt="Product image" class="product-image">
                                                     </a>{% endif %}
-                                                    {% if genre.photo_6 %}
-                                                    <a href="{{genre.photo_6.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{genre.photo_6.url}}" alt="Product image" class="product-image">
+                                                    {% if game.photo_6 %}
+                                                    <a href="{{game.photo_6.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
+                                                        <img src="{{game.photo_6.url}}" alt="Product image" class="product-image">
                                                     </a>{% endif %}
                                                 </div><!-- End .product-nav -->
                                             </div><!-- End .product-body -->
@@ -252,21 +252,21 @@
     </div>
 </div>
 
-                            {% if genres.has_other_pages %}
+                            {% if games.has_other_pages %}
                             <div class="row">
                               <div class="col-md-12">
                                 <ul class="pagination">
-                                  {% if genres.has_previous %}
+                                  {% if games.has_previous %}
                                   <li class="page-item">
-                                    <a class="page-link" href="?page={{genres.previous_page_number}}">&laquo;</a>
+                                    <a class="page-link" href="?page={{games.previous_page_number}}">&laquo;</a>
                                   </li>
                                   {% else %}
                                   <li class="page-item disabled">
                                     <a class="page-link" href="#">&laquo;</a>
                                   </li>
                                   {% endif %}
-                                  {% for i in genres.paginator.page_range %}
-                                  {% if i == genres.number %}
+                                  {% for i in games.paginator.page_range %}
+                                  {% if i == games.number %}
                                   <li class="page-item active">
                                     <a class="page-link">{{i}}</a>
                                   </li>
@@ -276,9 +276,9 @@
                                   </li>
                                   {% endif %}
                                   {% endfor %}
-                                  {% if genres.has_next %}
+                                  {% if games.has_next %}
                                   <li class="page-item">
-                                    <a class="page-link" href="?page={{genres.next_page_number}}">&raquo;</a>
+                                    <a class="page-link" href="?page={{games.next_page_number}}">&raquo;</a>
                                   </li>
                                   {% else %}
                                   <li class="page-item disabled">

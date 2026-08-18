@@ -4,7 +4,7 @@ from multiselectfield import MultiSelectField
 from recommendations.models import GAME_TYPE_CHOICES
 # Create your models here.
 
-class Genre(models.Model):
+class Game(models.Model):
     PLATFORM_CHOICES = [
         ('PC','PC'),
         ('PS5','PlayStation 5'),

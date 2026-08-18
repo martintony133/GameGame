@@ -5,5 +5,25 @@
 但 Django 同資料庫（PostgreSQL / pgAdmin 4）嘅運作方式完全唔同：
 1. 同一個大倉庫（Single Table）： 喺資料庫入面，你嘅 Apps、Devices 同 Accessories 通常唔係四散各地，而係統一儲存喺**同一張表（例如叫 Product 表）**入面。
 每一件商品只係多咗一個欄位叫 genre（類別），用嚟標記佢到底係 'app'、'device' 定 'accessory'。
+
 2. 「一網打盡」嘅指令： 當你喺後端執行 Product.objects.filter(...) 或者 Product.objects.all() 嗰陣，你其實係同 Django 講：「去倉庫幫我將所有符合條件嘅橫排數據（Rows）全部搬出嚟！」不論佢嘅類別欄位寫住咩，總之只要符合關鍵字，就全部打包。
+
 3. 統一的清單（JSON 格式）： Django 搬完貨之後，會將所有唔同類別嘅商品，排好隊變成一串長長嘅清單塞畀前端 JavaScript。喺前端眼入面，佢只會睇到一堆長得一模一樣嘅資料物件：
+json[
+  {"name": "太空飛船遊戲", "genre": "app", "price": "38"},
+  {"name": "VR 遊戲頭盔", "genre": "device", "price": "2999"},
+  {"name": "藍牙遊戲手掣", "genre": "accessory", "price": "350"}
+]
+
+第二部份：點樣套用你嘅 HTML 樣版去動態顯示所有商品？既然前端收到嘅係一串統一嘅商品資料，你就唔需要再喺 HTML 複製幾百個商品卡片。你只需要留低 一個空殼的外框（Grid Shell），然後交畀 JavaScript 根據收到的商品數量，自動好似「印圖章」咁複製你嘅 HTML 樣版！
+
+步驟 1：清理你原本的 HTML 結構搵返你幅圖裡面、原本擺放商品卡片嘅位置，將入面「寫死」嘅商品卡片全部刪除，只留低一個乾淨嘅外殼（Container），並加個 id：
+
+<!-- 商品大外殼（外層的 Grid 結構） -->
+<div class="product-grid" id="product-container">
+    
+    <!-- ⚠️ 呢度原本硬編碼嘅 <div class="product-card"> 全部擺清空 ⚠️ -->
+    <!-- JavaScript 陣間會自動喺度生成同塞入新卡片 -->
+
+</div>
+<!--Do I need to change the name of -->

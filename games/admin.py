@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Genre
+from .models import Game
 # Register your models here.
 
-@admin.register(Genre)
-class GenreAdmin(admin.ModelAdmin):
+@admin.register(Game)
+class GameAdmin(admin.ModelAdmin):
     list_display = ('title', 'game_type', 'platform', 'price', 'stars')
     list_display_links = ('title',)
     list_filter = ('platform', 'stars',)

@@ -41,11 +41,11 @@ def main():
     if len(sys.argv) < 3:
         print("\n❌ 使用方法錯誤！請輸入指令、Model名稱與檔案路徑。")
         print("格式: python db_tools.py [export/import] [Model名稱] [CSV檔案名稱]")
-        print("範例: python db_tools.py export genre output.csv\n")
+        print("範例: python db_tools.py export game output.csv\n")
         return
 
     action = sys.argv[1].lower()     # export 或 import
-    target_model = sys.argv[2]       # 例如: genre
+    target_model = sys.argv[2]       # 例如: game
     file_path = sys.argv[3]          # 例如: data.csv
 
     # 自動獲取 Table 名稱，不用手動打

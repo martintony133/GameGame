@@ -154,7 +154,7 @@
                                             <span>Category:</span>
                                             {% if item.game_type %}
                                                 {% for g_type in item.game_type %}
-                                                    <a href="#" class="genre-tag">{{ g_type }}</a>{% if not forloop.last %}, {% endif %}
+                                                    <a href="#" class="game-tag">{{ g_type }}</a>{% if not forloop.last %}, {% endif %}
                                                 {% endfor %}
                                             {% else %}
                                                 <a href="#">Uncategorized</a>

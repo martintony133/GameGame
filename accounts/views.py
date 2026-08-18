@@ -50,6 +50,12 @@ def login(request):
             return redirect('accounts:login')
     return render(request,'accounts/login.html')
 
+def logout(request):
+    if request.method == "POST":
+        auth.logout(request)
+        return redirect('pages:index')
+
 def dashboard(request):
     return render(request,'accounts/dashboard.html')
+
 

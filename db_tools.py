@@ -65,6 +65,14 @@ def main():
                 sql = f"COPY {table_name} TO STDOUT WITH CSV HEADER"
                 cur.copy_expert(sql, f)
             print(f"✅ 匯出成功！檔案已儲存至: {file_path}")
+            # 2. 💡 新增：自動把 Django 的 media 圖片資料夾複製一份到 CSV 旁邊
+            try:
+                import shutil
+                # 假設你的 Django 圖片都存在專案根目錄的 'media' 資料夾
+                shutil.copytree('media', f"{file_path}_media", dirs_exist_ok=True)
+                print(f"📦 圖片資料夾已同步備份至: {file_path}_media")
+            except Exception as e:
+                print(f"⚠️ 圖片備份失敗 (可能沒有 media 資料夾): {e}")
 
         elif action == "import":
             with open(file_path, "r", encoding="utf-8") as f:
@@ -72,7 +80,16 @@ def main():
                 cur.copy_expert(sql, f)
             conn.commit()
             print(f"✅ 匯入成功！已將 {file_path} 的資料寫入 {table_name}")
-            
+
+            try:
+                import shutil
+                if os.path.exists(f"{file_path}_media"):
+                    shutil.copytree(f"{file_path}_media", 'media', dirs_exist_ok=True)
+                    print(f"📂 圖片檔案已自動還原至專案的 'media' 資料夾！")
+                else:
+                    print(f"💡 提示：找不到對應的圖片備份資料夾 {file_path}_media，請手動檢查圖片。")
+            except Exception as e:
+                print(f"⚠️ 圖片還原失敗: {e}")
             # 自動修正 PostgreSQL 流水號計數器
             app_label = apps.get_model(target_model)._meta.app_label
             print(f"💡 提示: 匯入完成後，建議執行以下指令同步流水號:")

@@ -24,10 +24,12 @@ urlpatterns = [
     path('',include("pages.urls", namespace='pages')),
     path("accounts/", include("accounts.urls", namespace='accounts')),
     path("recommendations/", include("recommendations.urls", namespace='recommendations')),
-    path("genres/", include("genres.urls", namespace='genres')),
-    path('admin/', admin.site.urls),
+    path("games/", include("games.urls", namespace='games')),
     path('news/', include('news.urls', namespace='news')),
-    path('community/', include('community.urls')),
+    path('community/', include('community.urls', namespace='community')),
+    path('orders/', include('orders.urls', namespace='orders')),
+    path('admin/', admin.site.urls),
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

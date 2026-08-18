@@ -1,0 +1,234 @@
+[用家勾選 Checkbox] 
+         │
+         ▼
+[JavaScript 捕捉剔咗咩，組合成 URL 參數傳出去] 
+         │
+         ▼
+[後端伺服器 (Backend) 收到參數，去資料庫做 Query 篩選]
+         │
+         ▼
+[後端將篩選完嘅產品數據傳返出嚟，前端即時更新畫面]
+
+
+# 第一步：前端 HTML 執好個格式首先，你要確保你每一粒 Checkbox 都有正確嘅 name 同埋 value 屬性，咁樣 JavaScript 或者 Form 先至知用家剔緊邊一項。
+# html
+# <!-- 分類 (Category) 範例 -->
+# <h3>Category</h3>
+# <input type="checkbox" name="category" value="dresses"> Dresses
+# <input type="checkbox" name="category" value="shoes"> Shoes
+
+# <!-- 碼數 (Size) 範例 -->
+# <h3>Size</h3>
+# <input type="checkbox" name="size" value="M" checked> M
+# <input type="checkbox" name="size" value="L" checked> L
+
+
+# 第二步：用 JavaScript (前端) 監聽剔格仔嘅動作當用家一剔或者一取消剔個格仔，就要即時觸發一個 Function。我哋可以用 fetch API，咁樣網頁就唔使成頁重新載入（Reload），體驗會順好多：
+
+# javascript
+# // 監聽左邊所有篩選格仔嘅變動
+# document.querySelectorAll('.filters input[type="checkbox"]').forEach(checkbox => {
+#     checkbox.addEventListener('change', () => {
+#         applyFilters(); // 一有變動就去叫 Filter 嗰 Part 嘢
+#     });
+# });
+
+# function applyFilters() {
+#     // 1. 搜集晒目前所有剔咗嘅 Category 同埋 Size
+#     const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value);
+#     const selectedSizes = Array.from(document.querySelectorAll('input[name="size"]:checked')).map(cb => cb.value);
+
+#     // 2. 將佢哋組合成 URL 嘅參數 (Query Parameters)
+#     const params = new URLSearchParams();
+#     if (selectedCategories.length > 0) params.append('categories', selectedCategories.join(','));
+#     if (selectedSizes.length > 0) params.append('sizes', selectedSizes.join(','));
+
+#     // 3. 發送請求去你嘅後端 API (例如 /api/products/?categories=dresses&sizes=M,L)
+#     fetch(`/api/products/?${params.toString()}`)
+#         .then(response => response.json())
+#         .then(data => {
+#             // 4. 收到新嘅產品數據之後，寫個 Function 去擦洗舊畫面，將新產品鋪上網頁
+#             updateProductGrid(data.products);
+#         })
+#         .catch(error => console.error('出錯啦！', error));
+# }
+
+
+# 第三步：後端 (Backend) 處理資料庫篩選因為你用緊 Port 8000，好大機會係用緊 Django、FastAPI 或者 Laravel 等等。以下用 Django (Python) 做一個簡單例子，話你知後端收到參數之後點樣喺資料庫揀貨：
+# # --- Python (Django View 範例) ---
+# from django.http import JsonResponse
+# from .models import Product
+
+# def get_filtered_products(request):
+#     # 喺 URL 度拎返前端傳過嚟嘅 categories 同 sizes 字串
+#     categories_str = request.GET.get('categories', '')
+#     sizes_str = request.GET.get('sizes', '')
+    
+#     # 一開始先攞晒所有產品出來
+#     products = Product.objects.all()
+    
+#     # 如果前端有傳到分類過嚟，就跟住做 Filter
+#     if categories_str:
+#         category_list = categories_str.split(',')
+#         products = products.filter(category_name__in=category_list)
+        
+#     # 如果有傳到碼數過嚟，再進一步篩選
+#     if sizes_str:
+#         size_list = sizes_str.split(',')
+#         products = products.filter(sizes__in=size_list)
+        
+#     # 包裝成 JSON 格式傳返畀前端 JavaScript
+#     products_data = list(products.values('id', 'name', 'price', 'image_url'))
+#     return JsonResponse({'products': products_data})
+
+# 喺設計電商篩選系統時，處理多個標籤選取通常有兩種最核心嘅邏輯：OR 邏輯（聯集，通常用喺同一個類別內部，例如選 M 碼 或 L 碼都得）同埋 AMD 邏輯（交集，通常用喺跨類別，例如又要係「Dresses」而且 要係「M 碼」）。以下我會為你拆解點樣喺前端傳遞參數以及喺**後端（以 Python / Django 為例）**實現呢兩種靈活嘅 AND / OR 篩選條件。
+
+# 🔀 篩選邏輯設計方案通常業界最人性化嘅做法係：同一個大分類之內（例如 Size）：用 OR。（用家想睇 M 碼 或 L 碼嘅衫）跨唔同大分類之間（Category 夾 Size）：用 AND。（用家想搵一件 [Dresses] 而且 係 [M 碼] 嘅衫）
+
+# 1️⃣ 前端 JavaScript 修改 (點樣話畀後端知你想用邊種邏輯)
+# 你可以直接喺 URL 參數度加一個 logic 標籤，話畀後端聽呢個分類要用 and 定 or。
+
+# function applyFilters() {
+#     const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value);
+#     const selectedSizes = Array.from(document.querySelectorAll('input[name="size"]:checked')).map(cb => cb.value);
+
+#     const params = new URLSearchParams();
+    
+#     if (selectedCategories.length > 0) {
+#         params.append('categories', selectedCategories.join(','));
+#         // 💡 關鍵：你可以手動指定 Category 之間要用 'and' 判定定係 'or' 判定
+#         params.append('category_logic', 'and'); // 假設你要一件同時屬於多個標籤嘅商品
+#     }
+    
+#     if (selectedSizes.length > 0) {
+#         params.append('sizes', selectedSizes.join(','));
+#         params.append('size_logic', 'or'); // 碼數通常符合其中一個 (M 或 L) 就可以，所以用 OR
+#     }
+
+#     fetch(`/api/products/?${params.toString()}`)
+#         .then(response => response.json())
+#         .then(data => updateProductGrid(data.products));
+# }
+# 2️⃣ 後端處理 (以 Python Django 實戰為例)喺後端，我哋可以用 Django 嘅 Q 物件去動態組合 AND (&) 或者 OR (|) 嘅條件。
+
+# from django.http import JsonResponse
+# from django.db.models import Q
+# from .models import Product
+
+# def get_filtered_products(request):
+#     # 1. 喺 URL 攞返前端傳過嚟嘅參數同埋邏輯設定
+#     categories_str = request.GET.get('categories', '')
+#     category_logic = request.GET.get('category_logic', 'or')  # 預設用 or
+    
+#     sizes_str = request.GET.get('sizes', '')
+#     size_logic = request.GET.get('size_logic', 'or')          # 預設用 or
+    
+#     # 2. 基本 QuerySet
+#     products = Product.objects.all()
+
+#     # ==========================================
+#     # 處理 Category 嘅篩選 (支援 AND / OR)
+#     # ==========================================
+#     if categories_str:
+#         category_list = categories_str.split(',')
+#         category_query = Q()
+        
+#         if category_logic == 'and':
+#             # 【AND 邏輯】：必須同時滿足所有剔咗嘅分類
+#             # 做法：連續用 .filter() 去做資料庫交集
+#             for cat in category_list:
+#                 products = products.filter(category_name=cat)
+#         else:
+#             # 【OR 邏輯】：滿足其中一個分類就得 (Dresses 或者是 T-shirts)
+#             for cat in category_list:
+#                 category_query |= Q(category_name=cat)
+#             products = products.filter(category_query)
+
+#     # ==========================================
+#     # 處理 Size 嘅篩選 (支援 AND / OR)
+#     # ==========================================
+#     if sizes_str:
+#         size_list = sizes_str.split(',')
+#         size_query = Q()
+        
+#         if size_logic == 'and':
+#             # 【AND 邏輯】（極少用喺 Size，因為一件衫好難同時係 XS 又係 XL）
+#             for size in size_list:
+#                 products = products.filter(sizes=size)
+#         else:
+#             # 【OR 邏輯】：符合 M 碼 或 L 碼都得
+#             for size in size_list:
+#                 size_query |= Q(sizes=size)
+#             products = products.filter(size_query)
+
+#     # 3. 輸出結果
+#     products_data = list(products.values('id', 'name', 'price', 'image_url'))
+#     return JsonResponse({'products': products_data})
+
+
+睇到你張圖入面嘅 models.py 啦！你目前係用緊 MultiSelectField 嚟儲存 device_type 欄位。MultiSelectField 喺 Django 底層其實係將用家剔咗嘅選項，用**粒點（逗號 ,）**駁埋變成一條字串（例如 "PC,PS5"）嚟儲埋入資料庫同一個格仔入面。既然你冇用 Many-to-Many 關係，你要喺後端實現 AND 同 OR 篩選，就不能直接用一般的 filter(device_type__in=...)，而係要改用 Django 嘅 __contains 模糊搜尋功能。以下係幫你修正後端 views.py 篩選邏輯嘅廣東話完整指南：
+
+🛠️ 後端程式碼修正 (Django Views)請根據你前端傳過嚟嘅 logic 參數（or 或者是 and），喺後端改用以下嘅邏輯去組裝 Q 物件：
+
+from django.http import JsonResponse
+from django.db.models import Q
+from .models import Device  # 跟你張圖入面叫 Device
+
+def get_filtered_devices(request):
+    # 1. 喺 URL 攞返前端傳過嚟剔咗嘅裝置（例如：devices_str = "PC,PS5"）
+    devices_str = request.GET.get('devices', '')
+    logic = request.GET.get('logic', 'or')  # 預設用 'or'，亦可接收 'and'
+    
+    # 攞晒所有資料先
+    queryset = Device.objects.all()
+
+    if devices_str:
+        device_list = devices_str.split(',') # 拆開變返 ['PC', 'PS5']
+        
+        # 建立一個空的 Q 查詢物件
+        device_query = Q()
+        
+        # ==========================================
+        # 方案 A：用家揀咗 OR 邏輯 (包含 PC 或者是 PS5 都要)
+        # ==========================================
+        if logic == 'or':
+            for dev in device_list:
+                # 💡 核心：用 __contains 嚟檢查字串入面有冇包含呢個平台
+                device_query |= Q(device_type__contains=dev)
+            queryset = queryset.filter(device_query)
+            
+        # ==========================================
+        # 方案 B：用家揀咗 AND 邏輯 (必須同時支援 PC 而且支援 PS5)
+        # ==========================================
+        elif logic == 'and':
+            for dev in device_list:
+                # 💡 核心：用連續的 .filter() 或者 &= 嚟確保每一項都有包含
+                queryset = queryset.filter(device_type__contains=dev)
+
+    # 2. 回傳 JSON 畀前端
+    # 根據你上一張圖嘅欄位包裝返（請依需求調整要攞嘅 Field）
+    devices_data = list(queryset.values('id', 'device_name', 'price', 'status_tag'))
+    return JsonResponse({'products': devices_data})
+
+⚠️ 注意事項與邊界情況（Edge Case）因為 __contains 係純字串比對，如果你的選項代碼（Choices Code）有長短字串重疊，就會產生誤判。問題例子：如果你的 PLATFORM_CHOICES 入面有 'PS5' 同埋 'PS'。當你搜尋 device_type__contains='PS' 時，一隻只支援 'PS5' 嘅遊戲都會被意外篩選出嚟，因為 "PS5" 字串入面確實包含了 "PS"。解決辦法：睇到你張圖入面嘅 PLATFORM_CHOICES 設定得非常好（'PC', 'PS5', 'XBOX', 'SWITCH', 'MOBILE'），每個關鍵字都是獨一無二而且沒有互相包含的。所以喺你目前嘅設定下，直接用 __contains 係完全安全兼完美收工嘅！
+
+當然可以！事實上，喺長遠發展嚟講，將呢度改返做 Many-to-Many（多對多關係） 係一項非常明智嘅做法（Best Practice）。因為 MultiSelectField 雖然方便，但佢本質上只係一條字串。當你日後資料庫變得越來越大（例如有幾萬部裝置或商品時），用 __contains 做模糊搜尋會搞到資料庫行得好慢。改用 ManyToManyRel 可以利用資料庫嘅索引（Index）大大提升篩選速度，而且未來如果想為每個平台新增資料（例如加埋平台嘅 Logo 圖標或描述），Many-to-Many 架構可以隨時擴充。以下係幫你將 Device 欄位重構成 Many-to-Many 關係嘅完整廣東話指南。
+
+🧱 步驟一：修改 models.py (重新定義資料模型)你需要獨立建立一個 Platform 模型，然後喺 Device 入面用 ManyToManyField 去引用佢。
+
+【第一步：改 models.py】 ➔ 【第二步：行 Migration】 ➔ 【第三步：改 views.py】
+
+第一步：首先修改 models.py
+    class Platform(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    class Device(models.Model):
+    # ... 其他欄位維持原狀 ...
+    device_type = models.ManyToManyField(Platform, blank=True) # 改咗呢度！
+
+第二步：喺 Terminal 行 Migration（通知資料庫）呢一步最緊要！你要話畀資料庫聽，你要刪除舊嘅文字格仔，並建立 Many-to-Many 嘅全新中介表格：
+第三步：最後先好改 views.py當資料庫已經成功變身做 Many-to-Many 之後，你先將新嘅 Filter 程式碼貼入 views.py：
+# 呢個時候資料庫完全對位，呢行 Query 就會行得極順、完全唔會出 Error！
+queryset = queryset.filter(device_type__name__in=device_list).distinct()
+
+

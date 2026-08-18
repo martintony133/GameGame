@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Post - GameGame</title>
 </head>
-<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+<body>
 
-    <h1 style="color: #28a745;">📝 Publish a New Thread</h1>
-    <p style="color: #666;">Share your thoughts with the GameGame community.</p>
+    <h1>&emsp;Publish a New Thread</h1>
+    <p style="color: #666;">&emsp;&emsp;&emsp;&emsp;Share your thoughts with the GameGame community.</p>
     <hr style="margin-bottom: 25px;">
 
     <!-- Traditional standard POST submission form -->
@@ -40,10 +42,11 @@
 
         <!-- Action Control Buttons -->
         <div style="display: flex; gap: 10px;">
-            <button type="submit" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Publish Post</button>
+            <button type="submit" style="padding: 10px 20px; background-color: #333333; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Publish Post</button>
             <a href="{% url 'community:community_home' %}" style="padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; text-align: center;">Cancel</a>
         </div>
     </form>
 
 </body>
 </html>
+{% endblock %}

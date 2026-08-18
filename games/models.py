@@ -47,4 +47,4 @@ class Game(models.Model):
         return self.title
 
     class Meta:
-        db_table = 'games_genre'
+        db_table = 'games_game'

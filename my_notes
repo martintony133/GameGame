@@ -2,4 +2,10 @@
 
 <img src="assets/images/popup/newsletter/img-1.jpg" class="newsletter-img" alt="newsletter">
 
-1. 
+    PLATFORM_CHOICES = [
+        ('PC','PC'),
+        ('PS5','PlayStation 5'),
+        ('XBOX','XBOX'),
+        ('SWITCH','Nintendo Switch'),
+        ('MOBILE','Mobile')
+    ]

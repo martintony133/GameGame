@@ -231,4 +231,17 @@ def get_filtered_devices(request):
 # 呢個時候資料庫完全對位，呢行 Query 就會行得極順、完全唔會出 Error！
 queryset = queryset.filter(device_type__name__in=device_list).distinct()
 
+明白，你目前將 ManyToManyField 分別放咗喺 devices、accessories 同 games 嘅 models.py 裡面。如果每個 app 都各自指向其他 app，好容易會條線搞到好亂，甚至因為 循環引入 (Circular Import) 而行唔到粒制（即係 A 引入 B，B 又引入 A）。要避免衝突同重複，你可以用以下兩個最實用嘅方法去重構：
 
+方法一：使用字串路徑（最推薦、最簡單）Django 允許你用 'app_label.ModelName' 嘅字串形式 嚟定義 ManyToManyField，而唔需要用 from app.models import ... 實體引入。咁樣做可以完美解決循環引入嘅衝突。既然你已經喺三邊寫好咗，你可以直接將佢哋改成字串路徑：
+
+喺 devices/models.py 內：
+platforms = models.ManyToManyField('platforms.Platform', related_name='devices_list', blank=True)
+
+喺 accessories/models.py 內：
+platforms = models.ManyToManyField('platforms.Platform', related_name='accessories_list', blank=True)
+
+喺 games/models.py 內：
+platforms = models.ManyToManyField('platforms.Platform', related_name='games_list', blank=True)
+
+⚠️ 注意 related_name 衝突：你之前三邊都用 related_name='platforms'，Django 會報錯。因為由 Platform 角度睇，佢唔知 platform.platforms 到底係指返去 device、accessory 定 game。所以反向名稱一定要改成唯一值（例如 devices_list）。

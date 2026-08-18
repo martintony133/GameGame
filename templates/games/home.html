@@ -97,11 +97,7 @@
                                                 {% endif %}
                                                 <a href="product.html">
                                                     <img src="{{game.photo_main.url}}" alt="Product image" class="product-image w-100 object-fit-cover"
-<<<<<<< HEAD
-                                                    style="height: 370px;">
-=======
                                                     style="height: 380px;">
->>>>>>> origin/version3
                                                 </a>
 
                                                 <div class="product-action-vertical">
@@ -126,12 +122,8 @@
                                                 <div class="product-cat">
                                                     <a href="#">{{game.platform | join:", "}}</a>
                                                 </div><!-- End .product-cat -->
-<<<<<<< HEAD
-                                                <h3 class="product-title"><a href="{% url 'games:product' product_id=game.id %}">{{ game.title }}
+                                                <h3 class="product-title"><a href="{% url 'games:product' product_id=game.id %}">{{ game.title }}</a>
 												</h3><!-- End .product-title -->
-=======
-                                                <h3 class="product-title"><a href="product.html">{{game.title}}</a></h3><!-- End .product-title -->
->>>>>>> origin/version3
                                                 <div class="product-price">
                                                     {% if game.is_free %}Free {% else %}${{game.price}}{% endif %}</div><!-- End .product-price -->
                                                 <div class="ratings-container">

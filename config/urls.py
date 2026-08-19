@@ -32,6 +32,7 @@ urlpatterns = [
     path('accessories/', include('accessories.urls')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('supports/', include('supports.urls')),
+    path('promotions/', include('promotions.urls', namespace='promotions')),
     ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = "GameGame Admin"

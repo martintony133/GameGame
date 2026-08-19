@@ -5,7 +5,7 @@ from .models import CommunityCategory, CommunityPost, CommunityComment
 
 
 # 1. Main Landing Portal View: Fetches all threads for home.html
-def community_index_view(request):
+def community_home_view(request):
     posts = CommunityPost.objects.all().order_by('-created_at')
     return render(request, 'community/home.html', {'posts': posts})
 
@@ -64,7 +64,7 @@ def post_create_view(request):
             content=content
         )
         # Smoothly send the user back to home.html to view their brand new entry card
-        return redirect('community_index')
+        return redirect('community:community_home')
 
     # GET request handler: feeds category variants down to form select dropdown choice options
     categories = CommunityCategory.objects.all()

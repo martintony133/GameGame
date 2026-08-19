@@ -16,7 +16,7 @@
     <h3>Community Comments</h3>
 
     <!-- HTMX Polling: Requests latest comments every 2 seconds and updates inside this div -->
-    <div hx-get="{% url 'comment_list' post.id %}" 
+    <div hx-get="{% url 'community:comment_list' post.id %}" 
          hx-trigger="every 2s" 
          hx-swap="innerHTML">
         <!-- Initial load pointing to your project-level partial path -->
@@ -26,7 +26,7 @@
     <br><br>
     <h4>Leave a Comment</h4>
     <!-- HTMX Form: Sends data asynchronously, appends to list, and resets input field -->
-    <form hx-post="{% url 'add_comment' post.id %}" 
+    <form hx-post="{% url 'community:add_comment' post.id %}" 
           hx-target="#comment-list" 
           hx-swap="beforeend" 
           hx-on::after-request="this.reset()">

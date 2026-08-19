@@ -4,15 +4,15 @@
         <main class="main">
         	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         		<div class="container">
-        			<h1 class="page-title">Default With Sidebar<span>Single Post</span></h1>
+        			<h1 class="page-title">News<span>Posts</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Default With Sidebar</li>
+                        <li class="breadcrumb-item"><a href={% url 'news:home' %}>Home</a></li>
+                        <li class="breadcrumb-item"><a href={% url 'news:home' %}>News</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Post</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -21,90 +21,67 @@
                 <div class="container">
                 	<div class="row">
                 		<div class="col-lg-9">
-                            {% for item in news %}
                             <article class="entry single-entry">
                                 <figure class="entry-media">
-                                    {% if news.photo_1 %}
+                                    {% if item.photo_1 %}
                                         <img src={{item.photo_1.url}} alt={{item.title}}>
-                                    {% endif %}
+
                                 </figure><!-- End .entry-media -->
 
                                 <div class="entry-body">
                                     <div class="entry-meta">
                                         <span class="entry-author">
-                                            by <a href="#">John Doe</a>
+                                            by <a href="#">{{ item.author }}</a>
                                         </span>
                                         <span class="meta-separator">|</span>
-                                        <a href="#">Nov 22, 2018</a>
+                                        <a href="#">{{ item.date|date:"b d, Y" }}</a>
                                         <span class="meta-separator">|</span>
                                         <a href="#">2 Comments</a>
                                     </div><!-- End .entry-meta -->
 
                                     <h2 class="entry-title">
-                                        Cras ornare tristique elit.
+                                        {{ item.title }}
                                     </h2><!-- End .entry-title -->
 
                                     <div class="entry-cats">
-                                        in <a href="#">Lifestyle</a>,
-                                        <a href="#">Shopping</a>
+                                        in <a href="#">{{ item.theme }}</a>
                                     </div><!-- End .entry-cats -->
 
+
                                     <div class="entry-content editor-content">
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.</p>
+                                    {% if item.paragraph_1 %}
+                                        <p>{{ item.paragraph_1 }}</p>
+                                    {% endif %}
 
-                                        <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a <a href="#">ultrices sagittis</a>, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
+                                    {% if item.paragraph_2 %}
+                                        <p>{{ item.paragraph_2 }}</p>
+                                    {% endif %}
 
-                                        <div class="pb-1"></div><!-- End .mb-1 -->
+                                    {% if item.paragraph_3 %}
+                                        <p>{{ item.paragraph_3 }}</p>
+                                    {% endif %}
+                                    </div>
 
-                                        <img src="assets/images/blog/single/2.jpg" alt="image" class="float-left">
-
-                                        <h3>Quisque volutpat mattiseros. </h3>
-
-                                        <ul>
-                                            <li>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. </li>
-                                            <li>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. </li>
-                                            <li>Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</li>
-                                        </ul>
-
-                                        <div class="pb-1 clearfix"></div><!-- End .clearfix -->
-
-                                        <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula <a href="#">sollicitudin laoreet</a> viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. </p>
-
-                                        <blockquote>
-                                            <p>“ Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. ”</p>
-                                        </blockquote>
-
-                                        <p>Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna. Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae facilisis libero dolor a purus. </p>
-
-                                        <div class="pb-1"></div><!-- End .pb-1 -->
-
-                                        <h3>Morbi interdum mollis sapien.</h3>
-
-                                        <img src="assets/images/blog/single/3.jpg" alt="image">
-
-                                        <p>Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent <a href="#">elementum hendrerit</a> tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.</p>
-
-                                        <p>Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae facilisis libero dolor a purus. Sed vel lacus. Mauris nibh felis, adipiscing varius, adipiscing in, lacinia vel, tellus. Suspendisse ac urna. Etiam pellentesque mauris ut lectus. Nunc tellus ante, mattis eget, gravida vitae, ultricies ac, leo. Integer leo pede, ornare a, lacinia eu, vulputate vel, nisl. Suspendisse mauris. Fusce accumsan mollis eros. Pellentesque a diam sit amet mi ullamcorper vehicula. Integer adipiscing risus a sem. Nullam quis massa sit amet nibh viverra malesuada. Nunc sem lacus, accumsan quis, faucibus non, congue vel, arcu. </p>
-                                    </div><!-- End .entry-content -->
 
                                     <div class="entry-footer row no-gutters flex-column flex-md-row">
                                         <div class="col-md">
                                             <div class="entry-tags">
-                                                <span>Tags:</span> <a href="#">photography</a> <a href="#">style</a>
+                                                <span>Tags:</span> <a href="#">{{ item.theme }}</a>
                                             </div><!-- End .entry-tags -->
                                         </div><!-- End .col -->
 
                                         <div class="col-md-auto mt-2 mt-md-0">
                                             <div class="social-icons social-icons-color">
                                                 <span class="social-label">Share this post:</span>
-                                                <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                                                <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                                                <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
-                                                <a href="#" class="social-icon social-linkedin" title="Linkedin" target="_blank"><i class="icon-linkedin"></i></a>
+                                                <a href="https://www.facebook.com/login/?locale=zh_HK" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                                <a href="https://x.com/" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                                <a href="https://www.pinterest.com/login/" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                                <a href="https://www.linkedin.com/" class="social-icon social-linkedin" title="Linkedin" target="_blank"><i class="icon-linkedin"></i></a>
                                             </div><!-- End .soial-icons -->
                                         </div><!-- End .col-auto -->
                                     </div><!-- End .entry-footer row no-gutters -->
                                 </div><!-- End .entry-body -->
+                            {% endif %}
 
                                 <div class="entry-author-details">
                                     <figure class="author-media">
@@ -119,7 +96,6 @@
                                                 <h4><a href="#">John Doe</a></h4>
                                             </div><!-- End .col -->
                                             <div class="col-auto mt-1 mt-md-0">
-                                                <a href="#" class="author-link">View all posts by John Doe <i class="icon-long-arrow-right"></i></a>
                                             </div><!-- End .col -->
                                         </div><!-- End .row -->
 
@@ -129,7 +105,7 @@
                                     </div><!-- End .author-body -->
                                 </div><!-- End .entry-author-details-->
                             </article><!-- End .entry -->
-                            {% endfor %}
+
                             <nav class="pager-nav" aria-label="Page navigation">
                                 <a class="pager-link pager-link-prev" href="#" aria-label="Previous" tabindex="-1">
                                     Previous Post
@@ -368,119 +344,35 @@
 
                 		<aside class="col-lg-3">
                 			<div class="sidebar">
-                				<div class="widget widget-search">
-                                    <h3 class="widget-title">Search</h3><!-- End .widget-title -->
-
-                                    <form action="#">
-                                        <label for="ws" class="sr-only">Search in blog</label>
-                                        <input type="search" class="form-control" name="ws" id="ws" placeholder="Search in blog" required>
-                                        <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Search</span></button>
-                                    </form>
-                				</div><!-- End .widget -->
-
-                                <div class="widget widget-cats">
-                                    <h3 class="widget-title">Categories</h3><!-- End .widget-title -->
-
-                                    <ul>
-                                        <li><a href="#">Lifestyle<span>3</span></a></li>
-                                        <li><a href="#">Shopping<span>3</span></a></li>
-                                        <li><a href="#">Fashion<span>1</span></a></li>
-                                        <li><a href="#">Travel<span>3</span></a></li>
-                                        <li><a href="#">Hobbies<span>2</span></a></li>
-                                    </ul>
-                                </div><!-- End .widget -->
-
-                                <div class="widget">
-                                    <h3 class="widget-title">Popular Posts</h3><!-- End .widget-title -->
-
-                                    <ul class="posts-list">
-                                        <li>
-                                            <figure>
-                                                <a href="#">
-                                                    <img src="assets/images/blog/sidebar/post-1.jpg" alt="post">
-                                                </a>
-                                            </figure>
-
-                                            <div>
-                                                <span>Nov 22, 2018</span>
-                                                <h4><a href="#">Aliquam tincidunt mauris eurisus.</a></h4>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <figure>
-                                                <a href="#">
-                                                    <img src="assets/images/blog/sidebar/post-2.jpg" alt="post">
-                                                </a>
-                                            </figure>
-
-                                            <div>
-                                                <span>Nov 19, 2018</span>
-                                                <h4><a href="#">Cras ornare tristique elit.</a></h4>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <figure>
-                                                <a href="#">
-                                                    <img src="assets/images/blog/sidebar/post-3.jpg" alt="post">
-                                                </a>
-                                            </figure>
-
-                                            <div>
-                                                <span>Nov 12, 2018</span>
-                                                <h4><a href="#">Vivamus vestibulum ntulla nec ante.</a></h4>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <figure>
-                                                <a href="#">
-                                                    <img src="assets/images/blog/sidebar/post-4.jpg" alt="post">
-                                                </a>
-                                            </figure>
-
-                                            <div>
-                                                <span>Nov 25, 2018</span>
-                                                <h4><a href="#">Donec quis dui at dolor  tempor interdum.</a></h4>
-                                            </div>
-                                        </li>
-                                    </ul><!-- End .posts-list -->
-                                </div><!-- End .widget -->
-
+<!--advertisements-->
+                                {% for ad in advertisements %}
                                 <div class="widget widget-banner-sidebar">
-                                    <div class="banner-sidebar-title">ad box 280 x 280</div><!-- End .ad-title -->
-                                    
-                                    <div class="banner-sidebar">
-                                        <a href="#">
-                                            <img src="assets/images/blog/sidebar/banner.jpg" alt="banner">
+                                    <div class="banner-sidebar-title">ad box</div>
+                                
+                                    <div class="banner-sidebar banner-overlay">
+                                        <a href="{{ ad.destination_url }}" target="_blank">
+                                            {% if ad.media %}
+                                                <img src="{{ ad.media.url }}" 
+                                                    alt="{{ ad.project_name }}" 
+                                                    style="width: 280px; object-fit: cover;">
+                                            {% else %}
+                                                <img src="https://placehold.co" 
+                                                    alt="Placeholder ad" 
+                                                    style="width: 280px; height: 280px; object-fit: cover;">
+                                            {% endif %}
                                         </a>
-                                    </div><!-- End .banner-ad -->
-                                </div><!-- End .widget -->
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <p>No active advertisements available.</p>
+                                {% endfor %}
 
-                                <div class="widget">
-                                    <h3 class="widget-title">Browse Tags</h3><!-- End .widget-title -->
 
-                                    <div class="tagcloud">
-                                        <a href="#">fashion</a>
-                                        <a href="#">style</a>
-                                        <a href="#">women</a>
-                                        <a href="#">photography</a>
-                                        <a href="#">travel</a>
-                                        <a href="#">shopping</a>
-                                        <a href="#">hobbies</a>
-                                    </div><!-- End .tagcloud -->
-                                </div><!-- End .widget -->
 
-                                <div class="widget widget-text">
-                                    <h3 class="widget-title">About Blog</h3><!-- End .widget-title -->
-
-                                    <div class="widget-text-content">
-                                        <p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, pulvinar nunc sapien ornare nisl.</p>
-                                    </div><!-- End .widget-text-content -->
-                                </div><!-- End .widget -->
                 			</div><!-- End .sidebar sidebar-shop -->
                 		</aside><!-- End .col-lg-3 -->
                 	</div><!-- End .row -->
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
-
 {% endblock %}

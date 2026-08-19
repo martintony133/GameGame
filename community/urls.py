@@ -5,7 +5,7 @@ app_name = "community"
 
 urlpatterns = [
     # Main Portal: Targets http://localhost:8000/community/
-    path('', views.community_index_view, name='community_index'),
+    path('', views.community_home_view, name='community_home'),
     
     path('post/create/', views.post_create_view, name='post_create'),
     path('post/<int:post_id>/', views.post_detail_view, name='post_detail'),

@@ -53,8 +53,12 @@ LOCAL_APPS = [
     "community.apps.CommunityConfig",
     "recommendations.apps.RecommendationsConfig",
     "games.apps.GamesConfig",
+    "devices.apps.DevicesConfig",
+    'accessories.apps.AccessoriesConfig',
     "orders.apps.OrdersConfig",
     "promotions.apps.PromotionsConfig"
+    "advertisements.apps.AdvertisementsConfig",
+    "supports.apps.SupportsConfig",
 ]
 
 THIRD_PARTY_APPS = [
@@ -101,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'gamegame',
         'USER' : 'postgres',
-        'PASSWORD' : '123456',
+        'PASSWORD' : '950256',
         'HOST' : 'localhost',
         'PORT' : '5432',
     }

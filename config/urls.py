@@ -28,6 +28,7 @@ urlpatterns = [
     path('news/', include('news.urls', namespace='news')),
     path('community/', include('community.urls', namespace='community')),
     path('orders/', include('orders.urls', namespace='orders')),
+    path('promotions/', include('promotions.urls', namespace='promotions')),
     path('admin/', admin.site.urls),
 
 

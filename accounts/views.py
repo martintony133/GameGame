@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages,auth
+from orders.models import Order
 # Create your views here.
 
 def register(request):
@@ -56,6 +57,8 @@ def logout(request):
         return redirect('pages:index')
 
 def dashboard(request):
-    return render(request,'accounts/dashboard.html')
+    orders = Order.objects.filter(user_id=request.user.id)
+    context = {'orders':orders,}
+    return render(request,'accounts/dashboard.html', context)
 
 

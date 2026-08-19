@@ -22,30 +22,32 @@
         <div class="row">
           <div class="col-md-12">
             <h2 class="mb-3">Welcome {{user.first_name | title}}</h2>
-            {% if contacts %}
+            {% if orders %}
             <p class="text-muted">Here are the restaurants you have saved or inquired about.</p>
             <table class="table table-striped table-hover bg-white">
               <thead class="thead-dark">
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Restaurant</th>
-                  <th scope="col">Address</th>
+                  <th scope="col">#ID</th>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
                   <th scope="col">Status</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                {% for contact in contacts %}
+                {% for order in orders %}
                 <tr>
-                  <td>{{contact.listing_id}}</td>
-                  <td>{{contact.listing | title}}</td>
-                  <td>{{contact.address | title}}</td>
+                  <td>#{{order.id}}</td>
+                  <td>{% for item in order.items.all %}
+                      {{ item.product }} ( x {{ item.quantity }} )
+                      {{ item.price }}<br>{% endfor %}</td>
+                  <td></td>
                   <td>
-                    <a class="badge badge-success" href={% url "contacts:edit_contact" contact.id %}>Edie</a>
-                      <button class="badge badge-danger" data-url="{% url "contacts:delete_contact" contact.id %}" 
+                    <a class="badge badge-success" href="#">Edie</a>
+                      <button class="badge badge-danger" data-url="#" 
                       data-toggle="modal" data-target="#deleteConfirmModal" data-id="{{contact.id}}">Delete</button>
                   </td>
-                  <td><a class="btn btn-outline-danger btn-sm" href="{% url "listings:listing" contact.listing_id %}">View Restaurant</a></td>
+                  <td><a class="btn btn-outline-danger btn-sm" href="#">View Restaurant</a></td>
                 </tr>
                 {% endfor %}
               </tbody>

@@ -65,7 +65,7 @@ class FestivalSaleItem(models.Model):
 
     @property
     def show_status(self):
-        now = timezone.now()
+        now = timezone.localtime(timezone.now())
         if self.festival_sale.start_date <= now <= self.festival_sale.end_date:
             return 'Live'
         elif now < self.festival_sale.start_date:

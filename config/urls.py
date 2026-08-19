@@ -31,9 +31,8 @@ urlpatterns = [
     path('community/', include('community.urls')),
     path('accessories/', include('accessories.urls')),
     path('orders/', include('orders.urls', namespace='orders')),
-
-
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('supports/', include('supports.urls')),
+    ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = "GameGame Admin"
 admin.site.site_title = "GameGame Admin Portal"

@@ -57,6 +57,7 @@ LOCAL_APPS = [
     'accessories.apps.AccessoriesConfig',
     "orders.apps.OrdersConfig",
     "advertisements.apps.AdvertisementsConfig",
+    "supports.apps.SupportsConfig",
 ]
 
 THIRD_PARTY_APPS = [

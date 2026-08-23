@@ -23,7 +23,7 @@
                 			<div class="toolbox">
                 				<div class="toolbox-left">
                 					<div class="toolbox-info">
-                						Showing <span>9 of 56</span> Products
+                						Showing <span> {{ devices.object_list|length }} of {{ devices.paginator.count }} </span> Products
                 					</div><!-- End .toolbox-info -->
                 				</div><!-- End .toolbox-left -->
 
@@ -104,9 +104,9 @@
                     {% endif %}
 
                     <!-- 3. 主圖片顯示 -->
-                    <a href="#">
+                    <a href="{% url 'devices:product' product_id=device.id %}">
                         {% if device.photo_main %}
-                            <img src="{{ device.photo_main.url }}" alt="{{ device.device_name }}" class="product-image w-100 object-fit-cover" style="height: 370px;">
+                            <img src="{{ device.photo_main.url }}" alt="{{ device.device_name }}" class="product-image w-100 object-fit-cover" style="height: 350px; object-fit: contain; background-color: #ffffff">
                         {% else %}
                             <img src="/static/images/default-device.jpg" alt="Default image" class="product-image w-100 object-fit-cover" style="height: 370px;">
                         {% endif %}
@@ -119,9 +119,18 @@
                         <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
                     </div>
 
-                    <div class="product-action">
-                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                    </div>
+                        <div class="product-action">
+							<form action="{% url 'orders:cart_add' device.id %}" method="POST" style="width: 100%;">
+								{% csrf_token %}
+								<input type="hidden" name"quantity" value="1">
+									<button type="button" onclick="addToCartAsync(this)" 
+        									data-url="{% url 'orders:cart_add' device.id %}" 
+        									data-item-type="device" 
+        									class="btn-product btn-cart" style="border: none; background: warning; width: 100%; cursor: pointer;">
+										<span>add to cart</span>
+									</button>
+								</form>
+						</div>
                 </figure>
 
                 <div class="product-body">

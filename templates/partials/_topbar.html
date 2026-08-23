@@ -97,48 +97,79 @@
                                             {% for item in cart %}
                                             <div class="product">
                                                 <div class="product-cart-details">
-                                                    <h4 class="product-title">
-                                                        <a href="product.html">{{ item.product.title }}</a>
-                                                    </h4>
-
-                                                    <span class="cart-product-info" style="display: flex; flex-direction: column; gap: 5px;">
-                                                        <form action="{% url 'orders:cart_add' item.product.id %}" method="POST" 
-                                                        style="display: inline-flex; align-items: center; background: #f9f9f9; padding: 2px 6px; border-radius: 4px; border: 1px solid #e0e0e0; width: fit-content;">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="override" value="True">
-                                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="99"
-                                                            data-price="{{ item.price }}"
-                                                            onchange="changedropdownQty(this)"
-                                                            style="width: 35px; text-align: center; border: none; background: transparent; font-size: 13px; font-weight: 500;">
-
-                                                            
-                                                        </form>
+                                                     <a href="#">
+                                                        {% if item.device %}
+                                                            <!-- 獨立處理 Device 顯示名稱 -->
+                                                            <span>[Device] {{ item.device.device_name }}</span>
+                                                        {% elif item.product %}
+                                                            <!-- 獨立處理 Game 顯示名稱 -->
+                                                            <span>[Game] {{ item.product.title }}</span>
+                                                        {% endif %}
+                                                    </a>
+                                                    <span class="cart-product-info" style="display: flex; column; gap: 5px;">
+                                                        {% if item.device %}
+                                                            <!-- Device 專用嘅表單 -->
+                                                            <form action="{% url 'orders:cart_add' item.device.id %}" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="override" value="True">
+                                                                <input type="hidden" name="item_type" value="device"> <!-- 可選：話畀後端知呢個係 device -->
+                                                                <input type="number" name="quantity" value="{{ item.quantity }}" 
+                                                                       min="1" max="99" onchange="changedropdownQty(this)"
+                                                                       data-price="{{ item.price }}">
+                                                            </form>
+                                                        
+                                                        {% elif item.product %}
+                                                            <!-- Game 專用嘅表單 -->
+                                                            <form action="{% url 'orders:cart_add' item.product.id %}" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="override" value="True">
+                                                                <input type="hidden" name="item_type" value="game"> <!-- 可選：話畀後端知呢個係 game -->
+                                                                <input type="number" name="quantity" value="{{ item.quantity }}" 
+                                                                       min="1" max="99" onchange="changedropdownQty(this)"
+                                                                       data-price="{{ item.price }}">
+                                                            </form>
+                                                        {% endif %}
+                                                    </span>
                                                         
                                                     <span style="font-size: 12px; color: #777; margin-left: 5px;">Unit Price: ${{ item.price }}</span>
                                                             
                                                 </div><!-- End .product-cart-details -->
 
                                                 <figure class="product-image-container">
-                                                    <a href="product.html" class="product-image">
-                                                        <img src="{{ item.product.photo_main.url }}" alt="product">
+                                                    <a href="#"> <!-- 建議將 href 留空或連去正確頁面，例如 "#" -->
+                                                        {% if item.device %}
+                                                        <!-- 為 Device 圖片加上固定尺寸與 object-fit -->
+                                                        <img src="{{ item.device.photo_main.url }}" alt="{{ item.device.device_name }}" style="width: 80px; height: 100px; object-fit: cover;">
+                                                        {% elif item.product %}
+                                                        <!-- 為 Game 圖片加上固定尺寸與 object-fit -->
+                                                        <img src="{{ item.product.photo_main.url }}" alt="{{ item.product.title }}" style="width: 100px; height: 100px; object-fit: cover;">
+                                                        {% endif %}
                                                     </a>
                                                 </figure>
-                                                <a href="#"  class="btn-remove" title="Remove Product" onclick="removeDropdownCartItem(this); return false;"
-                                                data-url="{% url 'orders:cart_remove' item.product.id %}"><i class="icon-close"></i>
+                                                
+                                                <a href="#"  class="btn-remove" title="Remove Product" 
+                                                    onclick="removeDropdownCartItem(this); return false;" 
+                                                    data-url="{% url 'orders:cart_remove' item.id %}" 
+                                                    data-item-type="{% if item.device %}device{% else %}game{% endif %}">
+                                                    <i class="icon-close"></i>
                                                 </a>
                                             </div><!-- End .product -->
                                             {% endfor %}
-                                            </div><!-- End .cart-product -->
+                                        </div><!-- End .cart-product -->
+                                            
 
-                                        <div class="dropdown-cart-total">
-                                            <span>Total</span>
-
-                                            <span class="cart-total-price">${{ cart.get_total_price }}</span>
-                                        </div><!-- End .dropdown-cart-total -->
+                                            <div class="dropdown-cart-total" style="display: block; width: 100%; clear: both; margin-top: 10px;">
+                                                <span>Total</span>
+                                                <span class="cart-total-price">${{ cart.get_total_price }}</span>
+                                            </div>
 
                                         <div class="dropdown-cart-action">
                                             <a href="{% url 'orders:order_create' %}" class="btn btn-primary">View Cart</a>
+                                            {% if request.user.is_authenticated %}
                                             <a href="{% url 'orders:checkout' %}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                            {% else %}
+                                            <a href="{% url 'accounts:register' %}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                            {% endif %}
                                         </div><!-- End .dropdown-cart-total -->
                                     </div><!-- End .dropdown-menu -->
                                 </div><!-- End .cart-dropdown -->
@@ -152,62 +183,78 @@
 // 確保加入購物車函數在全域可用
 window.addToCartAsync = function(element) {
     const url = element.dataset.url;
+    const itemType = element.dataset.itemType; // 攞到係 game 定 device
     
     // 建立 FormData
     const formData = new FormData();
-    formData.append('quantity', '1');
-
+    const closestRow = element.closest('.row') || element.closest('.wrap-container');
+    let qtyInput = closestRow ? closestRow.querySelector('input[type="number"]') : null;
+    if (!qtyInput) {
+        qtyInput = document.getElementById('qty');
+    }
+    const realQty = qtyInput ? qtyInput.value : '1';
+    formData.append('quantity', realQty);
+    
+    // 如果有 itemType，就把它一齊塞入去 formData 傳給後端
+    if (itemType) {
+        formData.append('item_type', itemType);
+    }
+    
     fetch(url, {
         method: 'POST',
         headers: {
-            // 從 Django 預設在 Cookie 中的 csrftoken 讀取（免去在 HTML 帶 token）
-            'X-CSRFToken': getCookie('csrftoken'), 
-            'x-requested-with': 'XMLHttpRequest' // 完美對接你 views.py 的第 38 行
+            // 從 Django 預設在 Cookie 中的 csrftoken 讀取
+            'X-CSRFToken': getCookie('csrftoken'),
+            'x-requested-with': 'XMLHttpRequest'
         },
         body: formData
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status === 'success') {
+        if(data.status === 'success') {
             showCustomAlert('成功加入購物車！');
-            const cartCountElements = document.querySelectorAll('.cart-count'); // 假設你的數量用這個 class
+            const cartCountElements = document.querySelectorAll('.cart-count');
             cartCountElements.forEach(el => {
-            el.innerText = data.cart_count;
+                el.innerText = data.cart_count;
             });
-
-            const totalElements = document.querySelectorAll('.dropdown-cart-total'); // 假設你的總金額用這個 class
+            
+            const totalElements = document.querySelectorAll('.dropdown-cart-total');
             totalElements.forEach(el => {
-            el.innerText = '$' + data.total_price;
+                el.innerText = '$' + data.total_price;
             });
-            setTimeout(() => {
-            location.reload();
-            }, 1000);
+            
+            window.location.href = window.location.pathname + '?nocache=' + new Date().getTime();
         }
     })
     .catch(error => console.error('Error:', error));
 };
 
-// 確保刪除購物車函數在全域可用（對應你最新圖片中的邏輯）
 window.removeDropdownCartItem = function(element) {
     const url = element.dataset.url;
-
+    const itemType = element.dataset.itemType; // 拎到係 game 定 device
+    
+    const formData = new FormData();
+    if (itemType) {
+        formData.append('item_type', itemType);
+    }
+    
     fetch(url, {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCookie('csrftoken'),
-            'x-requested-with': 'XMLHttpRequest' // 完美對接你 views.py 的第 46 行
-        }
+            'x-requested-with': 'XMLHttpRequest'
+        },
+        body: formData // 將 item_type 一齊寄去後端
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status === 'success') {
-            // 成功後，直接在前端移除該商品的 HTML 節點（例如往上找 .product 元素）
+        if(data.status === 'success') {
             element.closest('.product').remove();
             alert('商品已移除');
+            location.reload(); // 重新整理或者直接更新畫面
         }
     })
     .catch(error => console.error('Error:', error));
-    location.reload();
 };
 
 // 輔助函數：用來自動獲取 Django 的 CSRF Cookie

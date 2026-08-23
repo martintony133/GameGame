@@ -58,6 +58,8 @@ def logout(request):
 
 def dashboard(request):
     orders = Order.objects.filter(user_id=request.user.id)
+    for order in orders:
+        order.total_sum = sum(item.price * item.quantity for item in order.items.all())
     context = {'orders':orders,}
     return render(request,'accounts/dashboard.html', context)
 

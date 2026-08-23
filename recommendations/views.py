@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import RecommendedGame
 from django.core.paginator import Paginator
 from advertisements.models import Advertisement
+from games.cart import Cart
 import datetime 
 
 def recommendation(request):
@@ -24,7 +25,8 @@ def recommendation(request):
         'paid_game': paid_ranked_games,
         'regular_game': regular_games,
         'recommendations': recommendations_page,
-        'advertisements': active_ads,  # 👈 核心：加埋呢行變數過去 HTML！
+        'advertisements': active_ads, 
+        'cart' : Cart(request),
     }
     
     return render(request, 'recommendations/home.html', content)

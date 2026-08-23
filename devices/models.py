@@ -9,10 +9,11 @@ class Device(models.Model):
 
     PLATFORM_CHOICES = [
         ('PC','PC'),
-        ('PS5','PlayStation 5'),
+        ('PS','PlayStation'),
         ('XBOX','XBOX'),
         ('SWITCH','Nintendo Switch'),
-        ('MOBILE','Mobile')
+        ('MOBILE','Mobile'),
+        ('VR','VR')
     ]
 
     STATUS_TAG_CHOICES = [
@@ -24,6 +25,7 @@ class Device(models.Model):
 
     device_name = models.CharField(max_length=225)
     device_type = MultiSelectField(max_length=250, choices=PLATFORM_CHOICES, default='', blank=True, null=True)
+    description=models.TextField(blank=True, null=True)
     color_code = models.CharField(max_length=7, default='#888888', verbose_name="Device Color")
     specifications=models.TextField(blank=True)
     features=models.TextField(max_length=250, blank=True)

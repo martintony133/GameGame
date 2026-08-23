@@ -1,5 +1,6 @@
 from django.db import models
 from games.models import Game
+from devices.models import Device
 # Create your models here.
 class Order(models.Model):
     first_name = models.CharField(max_length=100, blank=True, null=True)
@@ -24,13 +25,15 @@ class Order(models.Model):
         return sum(item.get_price() for item in self.items.all())
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    product = models.ForeignKey(Game, related_name='order_item', on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)   
+    product = models.ForeignKey(Game, related_name='order_item', on_delete=models.CASCADE, null=True, blank=True, verbose_name="game")
+    device = models.ForeignKey(Device, related_name='order_item', on_delete=models.CASCADE, null=True, blank=True)
+    
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
 
-    def __set__(self):
-        return f"Order ID:{self.id}"
+    def __str__(self):
+        return f"Order ID: {self.order.id}"
 
     def get_cost(self):
         return self.price * self.quantity

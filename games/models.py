@@ -22,8 +22,8 @@ class Game(models.Model):
 
     title = models.CharField(max_length=225)
     game_type = MultiSelectField(max_length=250, choices=GAME_TYPE_CHOICES, default='', blank=True, null=True)
-    description=models.TextField(blank=True)
-    short_description=models.TextField(max_length=250, blank=True)
+    description=models.TextField(blank=True, null=True)
+    short_description=models.TextField(max_length=250, blank=True, null=True)
     platform = MultiSelectField(max_length=250, choices=PLATFORM_CHOICES, default='', blank=True, null=True)
     stars = models.IntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)])
     status_tag = models.CharField(max_length=50,choices=STATUS_TAG_CHOICES,default='', blank=True, null=True)

@@ -46,6 +46,16 @@ class FestivalSale(models.Model):
     def _str_(self):
         return self.title
 
+    @property
+    def show_status(self):
+        now = timezone.localtime(timezone.now())
+        if self.start_date <= now <= self.end_date:
+            return 'Live'
+        elif now < self.start_date:
+            return 'UpComing'
+        else:
+            return 'Expired'
+
 class FestivalSaleItem(models.Model):
     festival_sale = models.ForeignKey(FestivalSale, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -63,12 +73,3 @@ class FestivalSaleItem(models.Model):
     def _str_(self):
         return f"{self.festival_sale.title} - {self.product.product_name}: ${self.individual_sale_price}"
 
-    @property
-    def show_status(self):
-        now = timezone.localtime(timezone.now())
-        if self.festival_sale.start_date <= now <= self.festival_sale.end_date:
-            return 'Live'
-        elif now < self.festival_sale.start_date:
-            return 'UpComing'
-        else:
-            return 'Expired'

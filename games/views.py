@@ -14,6 +14,15 @@ def game(request):
 
 def product(request, product_id):
         single_game = get_object_or_404(Game, pk=product_id)
-        context = {'item': single_game}
+        previous_game = Game.objects.filter(id__lt=single_game.id).order_by('-id').first()
+        next_game = Game.objects.filter(id__gt=single_game.id).order_by('id').first()
+        game_list = Game.objects.exclude(id=product_id).order_by('?')[:4]
+        context = {
+                'item': single_game,
+                'previous_game' : previous_game,
+                'next_game' : next_game, 
+                'cart' : Cart(request), 
+                'games' : game_list
+                }
         return render(request,'games/product.html', context)
 

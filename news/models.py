@@ -6,6 +6,7 @@ class News(models.Model):
     author = models.CharField(max_length=200)
     date = models.DateTimeField(auto_now_add=True)
     theme = models.CharField(max_length=30, choices=themes.items(), default=())
+    content = models.TextField(blank=True, null=True)
     photo_1 =models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     photo_2 =models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)
     photo_3 =models.ImageField(upload_to='photos/%Y/%m/%d/', blank=True)

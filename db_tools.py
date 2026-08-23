@@ -16,7 +16,7 @@ def get_db_connection():
     return psycopg2.connect(
         dbname = "gamegame",
         user = "postgres",
-        password = "950256",
+        password = "123456",
         host = "localhost",
         port = "5432"
 )
@@ -75,17 +75,56 @@ def main():
                 print(f"⚠️ 圖片備份失敗 (可能沒有 media 資料夾): {e}")
 
         elif action == "import":
-            with open(file_path, "r", encoding="utf-8") as f:
-                sql = f"COPY {table_name} FROM STDOUT WITH CSV HEADER"
-                cur.copy_expert(sql, f)
-            conn.commit()
-            print(f"✅ 匯入成功！已將 {file_path} 的資料寫入 {table_name}")
+            import csv
+            with open(file_path, "r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f)
+                
+                # 1. 取得資料庫目前的欄位清單
+                cur.execute(f"""
+                    SELECT column_name 
+                    FROM information_schema.columns 
+                    WHERE table_name = '{table_name}';
+                """)
+                db_fields = [row[0] for row in cur.fetchall()]
+                
+                success_count = 0
+                for row in reader:
+                    # 2. 嚴格過濾：只保留資料庫真正存在的欄位
+                    clean_row = {k: v for k, v in row.items() if k in db_fields}
+                    
+                    if not clean_row:
+                        continue
+                        
+                    # 3. 【防呆修正】如果 content 欄位是空的，自動填入預設文字，防止報錯跳過
+                    if 'content' in clean_row and (clean_row['content'] is None or str(clean_row['content']).strip() == ''):
+                        clean_row['content'] = '暫無內容'
+                        
+                    # 4. 如果 ID 為空，交給資料庫自動遞增
+                    if 'id' in clean_row and (clean_row['id'] is None or str(clean_row['id']).strip() == ''):
+                        del clean_row['id']
+                        
+                    # 5. 動態構建 SQL 插入語句
+                    columns = ", ".join(clean_row.keys())
+                    values_placeholders = ", ".join(["%s"] * len(clean_row))
+                    insert_query = f"INSERT INTO {table_name} ({columns}) VALUES ({values_placeholders})"
+                    
+                    try:
+                        cur.execute(insert_query, list(clean_row.values()))
+                        success_count += 1
+                    except Exception as single_e:
+                        conn.rollback()
+                        print(f"⚠️ 單筆寫入失敗，原因：{single_e}")
+                        continue
+                        
+                # 6. 提交交易並輸出結果
+                conn.commit()
+                print(f"✅ 真正導入成功！成功寫入 {success_count} 筆資料到 {table_name}")
 
             try:
                 import shutil
-                if os.path.exists(f"{file_path}_media"):
-                    shutil.copytree(f"{file_path}_media", 'media', dirs_exist_ok=True)
-                    print(f"📂 圖片檔案已自動還原至專案的 'media' 資料夾！")
+                if os.path.exists(f"{file_path}_media"): 
+                    shutil.copytree(f"{file_path}_media", 'media', dirs_exist_ok=True) 
+                    print(f"✅ 圖片檔案已自動還原至專案的 'media' 資料夾！")
                 else:
                     print(f"💡 提示：找不到對應的圖片備份資料夾 {file_path}_media，請手動檢查圖片。")
             except Exception as e:

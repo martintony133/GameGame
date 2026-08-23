@@ -56,7 +56,7 @@ LOCAL_APPS = [
     "devices.apps.DevicesConfig",
     'accessories.apps.AccessoriesConfig',
     "orders.apps.OrdersConfig",
-    "promotions.apps.PromotionsConfig"
+    "promotions.apps.PromotionsConfig",
     "advertisements.apps.AdvertisementsConfig",
     "supports.apps.SupportsConfig",
 ]
@@ -105,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'gamegame',
         'USER' : 'postgres',
-        'PASSWORD' : '950256',
+        'PASSWORD' : '123456',
         'HOST' : 'localhost',
         'PORT' : '5432',
     }

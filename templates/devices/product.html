@@ -18,22 +18,40 @@
             <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
                 <div class="container d-flex align-items-center">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Products</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Default</li>
+                        <li class="breadcrumb-item"><a href="{% url "pages:index" %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url "devices:device" %}">Devices</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ item.device_name }}</li>
                     </ol>
 
                     <nav class="product-pager ml-auto" aria-label="Product">
-                        <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
-
-                        <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
-                    </nav><!-- End .pager-nav -->
+                        <!-- 上一頁 (Prev) -->
+                        {% if previous_device %}
+                            <a class="product-pager-link product-pager-prev" href="{% url 'devices:product' previous_device.id %}" aria-label="Previous">
+                                <i class="icon-angle-left"></i>
+                                <span>Prev</span>
+                            </a>
+                        {% else %}
+                            <!-- 沒有上一頁時，讓按鈕變淡且無法點擊 -->
+                            <a class="product-pager-link product-pager-prev" href="#" style="opacity: 0.4; pointer-events: none;">
+                                <i class="icon-angle-left"></i>
+                                <span>Prev</span>
+                            </a>
+                        {% endif %}
+                        
+                        <!-- 下一頁 (Next) -->
+                        {% if next_device %}
+                            <a class="product-pager-link product-pager-next" href="{% url 'devices:product' next_device.id %}" aria-label="Next">
+                                <span>Next</span>
+                                <i class="icon-angle-right"></i>
+                            </a>
+                        {% else %}
+                            <!-- 沒有下一頁時，讓按鈕變淡且無法點擊 -->
+                            <a class="product-pager-link product-pager-next" href="#" style="opacity: 0.4; pointer-events: none;">
+                                <span>Next</span>
+                                <i class="icon-angle-right"></i>
+                            </a>
+                        {% endif %}
+                    </nav>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
 
@@ -45,9 +63,11 @@
                                 <div class="product-gallery product-gallery-vertical">
                                     <div class="row">
                                         <figure class="product-main-image">
-                                            <img src={{item.photo_main.url}}>
-
-                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                            <div class="product-main-image-wrap" style="width: 100%; height: 480px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                            <img src={{item.photo_main.url}} alt="{{ device.device_name }}"
+                                                alt="{{ device.device_name }}" class="img-fluid" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                                            </div>
+                                            <a href="{{item.photo_main.url}}" id="btn-product-gallery" class="btn-product-gallery" data-lightbox="item-gallery">
                                                 <i class="icon-arrows"></i>
                                             </a>
                                         </figure><!-- End .product-main-image -->
@@ -55,30 +75,36 @@
                                         <div class="product-image-gallery">
 
                                             {% if item.photo_1 %}
-                                            <a class="product-gallery-item active" href="#" 
-                                            data-image="{{ item.photo_1.url }}" data-zoom-image="{{ item.photo_1.url }}"
-                                            style="width: 100px; height: 100px; display: block;">
+                                            <a class="product-gallery-item active" href="{{ item.photo_1.url }}" 
+                                            data-image="{{ item.photo_1.url }}" data-zoom-image="{{ item.photo_1.url }}" data-lightbox="item-gallery"
+                                            style="width: 100px; height: 100px; display: block;
+                                            object-fit: cover;">
                                                 <img src="{{ item.photo_1.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
                                             
                                             {% if item.photo_2 %}
-                                            <a class="product-gallery-item active" href="#" 
-                                            data-image="{{ item.photo_2.url }}" data-zoom-image="{{ item.photo_2.url }}"
-                                            style="width: 100px; height: 100px; display: block;">
+                                            <a class="product-gallery-item active" href="{{ item.photo_2.url }}" 
+                                            data-image="{{ item.photo_2.url }}" data-zoom-image="{{ item.photo_2.url }}" data-lightbox="item-gallery"
+                                            style="width: 100px; height: 100px; display: block;
+                                            object-fit: cover;">
                                                 <img src="{{ item.photo_2.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
 
                                             {% if item.photo_3 %}
-                                            <a class="product-gallery-item active" href="#" 
-                                            data-image="{{ item.photo_3.url }}" data-zoom-image="{{ item.photo_3.url }}"
+                                            <a class="product-gallery-item active" href="{{ item.photo_3.url }}" 
+                                            data-image="{{ item.photo_3.url }}" data-zoom-image="{{ item.photo_3.url }}" data-lightbox="item-gallery"
                                             style="width: 100px; height: 100px; display: block;">
                                             
                                                 <img src="{{ item.photo_3.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
 
-                                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/4.jpg" data-zoom-image="assets/images/products/single/4-big.jpg">
-                                                <img src="assets/images/products/single/4-small.jpg" alt="product back">
-                                            </a>
+                                            {% if item.photo_4 %}
+                                            <a class="product-gallery-item active" href="{{ item.photo_4.url }}" 
+                                            data-image="{{ item.photo_4.url }}" data-zoom-image="{{ item.photo_4.url }}" data-lightbox="item-gallery"
+                                            style="width: 100px; height: 100px; display: block;">
+                                            
+                                                <img src="{{ item.photo_4.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
+                                            </a>{% endif %}
                                         </div><!-- End .product-image-gallery -->
                                     </div><!-- End .row -->
                                 </div><!-- End .product-gallery -->
@@ -87,7 +113,7 @@
                             <div class="col-md-6">
                                 <div class="product-details">
                             
-                                    <h1 class="product-title">{{item.title}}</h1><!-- End .product-title -->
+                                    <h1 class="product-title">{{item.device_name}}</h1><!-- End .product-title -->
                                 
 
                                     <div class="ratings-container">
@@ -120,34 +146,30 @@
                                         </div><!-- End .product-nav -->
                                     </div><!-- End .details-filter-row --> {% endcomment %}
 
-                                    <div class="details-filter-row details-row-size">
-                                        <label for="platform">Platform:</label>
-                                        <div class="select-custom">
-                                            <select name="platform" id="platform" class="form-control">
-                                                <option value="#" selected="selected">Select a platform</option>
-                                                <option value="PC">PC</option>
-                                                <option value="Console">Console</option>
-                                                <option value="PS5">PlayStation 5</option>
-                                                <option value="XBOX">XBOX</option>
-                                                <option value="SWITCH">Nintendo Switch</option>
-                                                <option value="MOBILE">Mobile</option>
-                                            </select>
-                                        </div><!-- End .select-custom -->
+                                    <div  div class="details-filter-row details-row-size">
+                                        <h5>Platform : {{item.device_type | join:", "}}</h5>
                                     </div><!-- End .details-filter-row -->
 
-                                    <div class="details-filter-row details-row-size">
-                                        <label for="qty">Qty:</label>
-                                        <div class="product-details-quantity">
-                                            <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                        </div><!-- End .product-details-quantity -->
-                                    </div><!-- End .details-filter-row -->
 
-                                    <div class="product-details-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        {% comment %} <div class="details-action-wrapper">
-                                            <a href="#" class="btn-cart btn-product" title="Wishlist"><span>Add to Wishlist</span></a>
-                                        </div><!-- End .details-action-wrapper --> {% endcomment %}
-                                    </div><!-- End .product-details-action -->
+                                    <form   form action="{% url 'orders:cart_add' item.id %}" method="POST" style="width: 100%;">
+											{% csrf_token %}
+                                            
+                                        <div class="details-filter-row details-row-size">
+                                            <label for="qty">Qty:</label>
+                                            <div class="product-details-quantity">
+                                                <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                            </div><!-- End .product-details-quantity -->
+                                        </div><!-- End .details-filter-row -->
+
+                                        <input type="hidden" name="item_type" value="device">
+							            <button type="button" 
+                                                onclick="addToCartAsync(this)" 
+                                                data-url="{% url "orders:cart_add" item.id %}"
+                                                data-item-type="device"
+							            		class="btn-product btn-cart" style="border: none; background: warning; width: 100%; cursor: pointer;">
+												<span>add to cart</span>
+											</button>
+									</form>
 
                                     <div class="product-details-footer">
                                         <div class="product-cat">
@@ -319,11 +341,21 @@
                                 }
                             }
                         }'>
+                        {% for device in devices %}
                         <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-new">New</span>
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-4.jpg" alt="Product image" class="product-image">
+                            <figure class="product-media" style="background:#ffffff !important; display: flex !important; align-items: center !important;
+                            justify-content: center !important; height:240px !important;">
+                                {% if device.status_tag and device.status_tag != "None" %}
+                                    {% if device.status_tag == "New" %}
+                                        <span class="product-label label-new" style="background-color: {{ device.color_code }};">New</span>
+                                    {% elif device.status_tag == "Top" %}
+                                        <span class="product-label label-top" style="background-color: {{ device.color_code }};">Top</span>
+                                    {% else %}
+                                        <span class="product-label label-out" style="background-color: {{ device.color_code }};">{{ device.status_tag }}</span>
+                                    {% endif %}
+                                {% endif %}
+                                <a href="{% url 'devices:product' product_id=device.id %}">
+                                    <img src="{{ device.photo_main.url }}" alt="Product image" class="product-image" style="width:180px;">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -339,184 +371,21 @@
 
                             <div class="product-body">
                                 <div class="product-cat">
-                                    <a href="#">Women</a>
+                                    <h6><a href="#">Platform : {{device.device_type | join:", "}}</a></h6>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Brown paperbag waist <br>pencil skirt</a></h3><!-- End .product-title -->
+                                <h3 class="product-title"><a href="{% url 'devices:product' product_id=device.id %}">{{ device.device_name }}</a></h3><!-- End .product-title -->
                                 <div class="product-price">
-                                    $60.00
+                                    ${{ device.price }}.00
                                 </div><!-- End .product-price -->
                                 <div class="ratings-container">
                                     <div class="ratings">
-                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
+                                        <div class="ratings-val" style="width:{{device.stars_percentage}}%;"></div><!-- End .ratings-val -->
                                     </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 2 Reviews )</span>
-                                </div><!-- End .rating-container -->
-
-                                <div class="product-nav product-nav-thumbs">
-                                    <a href="#" class="active">
-                                        <img src="assets/images/products/product-4-thumb.jpg" alt="product desc">
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/images/products/product-4-2-thumb.jpg" alt="product desc">
-                                    </a>
-
-                                    <a href="#">
-                                        <img src="assets/images/products/product-4-3-thumb.jpg" alt="product desc">
-                                    </a>
-                                </div><!-- End .product-nav -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-out">Out of Stock</span>
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-6.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Jackets</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Khaki utility boiler jumpsuit</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    <span class="out-price">$120.00</span>
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 6 Reviews )</span>
+                                    <span class="ratings-text">( {{ device.reviews_count }} Reviews )</span>
                                 </div><!-- End .rating-container -->
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-top">Top</span>
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-11.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Shoes</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Light brown studded Wide fit wedges</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $110.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 1 Reviews )</span>
-                                </div><!-- End .rating-container -->
-
-                                <div class="product-nav product-nav-thumbs">
-                                    <a href="#" class="active">
-                                        <img src="assets/images/products/product-11-thumb.jpg" alt="product desc">
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/images/products/product-11-2-thumb.jpg" alt="product desc">
-                                    </a>
-
-                                    <a href="#">
-                                        <img src="assets/images/products/product-11-3-thumb.jpg" alt="product desc">
-                                    </a>
-                                </div><!-- End .product-nav -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-10.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Jumpers</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Yellow button front tea top</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $56.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 0 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-7.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Jeans</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Blue utility pinafore denim dress</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $76.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 2 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
+                        {% endfor %}
                     </div><!-- End .owl-carousel -->
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
@@ -531,11 +400,11 @@
             <div class="row">
                 <div class="col-6">
                     <figure class="product-media">
-                        <a href="product.html">
+                        <a href="{{item.photo_main.url}}" data-lightbox="item-gallery">
                             <img src={{item.photo_main.url}} alt="Product image">
                         </a>
                     </figure><!-- End .product-media -->
-                    <h4 class="product-title"><a href="product.html">{{item.title}}</a></h4><!-- End .product-title -->
+                    <h4 class="product-title">{{item.device_name}}</a></h4><!-- End .product-title -->
                 </div><!-- End .col-6 -->
 
                 <div class="col-6 justify-content-end">
@@ -543,12 +412,22 @@
                         {{item.price}}
                     </div><!-- End .product-price -->
                     <div class="product-details-quantity">
-                        <input type="number" id="sticky-cart-qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                        <input type="number" id="sticky-qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                     </div><!-- End .product-details-quantity -->
 
                     <div class="product-details-action">
-                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                        {% comment %} <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a> {% endcomment %}
+                        <form   form action="{% url 'orders:cart_add' item.id %}" method="POST" style="width: 100%;">
+								{% csrf_token %}
+							<input type="hidden" name="quantity" value="1">
+                            <input type="hidden" name="item_type" value="device">
+							<button type="button" 
+                                    onclick="addToCartAsync(this)" 
+                                    data-url="{% url "orders:cart_add" item.id %}"
+                                    data-item-type="device"
+									class="btn-product btn-cart" style="border: none; background: warning; width: 100%; cursor: pointer;">
+									<span>add to cart</span>
+								</button>
+						</form>
                     </div><!-- End .product-details-action -->
                 </div><!-- End .col-6 -->
             </div><!-- End .row -->
@@ -840,20 +719,6 @@
             </div><!-- End .modal-content -->
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
-
-    <!-- Plugins JS File -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/jquery.hoverIntent.min.js"></script>
-    <script src="assets/js/jquery.waypoints.min.js"></script>
-    <script src="assets/js/superfish.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/bootstrap-input-spinner.js"></script>
-    <script src="assets/js/jquery.elevateZoom.min.js"></script>
-    <script src="assets/js/bootstrap-input-spinner.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
 </body>
 
 

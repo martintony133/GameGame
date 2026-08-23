@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% load humanize %}
         <main class="main">
         	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         		<div class="container">
@@ -10,7 +11,6 @@
                 <div class="container">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href={% url "pages:index" %}>Home</a></li>
-                        <li class="breadcrumb-item"><a>Games</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Game</li>
                     </ol>
                 </div><!-- End .container -->
@@ -23,7 +23,7 @@
                 			<div class="toolbox">
                 				<div class="toolbox-left">
                 					<div class="toolbox-info">
-                						Showing <span>9 of 56</span> Products
+                						Showing <span> {{ games.object_list|length }} of {{ games.paginator.count }} </span> Products
                 					</div><!-- End .toolbox-info -->
                 				</div><!-- End .toolbox-left -->
 
@@ -95,7 +95,7 @@
                                                 {% elif game.status_tag == "Top" %}<span class="product-label label-top">Top</span>
                                                 {% else %}<span class="product-label label-out">Out of Stock</span>{% endif %}
                                                 {% endif %}
-                                                <a href="product.html">
+                                                <a href="{% url 'games:product' product_id=game.id %}">
                                                     <img src="{{game.photo_main.url}}" alt="Product image" class="product-image w-100 object-fit-cover"
                                                     style="height: 380px;">
                                                 </a>
@@ -111,7 +111,7 @@
 														{% csrf_token %}
 														<input type="hidden" name"quantity" value="1">
 														    <button type="button" onclick="addToCartAsync(this)" data-url="{% url "orders:cart_add" game.id %}"
-															class="btn-product btn-cart" style="border: none; background: none; width: 100%; cursor: pointer;">
+															class="btn-product btn-cart" style="border: none; background: warning; width: 100%; cursor: pointer;">
 														        <span>add to cart</span>
 														    </button>
 														</form>

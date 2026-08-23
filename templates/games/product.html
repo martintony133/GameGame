@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,40 +19,41 @@
             <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
                 <div class="container d-flex align-items-center">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Products</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Default</li>
+                        <li class="breadcrumb-item"><a href="{% url "pages:index" %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url "games:game" %}">Games</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ item.title }}</li>
                     </ol>
-
                     
-                    {% comment %} {% if games.has_other_pages %}
                     <nav class="product-pager ml-auto" aria-label="Product">
-                        {% if games.has_previous %}
-                        <a class="product-pager-link product-pager-prev" href="?page={{ games.previous_page_number }}" aria-label="Previous">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
+                        <!-- 上一頁 (Prev) -->
+                        {% if previous_game %}
+                            <a class="product-pager-link product-pager-prev" href="{% url 'games:product' previous_game.id %}" aria-label="Previous">
+                                <i class="icon-angle-left"></i>
+                                <span>Prev</span>
+                            </a>
                         {% else %}
-                        <a class="product-pager-link product-pager-prev disabled" href="#" aria-label="Previous" tabindex="-1" style="opacity: 0.5; pointer-events: none;">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
+                            <!-- 沒有上一頁時，讓按鈕變淡且無法點擊 -->
+                            <a class="product-pager-link product-pager-prev" href="#" style="opacity: 0.4; pointer-events: none;">
+                                <i class="icon-angle-left"></i>
+                                <span>Prev</span>
+                            </a>
                         {% endif %}
-
-
-                        {% if games.has_next %}
-                        <a class="product-pager-link product-pager-next" href="?page={{ games.next_page_number }}" aria-label="Next">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
+                        
+                        <!-- 下一頁 (Next) -->
+                        {% if next_game %}
+                            <a class="product-pager-link product-pager-next" href="{% url 'games:product' next_game.id %}" aria-label="Next">
+                                <span>Next</span>
+                                <i class="icon-angle-right"></i>
+                            </a>
                         {% else %}
-                        <a class="product-pager-link product-pager-next disabled" href="#" aria-label="Next" tabindex="-1" style="opacity: 0.5; pointer-events: none;">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
+                            <!-- 沒有下一頁時，讓按鈕變淡且無法點擊 -->
+                            <a class="product-pager-link product-pager-next" href="#" style="opacity: 0.4; pointer-events: none;">
+                                <span>Next</span>
+                                <i class="icon-angle-right"></i>
+                            </a>
                         {% endif %}
                     </nav>
-                    {% endif %} {% endcomment %}
+
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
 
@@ -65,7 +67,7 @@
                                         <figure class="product-main-image">
                                             <img src={{item.photo_main.url}}>
 
-                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                            <a href="{{item.photo_main.url}}" id="btn-product-gallery" class="btn-product-gallery" data-lightbox="item-gallery">
                                                 <i class="icon-arrows"></i>
                                             </a>
                                         </figure><!-- End .product-main-image -->
@@ -73,29 +75,35 @@
                                         <div class="product-image-gallery">
                                             
                                             {% if item.photo_1 %}
-                                            <a class="product-gallery-item active" href="#" 
+                                            <a class="product-gallery-item active" href="{{ item.photo_1.url }}" data-lightbox="item-gallery"
                                             data-image="{{ item.photo_1.url }}" data-zoom-image="{{ item.photo_1.url }}"
                                             style="width: 100px; height: 100px; display: block;">
                                                 <img src="{{ item.photo_1.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
 
                                             {% if item.photo_2 %}
-                                            <a class="product-gallery-item active" href="#" 
+                                            <a class="product-gallery-item active" href="{{ item.photo_2.url }}" data-lightbox="item-gallery"
                                             data-image="{{ item.photo_2.url }}" data-zoom-image="{{ item.photo_2.url }}"
                                             style="width: 100px; height: 100px; display: block;">
                                                 <img src="{{ item.photo_2.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
 
                                             {% if item.photo_3 %}
-                                            <a class="product-gallery-item active" href="#" 
+                                            <a class="product-gallery-item active" href="{{ item.photo_3.url }}" data-lightbox="item-gallery"
                                             data-image="{{ item.photo_3.url }}" data-zoom-image="{{ item.photo_3.url }}"
                                             style="width: 100px; height: 100px; display: block;">
                                             
                                                 <img src="{{ item.photo_3.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
 
-                                            <a class="product-gallery-item" href="#" data-image="assets/images/products/single/4.jpg" data-zoom-image="assets/images/products/single/4-big.jpg">
-                                                <img src="assets/images/products/single/4-small.jpg" alt="product back">
+                                            {% if item.photo_4 %}
+                                            <a class="product-gallery-item active" href="{{ item.photo_4.url }}" data-lightbox="item-gallery"
+                                            data-image="{{ item.photo_4.url }}" data-zoom-image="{{ item.photo_4.url }}"
+                                            style="width: 100px; height: 100px; display: block;">
+                                            
+                                                <img src="{{ item.photo_4.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
+                                            </a>{% endif %}
+
                                             </a>
                                         </div><!-- End .product-image-gallery -->
                                     </div><!-- End .row -->
@@ -120,51 +128,35 @@
                                     <div class="product-price">
                                         {% if item.is_free %}Free {% else %}${{item.price}}{% endif %}
                                     </div><!-- End .product-price -->
-
+                                    <br>
                                     <div class="product-content">
                                         {{item.short_description}}
                                     </div><!-- End .product-content -->
-
-                                    {% comment %} <div class="details-filter-row details-row-size">
-                                        <label>Color:</label>
-
-                                        <div class="product-nav product-nav-thumbs">
-                                            <a href="#" class="active">
-                                                <img src="assets/images/products/single/1-thumb.jpg" alt="product desc">
-                                            </a>
-                                            <a href="#">
-                                                <img src="assets/images/products/single/2-thumb.jpg" alt="product desc">
-                                            </a>
-                                        </div><!-- End .product-nav -->
-                                    </div><!-- End .details-filter-row --> {% endcomment %}
-
+                                    <br>
                                     <div class="details-filter-row details-row-size">
-                                        <label for="platform">Platform:</label>
-                                        <div class="select-custom">
-                                            <select name="platform" id="platform" class="form-control">
-                                                <option value="#" selected="selected">Select a platform</option>
-                                                <option value="PC">PC</option>
-                                                <option value="Console">Console</option>
-                                                <option value="PS5">PlayStation 5</option>
-                                                <option value="XBOX">XBOX</option>
-                                                <option value="SWITCH">Nintendo Switch</option>
-                                                <option value="MOBILE">Mobile</option>
-                                            </select>
-                                        </div><!-- End .select-custom -->
+                                        <h5>Platform : {{item.platform | join:", "}}</h5>
                                     </div><!-- End .details-filter-row -->
 
-                                    <div class="details-filter-row details-row-size">
-                                        <label for="qty">Qty:</label>
-                                        <div class="product-details-quantity">
-                                            <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                        </div><!-- End .product-details-quantity -->
-                                    </div><!-- End .details-filter-row -->
+                                        <form   form action="{% url 'orders:cart_add' item.id %}" method="POST" style="width: 100%;">
+												{% csrf_token %}
 
-                                    <div class="product-details-action">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        {% comment %} <div class="details-action-wrapper">
-                                            <a href="#" class="btn-cart btn-product" title="Wishlist"><span>Add to Wishlist</span></a>
-                                        </div><!-- End .details-action-wrapper --> {% endcomment %}
+                                            <div class="details-filter-row details-row-size">
+                                                <label for="qty">Qty:</label>
+                                                <div class="product-details-quantity">
+                                                    <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                                </div><!-- End .product-details-quantity -->
+                                            </div><!-- End .details-filter-row -->
+                                            
+											<input type="hidden" name"quantity" value="1">
+											<button type="button" 
+                                                    onclick="addToCartAsync(this)" 
+                                                    data-url="{% url "orders:cart_add" item.id %}"
+													class="btn-product btn-cart" 
+                                                    style="border: none; background: warning; width: 100%; cursor: pointer;">
+													<span>add to cart</span>
+												</button>
+										</form>
+
                                     </div><!-- End .product-details-action -->
 
                                     <div class="product-details-footer">
@@ -337,11 +329,17 @@
                                 }
                             }
                         }'>
+                        {% for game in games %}
                         <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-new">New</span>
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-4.jpg" alt="Product image" class="product-image">
+                            <figure class="product-media" style="background:#ffffff !important; display: flex !important; align-items: center !important;
+                            justify-content: center !important; height:240px !important;">
+                                {% if game.status_tag != "None" %}
+                                {% if game.status_tag == "New" %}<span class="product-label label-new">New</span>
+                                {% elif game.status_tag == "Top" %}<span class="product-label label-top">Top</span>
+                                {% else %}<span class="product-label label-out">Out of Stock</span>{% endif %}
+                                {% endif %}
+                                <a href="{% url 'games:product' product_id=game.id %}">
+                                    <img src="{{game.photo_main.url}}" alt="Product image" class="product-image" style="width:180px;">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -357,184 +355,22 @@
 
                             <div class="product-body">
                                 <div class="product-cat">
-                                    <a href="#">Women</a>
+                                    <h6><a href="#">Platform : {{game.platform | join:", "}}</a></h6>
                                 </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Brown paperbag waist <br>pencil skirt</a></h3><!-- End .product-title -->
+                                <h3 class="product-title"><a href="{% url 'games:product' product_id=game.id %}">{{ game.title }}</a></h3><!-- End .product-title -->
                                 <div class="product-price">
-                                    $60.00
+                                    {% if game.price == 0 %}Free {% else %}${{ game.price }}.00{% endif %}
                                 </div><!-- End .product-price -->
+                                <br>
                                 <div class="ratings-container">
                                     <div class="ratings">
-                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
+                                        <div class="ratings-val" style="width:{{game.stars_percentage}}%;"></div><!-- End .ratings-val -->
                                     </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 2 Reviews )</span>
-                                </div><!-- End .rating-container -->
-
-                                <div class="product-nav product-nav-thumbs">
-                                    <a href="#" class="active">
-                                        <img src="assets/images/products/product-4-thumb.jpg" alt="product desc">
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/images/products/product-4-2-thumb.jpg" alt="product desc">
-                                    </a>
-
-                                    <a href="#">
-                                        <img src="assets/images/products/product-4-3-thumb.jpg" alt="product desc">
-                                    </a>
-                                </div><!-- End .product-nav -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-out">Out of Stock</span>
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-6.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Jackets</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Khaki utility boiler jumpsuit</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    <span class="out-price">$120.00</span>
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 6 Reviews )</span>
+                                    <span class="ratings-text">( {{ game.reviews_count }} Reviews )</span>
                                 </div><!-- End .rating-container -->
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <span class="product-label label-top">Top</span>
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-11.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Shoes</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Light brown studded Wide fit wedges</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $110.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 1 Reviews )</span>
-                                </div><!-- End .rating-container -->
-
-                                <div class="product-nav product-nav-thumbs">
-                                    <a href="#" class="active">
-                                        <img src="assets/images/products/product-11-thumb.jpg" alt="product desc">
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/images/products/product-11-2-thumb.jpg" alt="product desc">
-                                    </a>
-
-                                    <a href="#">
-                                        <img src="assets/images/products/product-11-3-thumb.jpg" alt="product desc">
-                                    </a>
-                                </div><!-- End .product-nav -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-10.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Jumpers</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Yellow button front tea top</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $56.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 0 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="assets/images/products/product-7.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">Jeans</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="product.html">Blue utility pinafore denim dress</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $76.00
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 2 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
+                        {% endfor %}
                     </div><!-- End .owl-carousel -->
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
@@ -558,15 +394,24 @@
 
                 <div class="col-6 justify-content-end">
                     <div class="product-price">
-                        {{item.price}}
+                        {% if item.price == 0 %}Free {% else %}${{ item.price }}.00{% endif %}
                     </div><!-- End .product-price -->
                     <div class="product-details-quantity">
-                        <input type="number" id="sticky-cart-qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                        <input type="number" id="sticky-qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                     </div><!-- End .product-details-quantity -->
 
                     <div class="product-details-action">
-                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                        {% comment %} <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a> {% endcomment %}
+                        <form   form action="{% url 'orders:cart_add' item.id %}" method="POST" style="width: 100%;">
+								{% csrf_token %}
+							<input type="hidden" name"quantity" value="1">
+							<button type="button" 
+                                    onclick="addToCartAsync(this)" 
+                                    data-url="{% url "orders:cart_add" item.id %}"
+									class="btn-product btn-cart" 
+                                    style="border: none; background: warning; width: 100%; cursor: pointer;">
+									<span>add to cart</span>
+								</button>
+						</form>
                     </div><!-- End .product-details-action -->
                 </div><!-- End .col-6 -->
             </div><!-- End .row -->
@@ -858,20 +703,6 @@
             </div><!-- End .modal-content -->
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
-
-    <!-- Plugins JS File -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/jquery.hoverIntent.min.js"></script>
-    <script src="assets/js/jquery.waypoints.min.js"></script>
-    <script src="assets/js/superfish.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/bootstrap-input-spinner.js"></script>
-    <script src="assets/js/jquery.elevateZoom.min.js"></script>
-    <script src="assets/js/bootstrap-input-spinner.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
 </body>
 
 

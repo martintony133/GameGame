@@ -1,11 +1,13 @@
 {% load static %}
-<footer class="footer footer-dark">
+    <div class="page-wrapper">
+        <div class="wrap-container">   
+            <footer class="footer footer-dark">
                 <div class="footer-middle">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-6 col-lg-3">
                                 <div class="widget widget-about">
-                                    <img src="assets/images/demos/demo-19/logo-footer.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                                    <img src={% static 'images/icons/GameGame_Icon.png' %} class="footer-logo" alt="Footer Logo" width="50" height="25">
                                     <p>We are more than just a company that sells games; we aspire to be a bridge between players and developers, building a global gaming community fueled by passion and sharing. </p>
 
                                     <div class="social-icons">
@@ -63,3 +65,5 @@
                     </div><!-- End .container -->
                 </div><!-- End .footer-bottom -->
             </footer><!-- End .footer -->
+        </div><!-- End .wrap-container -->  
+    </div><!-- End .page-wrapper -->

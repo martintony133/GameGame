@@ -27,5 +27,8 @@ class CommunityComment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def __str__(self):
         return f"Comment by {self.author.username} on {self.post.title}"

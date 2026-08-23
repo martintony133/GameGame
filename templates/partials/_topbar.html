@@ -1,3 +1,4 @@
+{% load static %}
 <div class="page-wrapper">
         <div class="wrap-container">
             <header class="header header-intro-clearance header-3">
@@ -45,8 +46,8 @@
                                 <i class="icon-bars"></i>
                             </button>
                             
-                            <a href="index.html" class="logo">
-                                <img src="assets/images/demos/demo-3/logo.png" alt="Molla Logo" width="105" height="25">
+                            <a href={% url "pages:index" %} class="logo">
+                                <img src={% static 'images/icons/GameGame_Icon.png' %} alt="Logo" width="60" height="25">
                             </a>
                         </div><!-- End .header-left -->
 

@@ -22,36 +22,6 @@
                         <li class="breadcrumb-item"><a href="#">Products</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Default</li>
                     </ol>
-
-                    
-                    {% comment %} {% if games.has_other_pages %}
-                    <nav class="product-pager ml-auto" aria-label="Product">
-                        {% if games.has_previous %}
-                        <a class="product-pager-link product-pager-prev" href="?page={{ games.previous_page_number }}" aria-label="Previous">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
-                        {% else %}
-                        <a class="product-pager-link product-pager-prev disabled" href="#" aria-label="Previous" tabindex="-1" style="opacity: 0.5; pointer-events: none;">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
-                        {% endif %}
-
-
-                        {% if games.has_next %}
-                        <a class="product-pager-link product-pager-next" href="?page={{ games.next_page_number }}" aria-label="Next">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
-                        {% else %}
-                        <a class="product-pager-link product-pager-next disabled" href="#" aria-label="Next" tabindex="-1" style="opacity: 0.5; pointer-events: none;">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
-                        {% endif %}
-                    </nav>
-                    {% endif %} {% endcomment %}
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
 

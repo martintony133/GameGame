@@ -1,8 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
         <main class="main">
-        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-        		<div class="container">
+        	<div class="page-header text-center" style="background-image: url('{% static 'images/backgrounds/page-header-bg.jpg' %}')">
         			<h1 class="page-title">Device<span>Categories</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
@@ -10,8 +10,7 @@
                 <div class="container">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href={% url "pages:index" %}>Home</a></li>
-                        <li class="breadcrumb-item"><a>Devices</a></li>
-                        {% comment %} <li class="breadcrumb-item active" aria-current="page">Devices</li> {% endcomment %}
+                        <li class="breadcrumb-item active" aria-current="page">Devices</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->

@@ -32,9 +32,8 @@ def product(request, product_id):
         Accessory.objects.prefetch_related('colors'), 
         pk=product_id
         )
-
         context = {
         'accessory': single_accessory,
         }
         # Renders your accessory detail page template
-        return render(request, 'accessories/single.html', context)
+        return render(request, 'accessories/product.html', context)

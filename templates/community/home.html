@@ -25,12 +25,12 @@
             </div>
         </div>
     </div>
-</header>
+    </header>
 
 
     <!-- 2. Main Live Post Feed Section -->
-    <main>
-        <h3 style="margin-bottom: 20px;">&emsp;All Discussion Threads</h3>
+    <main style="max-width: 1200px; margin: 0 auto; padding: 0 15px;">
+        <h3 style="margin-bottom: 20px;">All Discussion Threads</h3>
 
         <div id="global-feed">
             {% for post in posts %}
@@ -55,8 +55,8 @@
                     </p>
 
                     <!-- Card Footer Metrics & Metadata -->
-                    <footer style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85em; color: #777; border-top: 1px solid #f0f0f0; padding-top: 10px;">
-                        <div>
+                    <footer style="background-color: #f7f7f7; color: #fff; padding: 4px 0;">
+                        <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px; display: flex; justify-content: space-between;">
                             By <strong>{{ post.author.username }}</strong> 
                             <span style="margin: 0 5px;">•</span> 
                             Published: {{ post.created_at|date:"M d, Y H:i" }}

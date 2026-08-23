@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
         <main class="main">
-        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        	<div class="page-header text-center" style="background-image: url('{% static 'images/backgrounds/page-header-bg.jpg' %}')">
         		<div class="container">
         			<h1 class="page-title">Accessory<span>Categories</span></h1>
         		</div><!-- End .container -->
@@ -83,80 +84,7 @@
                 				</div><!-- End .toolbox-right -->
                 			</div><!-- End .toolbox -->
 
-                            {% comment %} <div class="products mb-3">
-                                <div class="row justify-content-center">
-                                    {% for accessory in accessories %}
-                                    <div class="col-6 col-md-4 col-lg-4">
-                                        <div class="product product-7 text-center">
-                                            <figure class="product-media">
-                                                {% if accessory.status_tag != "None" %}
-                                                {% if accessory.status_tag == "New" %}<span class="product-label label-new">New</span>
-                                                {% elif accessory.status_tag == "Top" %}<span class="product-label label-top">Top</span>
-                                                {% else %}<span class="product-label label-out">Out of Stock</span>{% endif %}
-                                                {% endif %}
-                                                <a href="product.html">
-                                                    <img src="{{accessory.photo_main.url}}" alt="Product image" class="product-image w-100 object-fit-cover"
-                                                    style="height: 370px;">
-                                                </a>
-
-                                                <div class="product-action-vertical">
-                                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                                </div><!-- End .product-action-vertical -->
-
-                                                <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                </div><!-- End .product-action -->
-                                            </figure><!-- End .product-media -->
-
-                                            <div class="product-body">
-                                                <div class="product-cat">
-                                                    <a href="#">{{accessory.platform | join:", "}}</a>
-                                                </div><!-- End .product-cat -->
-                                                <h3 class="product-title"><a href="{% url 'games:product' product_id=game.id %}">{{ game.title }}
-												</h3><!-- End .product-title -->
-                                                <div class="product-price">
-                                                    {% if game.is_free %}Free {% else %}${{game.price}}{% endif %}</div><!-- End .product-price -->
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width:{{game.stars_percentage}}%;"></div><!-- End .ratings-val -->
-                                                    </div><!-- End .ratings -->
-                                                    <span class="ratings-text">( {{game.reviews_count}} Reviews )</span>
-                                                </div><!-- End .rating-container -->
-
-                                                <div class="product-nav product-nav-thumbs">
-                                                    {% if game.photo_1 %}
-                                                    <a href="{{game.photo_1.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{game.photo_1.url}}" alt="Product image" class="product-image">
-                                                    </a>{% endif %}
-                                                    {% if game.photo_2 %}
-                                                    <a href="{{game.photo_2.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{game.photo_2.url}}" alt="Product image" class="product-image">
-                                                    </a>{% endif %}
-                                                    {% if game.photo_3 %}
-                                                    <a href="{{game.photo_3.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{game.photo_3.url}}" alt="Product image" class="product-image">
-                                                    </a>{% endif %}
-                                                    {% if game.photo_4 %}
-                                                    <a href="{{game.photo_4.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{game.photo_4.url}}" alt="Product image" class="product-image">
-                                                    </a>{% endif %}
-                                                    {% if game.photo_5 %}
-                                                    <a href="{{game.photo_5.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{game.photo_5.url}}" alt="Product image" class="product-image">
-                                                    </a>{% endif %}
-                                                    {% if game.photo_6 %}
-                                                    <a href="{{game.photo_6.url}}" data-lightbox="game-gallery" class="w-20 d-inline-block">
-                                                        <img src="{{game.photo_6.url}}" alt="Product image" class="product-image">
-                                                    </a>{% endif %}
-                                                </div><!-- End .product-nav -->
-                                            </div><!-- End .product-body -->
-                                        </div><!-- End .product -->
-                                    </div><!-- End .col-sm-6 col-lg-4 -->
-                                    {% endfor %}
-                                </div><!-- End .row -->
-                            </div><!-- End .products --> {% endcomment %}
+                            
 <div class="products mb-3">
     <div class="row justify-content-center">
         <!-- 🔴 1. 循環變數改成 accessory，撈取 backend 傳過嚟嘅 accessories 列表 -->
@@ -179,7 +107,7 @@
                     <!-- 🔴 3. 主圖片顯示 -->
                     <a href="{% url 'accessories:product' product_id=accessory.id %}">
                         {% if accessory.photo_main %}
-                            <img src="{{ accessory.photo_main.url }}" alt="{{ accessory.name }}" class="product-image w-100 object-fit-cover" style="height: 370px;">
+                            <img src="{{ accessory.photo_main.url }}" alt="{{ accessory.name }}" class="product-image w-100 object-fit:cover;" style="height: 370px;">
                         {% else %}
                             <img src="/static/images/default-accessory.jpg" alt="Default image" class="product-image w-100 object-fit-cover" style="height: 370px;">
                         {% endif %}
@@ -210,7 +138,7 @@
 
                     <!-- 🔴 5. 顯示配飾名稱 (對應 `views.py` 的 `Accessory` 模型，通常是欄位名 `name`) -->
                     <h3 class="product-title">
-                        <a href="{% url 'accessories:product' product_id=accessory.id %}">{{ accessory.name }}</a>
+                        <a href="{% url 'accessories:product' product_id=accessory.id %}">{{ accessory.accessory_name }}</a>
                     </h3>
 
                     <!-- 🔴 6. 價錢判斷 (如果價格為 0 顯示 Free，否則顯示正常售價) -->

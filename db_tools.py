@@ -3,7 +3,6 @@ import sys
 import django
 import psycopg2
 
-# 1. 自動初始化 Django 環境（這樣就能直接讀取 Django 的設定與 Model）
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
@@ -24,11 +23,9 @@ def get_db_connection():
 def get_table_name(model_name):
     """自動根據 Model 名稱找出 PostgreSQL 的 Table 名稱"""
     try:
-        # 自動搜尋整個專案，只要 Model 名字對了就抓出來
         model = apps.get_model(model_name)
         return model._meta.db_table
     except LookupError:
-        # 如果找不到，就嘗試尋找特定 app 裡面的 model
         for app_config in apps.get_app_configs():
             try:
                 model = apps.get_model(app_config.label, model_name)
@@ -48,7 +45,6 @@ def main():
     target_model = sys.argv[2]       # 例如: game
     file_path = sys.argv[3]          # 例如: data.csv
 
-    # 自動獲取 Table 名稱，不用手動打
     table_name = get_table_name(target_model)
     if not table_name:
         print(f"❌ 找不到名為 '{target_model}' 的 Django Model，請檢查大小寫是否正確！")
@@ -65,10 +61,8 @@ def main():
                 sql = f"COPY {table_name} TO STDOUT WITH CSV HEADER"
                 cur.copy_expert(sql, f)
             print(f"✅ 匯出成功！檔案已儲存至: {file_path}")
-            # 2. 💡 新增：自動把 Django 的 media 圖片資料夾複製一份到 CSV 旁邊
             try:
                 import shutil
-                # 假設你的 Django 圖片都存在專案根目錄的 'media' 資料夾
                 shutil.copytree('media', f"{file_path}_media", dirs_exist_ok=True)
                 print(f"📦 圖片資料夾已同步備份至: {file_path}_media")
             except Exception as e:
@@ -79,7 +73,6 @@ def main():
             with open(file_path, "r", encoding="utf-8-sig") as f:
                 reader = csv.DictReader(f)
                 
-                # 1. 取得資料庫目前的欄位清單
                 cur.execute(f"""
                     SELECT column_name 
                     FROM information_schema.columns 
@@ -89,21 +82,17 @@ def main():
                 
                 success_count = 0
                 for row in reader:
-                    # 2. 嚴格過濾：只保留資料庫真正存在的欄位
                     clean_row = {k: v for k, v in row.items() if k in db_fields}
                     
                     if not clean_row:
                         continue
                         
-                    # 3. 【防呆修正】如果 content 欄位是空的，自動填入預設文字，防止報錯跳過
                     if 'content' in clean_row and (clean_row['content'] is None or str(clean_row['content']).strip() == ''):
                         clean_row['content'] = '暫無內容'
                         
-                    # 4. 如果 ID 為空，交給資料庫自動遞增
                     if 'id' in clean_row and (clean_row['id'] is None or str(clean_row['id']).strip() == ''):
                         del clean_row['id']
                         
-                    # 5. 動態構建 SQL 插入語句
                     columns = ", ".join(clean_row.keys())
                     values_placeholders = ", ".join(["%s"] * len(clean_row))
                     insert_query = f"INSERT INTO {table_name} ({columns}) VALUES ({values_placeholders})"
@@ -116,7 +105,6 @@ def main():
                         print(f"⚠️ 單筆寫入失敗，原因：{single_e}")
                         continue
                         
-                # 6. 提交交易並輸出結果
                 conn.commit()
                 print(f"✅ 真正導入成功！成功寫入 {success_count} 筆資料到 {table_name}")
 
@@ -131,7 +119,7 @@ def main():
                 print(f"⚠️ 圖片還原失敗: {e}")
             # 自動修正 PostgreSQL 流水號計數器
             app_label = apps.get_model(target_model)._meta.app_label
-            print(f"💡 提示: 匯入完成後，建議執行以下指令同步流水號:")
+            print(f"💡 提示: 匯入完成後，建議執行以下指令同步Database:")
             print(f"   python manage.py sqlsequencereset {app_label} | python manage.py dbshell")
 
         else:

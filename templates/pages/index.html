@@ -126,7 +126,7 @@
                                 </a>
                                 <div class="banner-content text-right">
                                     <h4 class="banner-subtitle">Weekend Offer</h4>
-                                    <img class="banner-title-img" src="assets/images/demos/demo-19/banners/banner-2-title.png" alt="Banner-2">
+                                    {% comment %} <img class="banner-title-img" src="assets/images/demos/demo-19/banners/banner-2-title.png" alt="Banner-2"> {% endcomment %}
                                     <h4 class="banner-price">Save<span class="price">$19,99</span></h4>
                                     <a href="#" class="banner-link">Buy Now<i class="icon-long-arrow-right"></i></a>
                                 </div>
@@ -137,7 +137,7 @@
                                     <img src={% static "images/demo-19/banners/banner-3.jpg" %} alt="Banner">
                                 </a>
                                 <div class="banner-content text-right">
-                                    <img class="banner-title-img" src="assets/images/demos/demo-19/banners/banner-3-title.png" alt="Banner-3">
+                                    {% comment %} <img class="banner-title-img" src="assets/images/demos/demo-19/banners/banner-3-title.png" alt="Banner-3"> {% endcomment %}
                                     <h5 class="text-white">35% OFF</h5>
                                     <a href="#" class="banner-link">Buy Now<i class="icon-long-arrow-right"></i></a>
                                 </div> 
@@ -151,7 +151,7 @@
                                 </a>
                                 <div class="banner-content" style="left: auto; right: 3rem; align-items: flex-start;">
                                     <h4 class="banner-subtitle">Weekend Sale</h4>
-                                    <img class="banner-title-img" src="assets/images/demos/demo-19/banners/banner-4-title.png" alt="Banner-4">
+                                    {% comment %} <img class="banner-title-img" src="assets/images/demos/demo-19/banners/banner-4-title.png" alt="Banner-4"> {% endcomment %}
                                     <h4 class="banner-price"><span class="off">25% off</span></h4>
                                     <a href="#" class="banner-link">Buy Now<i class="icon-long-arrow-right"></i></a>
                                 </div>
@@ -230,7 +230,7 @@
                     </div><!-- End .container -->
                 </div><!-- End .icon-boxes-container -->
 
-                <div class="bg-light pt-3 pb-5 mb-5">
+                {% comment %} <div class="bg-light pt-3 pb-5 mb-5">
                     <div class="container">
                         <ul class="nav nav-pills nav-big nav-border-anim justify-content-center mb-5" role="tablist">
                             <li class="nav-item">
@@ -782,7 +782,7 @@
                             </div><!-- .End .tab-pane -->
                         </div><!-- End .tab-content -->
                     </div><!-- End .container -->
-                </div><!-- End .bg-light pt-4 pb-4 -->
+                </div><!-- End .bg-light pt-4 pb-4 --> {% endcomment %}
 
                 <div class="container">
                     <div class="row justify-content-center">
@@ -1012,7 +1012,7 @@
                             </div><!-- End .heading-left -->
 
                             <div class="heading-right">
-                                <a href="% url 'news:home' %}" class="title-link">View more articles <i class="icon-long-arrow-right"></i></a>
+                                <a href="{% url 'news:home' %}" class="title-link">View more articles <i class="icon-long-arrow-right"></i></a>
                             </div><!-- End .heading-right -->
                         </div><!-- End .heading -->
 

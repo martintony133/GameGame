@@ -10,10 +10,9 @@
                                         <a class="nav-link" href={% url "pages:index" %}>Home</a>
                                     </li>
 <!--Games-->
-                    <li>
-                                        <a href={% url 'games:game' %} class="sf-with-ul">Games</a>
-
-                                        <div class="megamenu megamenu-md">
+                                    <li {% if request.resolver_match.app_name == 'games' %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+                                        <a href={% url 'games:game' %} class="nav-item active mr-3">Games</a>
+                                        {% comment %} <div class="megamenu megamenu-md">
                                             <div class="row no-gutters">
                                                 <div class="col-md-8">
                                                     <div class="menu-col">
@@ -65,13 +64,13 @@
                                                     </div><!-- End .banner banner-overlay -->
                                                 </div><!-- End .col-md-4 -->
                                             </div><!-- End .row -->
-                                        </div><!-- End .megamenu megamenu-md -->
-                    </li>
+                                        </div><!-- End .megamenu megamenu-md --> {% endcomment %}
+                                    </li>
 <!--Devices-->
                     <li>
-                                        <a href={% url 'devices:device' %} class="sf-with-ul">Devices</a>
+                                        <a href={% url 'devices:device' %} class="nav-item active mr-3">Devices</a>
 
-                                        <div class="megamenu megamenu-md">
+                                        {% comment %} <div class="megamenu megamenu-md">
                                             <div class="row no-gutters">
                                                 <div class="col-md-8">
                                                     <div class="menu-col">
@@ -128,19 +127,19 @@
                                                     </div><!-- End .banner banner-overlay -->
                                                 </div><!-- End .col-md-4 -->
                                             </div><!-- End .row -->
-                                        </div><!-- End .megamenu megamenu-md -->
+                                        </div><!-- End .megamenu megamenu-md --> {% endcomment %}
                     </li>
 <!--Accessories-->
-                                    <li>
-                                        <a href={% url 'accessories:home' %} class="sf-with-ul">Accessories</a>
-                                        <ul>
+                                    <li {% if request.resolver_match.app_name == 'accessories' %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+                                        <a href={% url 'accessories:home' %} class="nav-item active mr-3">Accessories</a>
+                                        {% comment %} <ul>
                                             <li><a href={% url 'accessories:home' %} >Home</a></li>
-                                        </ul>
+                                        </ul> {% endcomment %}
                                     </li>
 <!--Recommendations-->
-                                    <li {% if request.resolver_match.app_name == 'recommendations' %} class="active" {% else %} class="nav-item mr-3" {% endif %}>
-                                        <a href={% url "recommendations:recommendation" %} class="sf-with-ul">Recommendations</a>
-                                        <div class="megamenu megamenu-md">
+                                    <li {% if request.resolver_match.app_name == 'recommendations' %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+                                        <a href={% url "recommendations:recommendation" %} class="av-item active mr-3">Recommendations</a>
+                                        {% comment %} <div class="megamenu megamenu-md">
                                             <div class="row no-gutters">
                                                 <div class="col-md-8">
                                                     <div class="menu-col">
@@ -195,25 +194,25 @@
                                                     </div><!-- End .banner banner-overlay -->
                                                 </div><!-- End .col-md-4 -->
                                             </div><!-- End .row -->
-                                        </div><!-- End .megamenu megamenu-md -->
+                                        </div><!-- End .megamenu megamenu-md --> {% endcomment %}
                                     </li>
 <!--Promotions-->
-                                    <li>
-                                        <a href="{% url 'promotions:promo_game' %}" class="sf-with-ul">Promotions</a>
-                                        <ul>
+                                    <li {% if request.resolver_match.app_name == 'promotions' %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+                                        <a href="{% url 'promotions:promo_game' %}" class="av-item active mr-3">Promotions</a>
+                                        {% comment %} <ul>
                                             <li>
                                                 <a href="#">Home</a>
                                             </li>
-                                        </ul>
+                                        </ul> {% endcomment %}
                                     </li>
 <!--News-->
-                                    <li>
-                                        <a href={% url 'news:home' %} class="sf-with-ul">News</a>
-                                        <ul>
+                                    <li {% if request.resolver_match.app_name == 'news' %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+                                        <a href={% url 'news:home' %} class="av-item active mr-3">News</a>
+                                        {% comment %} <ul>
                                             <li>
                                                 <a href={% url 'news:home' %}>Home</a>
                                             </li>
-                                        </ul>
+                                        </ul> {% endcomment %}
                                     </li>        
                                 </ul><!-- End .menu -->
                             </nav><!-- End .main-nav -->

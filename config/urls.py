@@ -28,11 +28,11 @@ urlpatterns = [
     path('news/', include('news.urls', namespace='news')),
     path('community/', include('community.urls', namespace='community')),
     path('orders/', include('orders.urls', namespace='orders')),
-    path('promotions/', include('promotions.urls', namespace='promotions')),
     path("devices/", include("devices.urls", namespace='devices')),
     path('admin/', admin.site.urls),
     path('accessories/', include('accessories.urls')),
     path('supports/', include('supports.urls')),
+    path('promotions/', include('promotions.urls', namespace='promotions')),
     ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = "GameGame Admin"

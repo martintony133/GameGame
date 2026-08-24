@@ -6,6 +6,7 @@ from .models import Order, OrderItem
 from games.models import Game
 from devices.models import Device
 from games.cart import Cart
+from accounts.models import Account
 # Create your views here.
 def order_create(request):
     print("--- order_create 函數被觸發了！ ---")
@@ -119,12 +120,12 @@ def cart_remove(request, product_id):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return JsonResponse({
             'status': 'success',
-            'message': 'Produce successfully removed from cart',
+            'message': '商品已成功移除！',
             'total_price': cart.get_total_price(),
             'cart_count': len(cart),
         })
     else:
-        messages.success(request,"Produce successfully removed from cart")
+        messages.success(request,"商品已成功移除！")
         return redirect('orders:order_create')
 
 def checkout(request):

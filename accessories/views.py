@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from .models import Accessory
+from games.cart import Cart
 
 def accessory(request):
         """
@@ -18,6 +19,7 @@ def accessory(request):
 
         context = {
         'accessories': accessories_page,
+        'cart' : Cart(request), 
         }
         # Renders your accessories homepage template
         return render(request, 'accessories/home.html', context)
@@ -32,9 +34,9 @@ def product(request, product_id):
         Accessory.objects.prefetch_related('colors'), 
         pk=product_id
         )
-
         context = {
         'accessory': single_accessory,
+        'cart' : Cart(request), 
         }
         # Renders your accessory detail page template
-        return render(request, 'accessories/single.html', context)
+        return render(request, 'accessories/product.html', context)

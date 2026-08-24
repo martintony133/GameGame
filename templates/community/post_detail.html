@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,33 +9,40 @@
     <!-- Include HTMX Library -->
     <script src="https://unpkg.com"></script>
 </head>
-<body style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
-
+<body>
+    <main style="max-width: 1600px; margin: 0 auto; padding: 0 15px;">
     <h1>{{ post.title }}</h1>
     <p style="font-size: 1.2em; color: #333;">{{ post.content }}</p>
     <hr>
-
+        <!-- 1. 顯示現有留言嘅清單 -->
     <h3>Community Comments</h3>
-
-    <!-- HTMX Polling: Requests latest comments every 2 seconds and updates inside this div -->
-    <div hx-get="{% url 'community:comment_list' post.id %}" 
-         hx-trigger="every 2s" 
-         hx-swap="innerHTML">
-        <!-- Initial load pointing to your project-level partial path -->
+    <div class="comment-list-container">
         {% include 'community/partials/comment_list.html' %}
-    </div>
+        </div>
 
-    <br><br>
-    <h4>Leave a Comment</h4>
-    <!-- HTMX Form: Sends data asynchronously, appends to list, and resets input field -->
-    <form hx-post="{% url 'community:add_comment' post.id %}" 
-          hx-target="#comment-list" 
-          hx-swap="beforeend" 
-          hx-on::after-request="this.reset()">
-        {% csrf_token %}
-        <textarea name="content" rows="4" style="width: 100%; max-width: 500px;" required placeholder="Write a comment..."></textarea><br style="margin-bottom: 10px;">
-        <button type="submit" style="padding: 8px 15px; background-color: #007bff; color: white; border: none; cursor: pointer;">Post Comment</button>
-    </form>
+        <br><br>
 
+        <!-- 2. 留新留言嘅 Form 表單 -->
+        <h4>Leave a Comment</h4>
+        {% if user.is_authenticated %}
+            <!-- 呢度會將資料直接發送到後端 add_comment 視圖 -->
+            <form method="POST" action="{% url 'community:add_comment' post.id %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <!-- 必須要有 name="content" -->
+                    <textarea name="content" rows="4" style="width: 100%; margin-bottom: 10px;" required placeholder="Write a comment...        "></textarea>
+                </div>
+
+                <button type="submit" style="padding: 8px 15px; background-color: #007bff; color: white; border: none; cursor: pointer;     ">
+                    Post Comment
+                </button>
+            </form>
+        {% else %}
+            <p>Please log in to leave a comment.</p>
+        {% endif %}
+        
+    </main>
 </body>
 </html>
+{% endblock %}

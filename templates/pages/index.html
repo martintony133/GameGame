@@ -1,19 +1,120 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<!--1-->
-                <div class="icon-boxes-container icon-boxes-separator bg-transparent">
+<body>
+    <div class="page-wrapper">
+        
+        <div class="wrap-container">   
+            <main class="main">
+                <div class="mb-2"></div><!-- End .mb-2 -->
+
                 <div class="container">
                     <div class="row">
+                        <div class="col-xl-3 d-none d-xl-block">
+                            <nav class="side-nav">
+                                <div class="sidenav-title">Browse Categories</div><!-- End .sidenav-title -->
+                                <ul class="menu-vertical sf-arrows">
+                                    <li>
+                                        <a href="product.html" class="sf-with-ul">Playstation</a>
+
+                                        <div class="megamenu megamenu-sm">
+                                            <div class="row no-gutters">
+                                                <div class="col-md-6">
+                                                    <div class="menu-col">
+                                                        <div class="menu-title">Games Software</div><!-- End .menu-title -->
+                                                        <ul>
+                                                            <li><a href="#">Action</a></li>
+                                                            <li><a href="#">Adventure</a></li>
+                                                            <li><a href="#">Sports</a></li>
+                                                            <li><a href="#">Strategy</a></li>
+                                                            <li><a href="#">Role-Playing Game</a></li>
+                                                            <li><a href="#">Action-Adventure</a></li>
+                                                            <li><a href="#">Stealth</a></li>
+                                                            <li><a href="#">Shooter</a></li>
+                                                        </ul>
+                                                    </div><!-- End .menu-col -->
+                                                </div><!-- End .col-md-6 -->
+
+                                                <div class="col-md-6">
+                                                    <div class="banner banner-overlay">
+                                                        <a href="category.html">
+                                                            <img src="assets/images/demos/demo-19/menu/banner-2.jpg" alt="Banner">
+                                                        </a>
+                                                    </div><!-- End .banner -->
+                                                </div><!-- End .col-md-6 -->
+                                            </div><!-- End .row -->
+                                        </div><!-- End .megamenu megamenu-sm -->
+                                    </li>
+                                    <li class="megamenu-container">
+                                        <a href="category.html" class="sf-with-ul">XBOX</a>
+
+                                        <div class="megamenu">
+                                            <div class="row no-gutters">
+                                                <div class="col-md-8">
+                                                    <div class="menu-col">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="menu-title">Games Software</div><!-- End .menu-title -->
+                                                                <ul>
+                                                                    <li><a href="#">Action</a></li>
+                                                                    <li><a href="#">Adventure</a></li>
+                                                                    <li><a href="#">Music</a></li>
+                                                                    <li><a href="#">Racing</a></li>
+                                                                    <li><a href="#">Sports</a></li>
+                                                                    <li><a href="#">Strategy</a></li>
+                                                                    <li><a href="#">Role-Playing Game</a></li>
+                                                                    <li><a href="#">Action-Adventure</a></li>
+                                                                    <li><a href="#">Stealth</a></li>
+                                                                    <li><a href="#">Shooter</a></li>
+                                                                    <li><a href="#">Horror</a></li>
+                                                                </ul>
+                                                            </div><!-- End .col-md-6 -->
+
+                                                            <div class="col-md-6">
+                                                                <div class="menu-title">Game Console & Accessories</div><!-- End .menu-title -->
+                                                                <ul>
+                                                                    <li><a href="#">Console</a></li>
+                                                                    <li><a href="#">Headsets</a></li>
+                                                                    <li><a href="#">Collectibles</a></li>
+                                                                    <li><a href="#">Gaming Chairs</a></li>
+                                                                    <li><a href="#">Controller</a></li>
+                                                                    <li><a href="#">Digital</a></li>
+                                                                </ul>
+                                                            </div><!-- End .col-md-6 -->
+                                                        </div><!-- End .row -->
+                                                    </div><!-- End .menu-col -->
+                                                </div><!-- End .col-md-8 -->
+
+                                                <div class="col-md-4">
+                                                    <div class="banner banner-overlay">
+                                                        <a href="category.html" class="banner banner-menu">
+                                                            <img src="assets/images/demos/demo-19/menu/banner-1.jpg" alt="Banner">
+                                                        </a>
+                                                    </div><!-- End .banner banner-overlay -->
+                                                </div><!-- End .col-md-4 -->
+                                            </div><!-- End .row -->
+                                        </div><!-- End .megamenu -->
+                                    </li>
+                                    <li><a href="#">Nindendo</a></li>
+                                    <li><a href="#">PC Gaming</a></li>
+                                    <li><a href="#">Phones & Tablets</a></li>
+                                    <li><a href="#">Pre-owned</a></li>
+                                    <li><a href="#">Deals</a></li>
+                                    <li><a href="#">Coming Soon</a></li>
+                                    <li><a href="#">Accessories</a></li>
+                                </ul><!-- End .menu -->
+                            </nav><!-- End .side-nav -->
+                        </div><!-- End .col-lg-3 -->
+
                         <div class="col-lg-8 col-xl-6">
                             <div class="banner banner-overlay banner-lg  content-left">
-                                <a href="#">
+                                <a href="{% url 'games:product' 7 %}">
                                     <img src={% static "images/demo-19/banners/banner-1.jpg" %} alt="Banner">
                                 </a>
                                 <div class="banner-content">
-                                    <h4 class="banner-subtitle">Pre-order now</h4>
+                                    <a href="{% url 'games:product' 7 %}">
                                     <img src={% static "images/demo-19/banners/banner-1-title.png" %} alt="Banner 1 Title" width="217" height="54" class="mb-1">
-                                    <a href="#" class="banner-link size-lg">Pre-Order Now<i class="icon-long-arrow-right"></i></a>
+                                    <i class="icon-long-arrow-right"></i></a>
                                 </div>
                             </div><!-- End .banner -->
                         </div><!-- End .col-lg-6 -->
@@ -25,7 +126,7 @@
                                 </a>
                                 <div class="banner-content text-right">
                                     <h4 class="banner-subtitle">Weekend Offer</h4>
-                                    <img class="banner-title-img" src={% static "images/demo-19/banners/banner-2-title.png" %} alt="Banner-2">
+                                    <img class="banner-title-img" src="assets/images/demos/demo-19/banners/banner-2-title.png" alt="Banner-2">
                                     <h4 class="banner-price">Save<span class="price">$19,99</span></h4>
                                     <a href="#" class="banner-link">Buy Now<i class="icon-long-arrow-right"></i></a>
                                 </div>
@@ -36,7 +137,7 @@
                                     <img src={% static "images/demo-19/banners/banner-3.jpg" %} alt="Banner">
                                 </a>
                                 <div class="banner-content text-right">
-                                <img class="banner-title-img" src={% static "images/demo-19/banners/banner-3-title.png" %} alt="Banner-3">
+                                    <img class="banner-title-img" src="assets/images/demos/demo-19/banners/banner-3-title.png" alt="Banner-3">
                                     <h5 class="text-white">35% OFF</h5>
                                     <a href="#" class="banner-link">Buy Now<i class="icon-long-arrow-right"></i></a>
                                 </div> 
@@ -50,7 +151,7 @@
                                 </a>
                                 <div class="banner-content" style="left: auto; right: 3rem; align-items: flex-start;">
                                     <h4 class="banner-subtitle">Weekend Sale</h4>
-                                    <img class="banner-title-img" src={% static "images/demo-19/banners/banner-4-title.png" %} alt="Banner-4">
+                                    <img class="banner-title-img" src="assets/images/demos/demo-19/banners/banner-4-title.png" alt="Banner-4">
                                     <h4 class="banner-price"><span class="off">25% off</span></h4>
                                     <a href="#" class="banner-link">Buy Now<i class="icon-long-arrow-right"></i></a>
                                 </div>
@@ -59,20 +160,19 @@
 
                         <div class="col-lg-9">
                             <div class="banner banner-overlay banner-lg">
-                                <a href="#">
+                                <a href="{% url 'games:product' 14 %}">
                                     <img src={% static "images/demo-19/banners/banner-5.jpg" %} alt="Banner">
                                 </a>
                                 <div class="banner-content">
-                                    <h4 class="banner-subtitle">Amazing Value</h4>
+                                    <a href="{% url 'games:product' 14 %}">
                                     <img class="banner-title-img mb-1" src={% static "images/demo-19/banners/banner-5-title.png" %} alt="Banner-5">
-                                    <a href="#" class="banner-link">Pre-Order Now<i class="icon-long-arrow-right"></i></a>
+                                    </a>
                                 </div>
                             </div><!-- End .banner -->
                         </div><!-- End .col-lg-9 -->
                     </div><!-- End .row -->
                 </div><!-- End .container -->
 
-<!--2-->
                 <div class="icon-boxes-container icon-boxes-separator bg-transparent">
                     <div class="container">
                         <div class="row">
@@ -683,49 +783,28 @@
                         </div><!-- End .tab-content -->
                     </div><!-- End .container -->
                 </div><!-- End .bg-light pt-4 pb-4 -->
-<!--3-->
+
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-sm-6 col-md-4">
                             <div class="banner banner-overlay banner-sm banner-ad content-left align-center">
-                                <a href="#">
                                     <img src={% static "images/demo-19/banners/banner-6.jpg" %} alt="Banner">
-                                </a>
-                                <div class="banner-content">
-                                    <h4 class="banner-subtitle">Weekend Offer</h4>
-                                    <img class="banner-title-img" src={% static "images/demo-19/banners/banner-6-title.png" %} alt="Banner-6">
-                                    <h4 class="banner-price"><span class="off" style="font-weight: 600;">Save <span class="price">$19.99</span></span></h4>
-                                    <a href="#" class="banner-link">Buy Now<i class="icon-long-arrow-right"></i></a>
-                                </div>
                             </div><!-- End .banner -->
                         </div><!-- End .col-md-4 -->
 
-                        <div class="col-sm-6 col-md-4">
+                         <div class="col-sm-6 col-md-4">
                             <div class="banner banner-overlay banner-sm banner-ad content-left align-center">
-                                <a href="#">
                                     <img src={% static "images/demo-19/banners/banner-7.jpg" %} alt="Banner">
-                                </a>
-                                <div class="banner-content">
-                                    <h4 class="banner-subtitle" style="letter-spacing: 0.1em;">Amazing Deal on an</h4>
-                                    <h2 class="banner-title mb-0" style="font-size: 3rem;">XBOX ONE</h2>
-                                    <h4 class="banner-price"><span class="off" style="font-weight: 600;">Save $50</span></h4>
-                                    <a href="#" class="banner-link">Buy Now<i class="icon-long-arrow-right"></i></a>
-                                </div>
                             </div><!-- End .banner -->
                         </div><!-- End .col-md-4 -->
 
-                        <div class="col-sm-6 col-md-4">
+
+                         <div class="col-sm-6 col-md-4">
                             <div class="banner banner-overlay banner-sm banner-ad content-left align-center">
-                                <a href="#">
                                     <img src={% static "images/demo-19/banners/banner-8.jpg" %} alt="Banner">
-                                </a>
-                                <div class="banner-content">
-                                    <h4 class="banner-price text-white mb-1">Save $29.00</h4>
-                                    <img class="banner-title-img mb-2" src={% static "images/demo-19/banners/banner-8-title.png" %} alt="Banner-8">
-                                    <a href="#" class="banner-link">Buy Now<i class="icon-long-arrow-right"></i></a>
-                                </div>
                             </div><!-- End .banner -->
                         </div><!-- End .col-md-4 -->
+
                     </div><!-- End .row -->
                 </div><!-- End .container -->
 
@@ -740,7 +819,7 @@
                         </div><!-- End .heading-left -->
 
                         <div class="heading-right">
-                            <a href="category.html" class="title-link">View more products <i class="icon-long-arrow-right"></i></a>
+                            <a href="{% url 'games:game' %}" class="title-link">View more products <i class="icon-long-arrow-right"></i></a>
                         </div><!-- End .heading-right -->
                     </div><!-- End .heading -->
 
@@ -749,11 +828,13 @@
                             <div class="col-lg-7">
                                 <div class="products">
                                     <div class="row">
+                                        {% for game in games %}
                                         <div class="col-6 col-md-4">
                                             <div class="product">
                                                 <figure class="product-media">
-                                                    <a href="product.html">
-                                                        <img src="assets/images/demos/demo-19/products/product-6.jpg" alt="Product image" class="product-image">
+                                                    <a href="{% url 'games:product' product_id=game.id %}">
+                                                        <img src="{{game.photo_main.url}}" alt="Product image" class="product-image w-100 object-fit-cover"
+                                                    style="height: 340px;">
                                                     </a>
 
                                                     <div class="product-action-vertical">
@@ -761,7 +842,14 @@
                                                     </div><!-- End .product-action-vertical -->
 
                                                     <div class="product-action">
-                                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+													<form action="{% url 'orders:cart_add' game.id %}" method="POST" style="width: 100%;">
+														{% csrf_token %}
+														<input type="hidden" name"quantity" value="1">
+														    <button type="button" onclick="addToCartAsync(this)" data-url="{% url "orders:cart_add" game.id %}"
+															class="btn-product btn-cart" style="border: none; background: warning; width: 100%; cursor: pointer;">
+														        <span>add to cart</span>
+														    </button>
+														</form>
                                                     </div><!-- End .product-action -->
                                                 </figure><!-- End .product-media -->
 
@@ -769,153 +857,14 @@
                                                     <div class="product-cat">
                                                         <a href="#">Shooter</a>
                                                     </div><!-- End .product-cat -->
-                                                    <h3 class="product-title"><a href="product.html">Tom Clancy’s <br>Ghost Recon Wildlands</a></h3><!-- End .product-title -->
+                                                    <h3 class="product-title"><a href="product.html">{{ game.title }}</a></h3><!-- End .product-title -->
                                                     <div class="product-price">
-                                                        $49.99
+                                                        {% if game.price == 0 %}Free {% else %}${{ game.price }}.00{% endif %}
                                                     </div><!-- End .product-price -->
                                                 </div><!-- End .product-body -->
                                             </div><!-- End .product -->
                                         </div><!-- End .col-sm-6 col-md-4 -->
-
-                                        <div class="col-6 col-md-4">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="product.html">
-                                                        <img src="assets/images/demos/demo-19/products/product-7.jpg" alt="Product image" class="product-image">
-                                                    </a>
-
-                                                    <div class="product-action-vertical">
-                                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>add to wishlist</span></a>
-                                                    </div><!-- End .product-action-vertical -->
-
-                                                    <div class="product-action">
-                                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                    </div><!-- End .product-action -->
-                                                </figure><!-- End .product-media -->
-
-                                                <div class="product-body">
-                                                    <div class="product-cat">
-                                                        <a href="#">Sport</a>
-                                                    </div><!-- End .product-cat -->
-                                                    <h3 class="product-title"><a href="product.html">NBA 2K19 450,000 VC</a></h3><!-- End .product-title -->
-                                                    <div class="product-price">
-                                                        $74.99
-                                                    </div><!-- End .product-price -->
-                                                </div><!-- End .product-body -->
-                                            </div><!-- End .product -->
-                                        </div><!-- End .col-sm-6 col-md-4 -->
-
-                                        <div class="col-6 col-md-4">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="product.html">
-                                                        <img src="assets/images/demos/demo-19/products/product-8.jpg" alt="Product image" class="product-image">
-                                                    </a>
-
-                                                    <div class="product-action-vertical">
-                                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>add to wishlist</span></a>
-                                                    </div><!-- End .product-action-vertical -->
-
-                                                    <div class="product-action">
-                                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                    </div><!-- End .product-action -->
-                                                </figure><!-- End .product-media -->
-
-                                                <div class="product-body">
-                                                    <div class="product-cat">
-                                                        <a href="#">Shooter</a>
-                                                    </div><!-- End .product-cat -->
-                                                    <h3 class="product-title"><a href="product.html">STAR WARS Battlefront II</a></h3><!-- End .product-title -->
-                                                    <div class="product-price">
-                                                        $24.99
-                                                    </div><!-- End .product-price -->
-                                                </div><!-- End .product-body -->
-                                            </div><!-- End .product -->
-                                        </div><!-- End .col-sm-6 col-md-4 -->
-
-                                        <div class="col-6 col-md-4">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="product.html">
-                                                        <img src="assets/images/demos/demo-19/products/product-9.jpg" alt="Product image" class="product-image">
-                                                    </a>
-
-                                                    <div class="product-action-vertical">
-                                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>add to wishlist</span></a>
-                                                    </div><!-- End .product-action-vertical -->
-
-                                                    <div class="product-action">
-                                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                    </div><!-- End .product-action -->
-                                                </figure><!-- End .product-media -->
-
-                                                <div class="product-body">
-                                                    <div class="product-cat">
-                                                        <a href="#">Shooter</a>
-                                                    </div><!-- End .product-cat -->
-                                                    <h3 class="product-title"><a href="product.html">Call of Duty: Black Ops 4 Spectre Rising Edition</a></h3><!-- End .product-title -->
-                                                    <div class="product-price">
-                                                        $39.99
-                                                    </div><!-- End .product-price -->
-                                                </div><!-- End .product-body -->
-                                            </div><!-- End .product -->
-                                        </div><!-- End .col-sm-6 col-md-4 -->
-
-                                        <div class="col-6 col-md-4">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="product.html">
-                                                        <img src="assets/images/demos/demo-19/products/product-10.jpg" alt="Product image" class="product-image">
-                                                    </a>
-
-                                                    <div class="product-action-vertical">
-                                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>add to wishlist</span></a>
-                                                    </div><!-- End .product-action-vertical -->
-
-                                                    <div class="product-action">
-                                                        <a href="#" class="btn-product btn-cart"><span>Pre-order Now</span></a>
-                                                    </div><!-- End .product-action -->
-                                                </figure><!-- End .product-media -->
-
-                                                <div class="product-body">
-                                                    <div class="product-cat">
-                                                        <a href="#">Role playing</a>
-                                                    </div><!-- End .product-cat -->
-                                                    <h3 class="product-title"><a href="product.html">Diablo III: <br>Eternal Collection</a></h3><!-- End .product-title -->
-                                                    <div class="product-price">
-                                                        $19.99
-                                                    </div><!-- End .product-price -->
-                                                </div><!-- End .product-body -->
-                                            </div><!-- End .product -->
-                                        </div><!-- End .col-sm-6 col-md-4 -->
-
-                                        <div class="col-6 col-md-4">
-                                            <div class="product">
-                                                <figure class="product-media">
-                                                    <a href="product.html">
-                                                        <img src="assets/images/demos/demo-19/products/product-11.jpg" alt="Product image" class="product-image">
-                                                    </a>
-
-                                                    <div class="product-action-vertical">
-                                                        <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>add to wishlist</span></a>
-                                                    </div><!-- End .product-action-vertical -->
-
-                                                    <div class="product-action">
-                                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                    </div><!-- End .product-action -->
-                                                </figure><!-- End .product-media -->
-
-                                                <div class="product-body">
-                                                    <div class="product-cat">
-                                                        <a href="#">Role playing</a>
-                                                    </div><!-- End .product-cat -->
-                                                    <h3 class="product-title"><a href="product.html">Tom Clancy's <br>The Division 2</a></h3><!-- End .product-title -->
-                                                    <div class="product-price">
-                                                        $24.99
-                                                    </div><!-- End .product-price -->
-                                                </div><!-- End .product-body -->
-                                            </div><!-- End .product -->
-                                        </div><!-- End .col-sm-6 col-md-4 -->
+                                        {% endfor %}
                                     </div><!-- End .row -->
                                 </div><!-- End .products -->
                             </div><!-- End .col-lg-7 -->
@@ -929,27 +878,18 @@
                                         "loop": false,
                                         "items":1
                                     }'>
+                                    {% for game in extra_games %}
                                     <div class="banner banner-overlay product-banner">
-                                        <a href="#">
-                                            <img src="assets/images/demos/demo-19/banners/banner-9.jpg" alt="Banner">
+                                        <a href="{% url 'games:product' product_id=game.id %}">
+                                            <img src="{{game.photo_main.url}}" alt="Banner" class="product-image w-100 object-fit-cover"
+                                                    style="height: 750px;">
                                         </a>
                                         <div class="banner-content align-items-center center">
-                                            <img class="banner-title-img mb-1" src="assets/images/demos/demo-19/banners/banner-9-title.png" alt="Banner-9">
-                                            <h4 class="banner-price mb-2" style="font-weight: 600;">$29.99</h4>
-                                            <a href="#" class="banner-link size-lg">Pre-Order Now<i class="icon-long-arrow-right"></i></a>
+                                            <h4 class="banner-price mb-2" style="font-weight: 600;">{% if game.price == 0 %}Free {% else %}${{ game.price }}.00{% endif %}</h4>
+                                            <a href="{% url 'games:product' product_id=game.id %}" class="banner-link size-lg">Pre-Order Now<i class="icon-long-arrow-right"></i></a>
                                         </div>
                                     </div><!-- End .banner -->
-
-                                    <div class="banner banner-overlay product-banner">
-                                        <a href="#">
-                                            <img src="assets/images/demos/demo-19/banners/banner-10.jpg" alt="Banner">
-                                        </a>
-                                        <div class="banner-content align-items-center">
-                                            <h4 class="banner-subtitle" style="letter-spacing: 0.1em;">Out 14 May 2019</h4>
-                                            <img class="banner-title-img mb-1" src="assets/images/demos/demo-19/banners/banner-10-title.png" alt="Banner-10">
-                                            <a href="#" class="banner-link size-lg">Pre-Order Now<i class="icon-long-arrow-right"></i></a>
-                                        </div>
-                                    </div><!-- End .banner -->
+                                      {% endfor %}
 
                                 </div><!-- End .owl-carousel -->
                             </div><!-- End .col-lg-5 -->
@@ -988,7 +928,7 @@
                         </div><!-- End .heading-left -->
 
                         <div class="heading-right">
-                            <a href="category.html" class="title-link">View more products <i class="icon-long-arrow-right"></i></a>
+                            <a href="{% url 'devices:device' %}" class="title-link">View more products <i class="icon-long-arrow-right"></i></a>
                         </div><!-- End .heading-right -->
                     </div><!-- End .heading -->
 
@@ -1017,11 +957,20 @@
                                 }
                             }
                         }'>
+                        {% for device in devices %}
                         <div class="product">
-                            <figure class="product-media">
-                                <span class="product-label label-new">New</span>
-                                <a href="product.html">
-                                    <img src="assets/images/demos/demo-19/products/product-12.jpg" alt="Product image" class="product-image">
+                            <figure class="product-media-unified" style="align-items: center; height: 200px; display: flex;">
+                                {% if device.status_tag and device.status_tag != "None" %}
+					                {% if device.status_tag == "New" %}
+					                    <span class="product-label label-new" style="background-color: {{ device.color_code }};">New</span>
+					                {% elif device.status_tag == "Top" %}
+					                    <span class="product-label label-top" style="background-color: {{ device.color_code }};">Top</span>
+					                {% else %}
+					                    <span class="product-label label-out" style="background-color: {{ device.color_code }};">{{ device.status_tag }}</span>
+					                {% endif %}
+					            {% endif %}
+                                <a href="{% url 'devices:product' product_id=device.id %}">
+                                    <img src={{ device.photo_main.url }} alt="Product image" class="product-image product-image w-120 object-fit-cove" style="align-items: center;">
                                 </a>
 
                                 <div class="product-action-vertical">
@@ -1029,111 +978,27 @@
                                 </div><!-- End .product-action-vertical -->
 
                                 <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                    <form action="{% url 'orders:cart_add' device.id %}" method="POST" style="width: 100%;">
+												{% csrf_token %}
+												<input type="hidden" name"quantity" value="1">
+													<button type="button" onclick="addToCartAsync(this)" 
+        													data-url="{% url 'orders:cart_add' device.id %}" 
+        													data-item-type="device" 
+        													class="btn-product btn-cart" style="border: none; background: warning; width: 100%; cursor: pointer;">
+														<span>add to cart</span>
+													</button>
+												</form>
                                 </div><!-- End .product-action -->
                             </figure><!-- End .product-media -->
 
                             <div class="product-body">
-                                <h3 class="product-title"><a href="product.html">Microsoft - Xbox Elite Wireless Controller</a></h3><!-- End .product-title -->
+                                <h3 class="product-title"><a href="{% url 'devices:product' product_id=device.id %}">{{ device.device_name}}</a></h3><!-- End .product-title -->
                                 <div class="product-price">
-                                    $149.99
+                                    ${{ device.price}}
                                 </div><!-- End .product-price -->
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
-
-                        <div class="product">
-                            <figure class="product-media">
-                                <span class="product-label label-top">Top</span>
-                                <a href="product.html">
-                                    <img src="assets/images/demos/demo-19/products/product-13.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>add to wishlist</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <h3 class="product-title"><a href="product.html">Sony - PlayStation 4 1TB Console - Black</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $299.99
-                                </div><!-- End .product-price -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="assets/images/demos/demo-19/products/product-14.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>add to wishlist</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <h3 class="product-title"><a href="product.html">Nintendo - Switch 32GB Console</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $149.99
-                                </div><!-- End .product-price -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product">
-                            <figure class="product-media">
-                                <span class="product-label label-top">Top</span>
-                                <a href="product.html">
-                                    <img src="assets/images/demos/demo-19/products/product-15.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>add to wishlist</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <h3 class="product-title"><a href="product.html">HyperX - Cloud Alpha Wired Stereo Gaming Headset</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $99.99
-                                </div><!-- End .product-price -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-
-                        <div class="product">
-                            <figure class="product-media">
-                                <a href="product.html">
-                                    <img src="assets/images/demos/demo-19/products/product-16.jpg" alt="Product image" class="product-image">
-                                </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist" title="Add to Wishlist"><span>add to wishlist</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
-                            </figure><!-- End .product-media -->
-
-                            <div class="product-body">
-                                <h3 class="product-title"><a href="product.html">Logitech - G502 HERO Wired Optical Gaming Mouse Pack</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    $59.99
-                                </div><!-- End .product-price -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
+                        {% endfor %}
                     </div><!-- End .owl-carousel -->
 
                     <div class="mb-5"></div><!-- End .mb-4 -->
@@ -1147,7 +1012,7 @@
                             </div><!-- End .heading-left -->
 
                             <div class="heading-right">
-                                <a href="blog.html" class="title-link">View more articles <i class="icon-long-arrow-right"></i></a>
+                                <a href="% url 'news:home' %}" class="title-link">View more articles <i class="icon-long-arrow-right"></i></a>
                             </div><!-- End .heading-right -->
                         </div><!-- End .heading -->
 
@@ -1174,98 +1039,39 @@
                                     }
                                 }
                             }'>
+                            {% for item in news %}
                             <article class="entry">
                                 <figure class="entry-media">
-                                    <a href="single.html">
-                                        <img src="assets/images/demos/demo-19/blog/post-1.jpg" alt="image desc">
+                                    <a href="{% url 'news:post' item.id %}">
+                                        <img src="{{item.photo_1.url}}" alt="{{item.title}}">
                                     </a>
                                 </figure><!-- End .entry-media -->
 
                                 <div class="entry-body">
                                     <div class="entry-meta">
-                                        <a href="#">Nov 22, 2018</a>, 0 Comments
+                                        <a href="#">{{ item.date|date:"b d, Y" }}</a>, 3 Comments
                                     </div><!-- End .entry-meta -->
 
                                     <h3 class="entry-title">
-                                        <a href="single.html">Morbi in sem quis dui placerat mauris sit ornare.</a>
+                                        <a href="{% url 'news:post' item.id %}">{{item.title}}</a>
                                     </h3><!-- End .entry-title -->
                                 </div><!-- End .entry-body -->
                             </article><!-- End .entry -->
-                        
-                            <article class="entry">
-                                <figure class="entry-media">
-                                    <a href="single.html">
-                                        <img src="assets/images/demos/demo-19/blog/post-2.jpg" alt="image desc">
-                                    </a>
-                                </figure><!-- End .entry-media -->
+                            {% endfor %}
 
-                                <div class="entry-body">
-                                    <div class="entry-meta">
-                                        <a href="#">Dec 12, 2018</a>, 0 Comments
-                                    </div><!-- End .entry-meta -->
 
-                                    <h3 class="entry-title">
-                                        <a href="single.html">Aliquam porttitor mauris sit ametorci.</a>
-                                    </h3><!-- End .entry-title -->
-                                </div><!-- End .entry-body -->
-                            </article><!-- End .entry -->
 
-                            <article class="entry">
-                                <figure class="entry-media">
-                                    <a href="single.html">
-                                        <img src="assets/images/demos/demo-19/blog/post-3.jpg" alt="image desc">
-                                    </a>
-                                </figure><!-- End .entry-media -->
 
-                                <div class="entry-body">
-                                    <div class="entry-meta">
-                                        <a href="#">Dec 19, 2018</a>, 2 Comments
-                                    </div><!-- End .entry-meta -->
 
-                                    <h3 class="entry-title">
-                                        <a href="single.html">Cras ornare tristique elit.</a>
-                                    </h3><!-- End .entry-title -->
-                                </div><!-- End .entry-body -->
-                            </article><!-- End .entry -->
 
-                            <article class="entry">
-                                <figure class="entry-media">
-                                    <a href="single.html">
-                                        <img src="assets/images/demos/demo-19/blog/post-4.jpg" alt="image desc">
-                                    </a>
-                                </figure><!-- End .entry-media -->
-
-                                <div class="entry-body">
-                                    <div class="entry-meta">
-                                        <a href="#">Dec 19, 2018</a>, 2 Comments
-                                    </div><!-- End .entry-meta -->
-
-                                    <h3 class="entry-title">
-                                        <a href="single.html">Donec consectetuer ligula vulputate sem cursus.</a>
-                                    </h3><!-- End .entry-title -->
-                                </div><!-- End .entry-body -->
-                            </article><!-- End .entry -->
-
-                            <article class="entry">
-                                <figure class="entry-media">
-                                    <a href="single.html">
-                                        <img src="assets/images/demos/demo-19/blog/post-1.jpg" alt="image desc">
-                                    </a>
-                                </figure><!-- End .entry-media -->
-
-                                <div class="entry-body">
-                                    <div class="entry-meta">
-                                        <a href="#">Nov 22, 2018</a>, 0 Comments
-                                    </div><!-- End .entry-meta -->
-
-                                    <h3 class="entry-title">
-                                        <a href="single.html">Morbi in sem quis dui placerat mauris sit ornare.</a>
-                                    </h3><!-- End .entry-title -->
-                                </div><!-- End .entry-body -->
-                            </article><!-- End .entry -->
                         </div><!-- End .owl-carousel -->
                     </div><!-- End .container -->
                 </div><!-- End .blog-posts -->
             </main><!-- End .main -->
 
+            
+        </div><!-- End .wrap-container -->  
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+</body>
 {% endblock %}

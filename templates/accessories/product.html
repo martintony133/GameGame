@@ -19,39 +19,12 @@
                 <div class="container d-flex align-items-center">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Products</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Default</li>
+                        <li class="breadcrumb-item"><a href={% url "accessories:home"%}>Accessories</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ accessory.accessory_name }}</li>
                     </ol>
 
                     
-                    {% comment %} {% if games.has_other_pages %}
-                    <nav class="product-pager ml-auto" aria-label="Product">
-                        {% if games.has_previous %}
-                        <a class="product-pager-link product-pager-prev" href="?page={{ games.previous_page_number }}" aria-label="Previous">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
-                        {% else %}
-                        <a class="product-pager-link product-pager-prev disabled" href="#" aria-label="Previous" tabindex="-1" style="opacity: 0.5; pointer-events: none;">
-                            <i class="icon-angle-left"></i>
-                            <span>Prev</span>
-                        </a>
-                        {% endif %}
-
-
-                        {% if games.has_next %}
-                        <a class="product-pager-link product-pager-next" href="?page={{ games.next_page_number }}" aria-label="Next">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
-                        {% else %}
-                        <a class="product-pager-link product-pager-next disabled" href="#" aria-label="Next" tabindex="-1" style="opacity: 0.5; pointer-events: none;">
-                            <span>Next</span>
-                            <i class="icon-angle-right"></i>
-                        </a>
-                        {% endif %}
-                    </nav>
-                    {% endif %} {% endcomment %}
+                    
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
 
@@ -63,7 +36,7 @@
                                 <div class="product-gallery product-gallery-vertical">
                                     <div class="row">
                                         <figure class="product-main-image">
-                                            <img src={{item.photo_main.url}}>
+                                            <img src={{accessory.photo_main.url}}>
 
                                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                                 <i class="icon-arrows"></i>
@@ -72,26 +45,26 @@
 
                                         <div class="product-image-gallery">
                                             
-                                            {% if item.photo_1 %}
+                                            {% if accessory.photo_1 %}
                                             <a class="product-gallery-item active" href="#" 
-                                            data-image="{{ item.photo_1.url }}" data-zoom-image="{{ item.photo_1.url }}"
+                                            data-image="{{ accessory.photo_1.url }}" data-zoom-image="{{ accessory.photo_1.url }}"
                                             style="width: 100px; height: 100px; display: block;">
-                                                <img src="{{ item.photo_1.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
+                                                <img src="{{ accessory.photo_1.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
 
-                                            {% if item.photo_2 %}
+                                            {% if accessory.photo_2 %}
                                             <a class="product-gallery-item active" href="#" 
-                                            data-image="{{ item.photo_2.url }}" data-zoom-image="{{ item.photo_2.url }}"
+                                            data-image="{{ accessory.photo_2.url }}" data-zoom-image="{{ accessory.photo_2.url }}"
                                             style="width: 100px; height: 100px; display: block;">
-                                                <img src="{{ item.photo_2.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
+                                                <img src="{{ accessory.photo_2.url }}" alt="{{ accessory.accessory_name }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
 
-                                            {% if item.photo_3 %}
+                                            {% if accessory.photo_3 %}
                                             <a class="product-gallery-item active" href="#" 
-                                            data-image="{{ item.photo_3.url }}" data-zoom-image="{{ item.photo_3.url }}"
+                                            data-image="{{ accessory.photo_3.url }}" data-zoom-image="{{ accessory.photo_3.url }}"
                                             style="width: 100px; height: 100px; display: block;">
                                             
-                                                <img src="{{ item.photo_3.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover;"> 
+                                                <img src="{{ accessory.photo_3.url }}" alt="{{ accessory.accessory_name }}" style="width: 100%; height: 100%; object-fit: cover;"> 
                                             </a>{% endif %}
 
                                             <a class="product-gallery-item" href="#" data-image="assets/images/products/single/4.jpg" data-zoom-image="assets/images/products/single/4-big.jpg">
@@ -105,7 +78,7 @@
                             <div class="col-md-6">
                                 <div class="product-details">
                             
-                                    <h1 class="product-title">{{item.title}}</h1><!-- End .product-title -->
+                                    <h1 class="product-title">{{accessory.accessory_name}}</h1><!-- End .product-title -->
                                 
 
                                     <div class="ratings-container">
@@ -113,16 +86,16 @@
                                             <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
                                         </div><!-- End .ratings -->
                                     
-                                        <span class="ratings-text">( {{item.reviews_count}} Reviews )</span>
+                                        <span class="ratings-text">( {{accessory.reviews_count}} Reviews )</span>
                                     </div><!-- End .rating-container -->
                                     
 
                                     <div class="product-price">
-                                        {% if item.is_free %}Free {% else %}${{item.price}}{% endif %}
+                                        {% if accessory.is_free %}Free {% else %}${{accessory.price}}{% endif %}
                                     </div><!-- End .product-price -->
 
                                     <div class="product-content">
-                                        {{item.short_description}}
+                                        {{accessory.short_description}}
                                     </div><!-- End .product-content -->
 
                                     {% comment %} <div class="details-filter-row details-row-size">
@@ -170,9 +143,9 @@
                                     <div class="product-details-footer">
                                         <div class="product-cat">
                                             <span>Category:</span>
-                                            {% if item.game_type %}
-                                                {% for g_type in item.game_type %}
-                                                    <a href="#" class="game-tag">{{ g_type }}</a>{% if not forloop.last %}, {% endif %}
+                                            {% if accessory.accessory_type %}
+                                                {% for a_type in accessory.accessory_type %}
+                                                    <a href="#" class="game-tag">{{ a_type }}</a>{% if not forloop.last %}, {% endif %}
                                                 {% endfor %}
                                             {% else %}
                                                 <a href="#">Uncategorized</a>
@@ -211,7 +184,7 @@
                             <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
                                 <div class="product-desc-content">
                                     <h3>Product Information</h3>
-                                    {{item.description}}
+                                    {{accessory.description}}
                                     
                                 </div><!-- End .product-desc-content -->
                             </div><!-- .End .tab-pane -->
@@ -256,7 +229,7 @@
                                     <div class="review">
                                         <div class="row no-gutters">
                                             <div class="col-auto">
-                                                <h4><a href="#">Samanta J.</a></h4>
+                                                <h4><a>Samanta J.</a></h4>
                                                 <div class="ratings-container">
                                                     <div class="ratings">
                                                         <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
@@ -268,12 +241,12 @@
                                                 <h4>Recommended</h4>
 
                                                 <div class="review-content">
-                                                    <p>This game goes hard, the gameplay mechanic of "Maintenance in Progress. The game is not available during this time." is really innovative!!</p>
+                                                    <p>Awesome!</p>
                                                 </div><!-- End .review-content -->
 
                                                 <div class="review-action">
-                                                    <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-                                                    <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
+                                                    <a><i class="icon-thumbs-up"></i>Helpful (2)</a>
+                                                    <a><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
                                                 </div><!-- End .review-action -->
                                             </div><!-- End .col-auto -->
                                         </div><!-- End .row -->
@@ -282,7 +255,7 @@
                                     <div class="review">
                                         <div class="row no-gutters">
                                             <div class="col-auto">
-                                                <h4><a href="#">John Doe</a></h4>
+                                                <h4><a>John Doe</a></h4>
                                                 <div class="ratings-container">
                                                     <div class="ratings">
                                                         <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
@@ -291,15 +264,15 @@
                                                 <span class="review-date">5 days ago</span>
                                             </div><!-- End .col -->
                                             <div class="col">
-                                                <h4>Recommended</h4>
+                                                <h4>Not Recommended</h4>
 
                                                 <div class="review-content">
-                                                    <p>Every single frame of this game looks like a painting. You can tell the developers didn't just rush this out—every hidden corner, every line of dialogue, and every environmental detail feels meticulously hand-crafted with pure love."</p>
+                                                    <p>Not worthy:(</p>
                                                 </div><!-- End .review-content -->
 
                                                 <div class="review-action">
-                                                    <a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
-                                                    <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
+                                                    <a><i class="icon-thumbs-up"></i>Helpful (0)</a>
+                                                    <a><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
                                                 </div><!-- End .review-action -->
                                             </div><!-- End .col-auto -->
                                         </div><!-- End .row -->

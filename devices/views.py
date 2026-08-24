@@ -8,7 +8,10 @@ def device(request):
         paginator = Paginator(device_list, 6)
         page_number = request.GET.get('page',1)
         devices_page = paginator.get_page(page_number)
-        context = {'devices' : devices_page, 'cart' : Cart(request)}
+        context = {
+                'devices' : devices_page, 
+                'cart' : Cart(request),
+                }
         return render(request,'devices/home.html', context)
 
 def product(request, product_id):

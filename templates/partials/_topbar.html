@@ -1,3 +1,4 @@
+{% load static %}
 <div class="page-wrapper">
         <div class="wrap-container">
             <header class="header header-intro-clearance header-3">
@@ -45,8 +46,9 @@
                                 <i class="icon-bars"></i>
                             </button>
                             
-                            <a href="index.html" class="logo">
-                                <img src="assets/images/demos/demo-3/logo.png" alt="Molla Logo" width="105" height="25">
+                            <a href={% url "pages:index" %} class="logo">
+                                {% comment %} <img src={% static 'images/icon.png' %} alt="Logo" width="247" height="128" class="position-absolute start-0 top-50 translate-middle-y" 
+                                style="max-height: none !important;"> {% endcomment %}
                             </a>
                         </div><!-- End .header-left -->
 
@@ -222,8 +224,9 @@ window.addToCartAsync = function(element) {
             totalElements.forEach(el => {
                 el.innerText = '$' + data.total_price;
             });
-            
+            setTimeout(() => {
             window.location.href = window.location.pathname + '?nocache=' + new Date().getTime();
+            }, 500);
         }
     })
     .catch(error => console.error('Error:', error));
@@ -248,11 +251,22 @@ window.removeDropdownCartItem = function(element) {
     })
     .then(response => response.json())
     .then(data => {
-        if(data.status === 'success') {
-            element.closest('.product').remove();
-            alert('商品已移除');
-            location.reload(); // 重新整理或者直接更新畫面
-        }
+        if (data.status === 'success') {
+    // 1. 小畫面的防錯：如果是從小畫面選單點的，移除對應的商品節點
+    const productEl = element.closest('.product');
+    if (productEl) {
+        productEl.remove();
+    }
+
+    // 2. ⚡ 這裡就是呼叫（Call）你自訂提示訊息的地方！
+    // 後端有回傳 data.message，直接拿來用；如果沒有就顯示預設文字
+    showCustomAlert(data.message || '商品已成功移除！');
+
+    // 3. 延遲 1.5 秒再重整網頁，留時間給使用者看你的漂亮提示訊息
+    setTimeout(() => {
+        location.reload();
+    }, 500);
+}
     })
     .catch(error => console.error('Error:', error));
 };
@@ -300,7 +314,9 @@ window.changedropdownQty = function(inputElement) {
             });
 
             console.log('完全無重整，雙向即時同步成功！');
+            setTimeout(() => {
             location.reload();        
+            }, 500);
         }
     })
     .catch(error => console.error('Error:', error));

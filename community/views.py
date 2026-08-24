@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import CommunityCategory, CommunityPost, CommunityComment
+from games.cart import Cart
 
 
 # 1. Main Landing Portal View: Fetches all threads for home.html
@@ -21,27 +22,32 @@ def comment_list_view(request, post_id):
     comments = post.comments.all()
     return render(request, 'community/partials/comment_list.html', {'comments': comments})
 
-# 4. HTMX Submission Endpoint: Saves incoming comment and appends live block
-def add_comment_view(request, post_id):
+
+
+
+
+def add_comment(request, post_id):
+    post = get_object_or_404(CommunityPost, id=post_id)
+    
     if request.method == "POST":
-        post = get_object_or_404(CommunityPost, id=post_id)
+        if not request.user.is_authenticated:
+            return HttpResponse("Please log in to leave a comment.", status=401)
+            
         content = request.POST.get('content')
-        
-        if request.user.is_authenticated:
-            comment = CommunityComment.objects.create(
+        if content and content.strip():
+            CommunityComment.objects.create(
                 post=post,
                 author=request.user,
-                content=content
+                content=content.strip(),
             )
-            return HttpResponse(f"""
-                <div style="border-bottom: 1px solid #eee; padding: 10px 0;">
-                    <p><strong>{comment.author.username}</strong>:</p>
-                    <p>{comment.content}</p>
-                    <small style="color: gray;">Just now</small>
-                </div>
-            """)
-        else:
-            return HttpResponse("Please log in to leave a comment.", status=401)
+            # ［關鍵］留言成功之後，直接重整刷新返去呢一頁
+            return redirect('community:post_detail', post_id=post.id)
+            
+    return HttpResponse("Invalid request", status=400)
+
+
+
+
 
 def post_create_view(request):
     # Security block: redirect anonymous users to prevent form submission crashes
@@ -61,7 +67,7 @@ def post_create_view(request):
             category=category_obj,
             author=request.user,
             title=title,
-            content=content
+            content=content,
         )
         # Smoothly send the user back to home.html to view their brand new entry card
         return redirect('community:community_home')

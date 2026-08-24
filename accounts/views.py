@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages,auth
 from orders.models import Order
+from games.cart import Cart
 # Create your views here.
 
 def register(request):
@@ -60,7 +61,7 @@ def dashboard(request):
     orders = Order.objects.filter(user_id=request.user.id)
     for order in orders:
         order.total_sum = sum(item.price * item.quantity for item in order.items.all())
-    context = {'orders':orders,}
+    context = {'orders':orders, 'cart' : Cart(request), }
     return render(request,'accounts/dashboard.html', context)
 
 

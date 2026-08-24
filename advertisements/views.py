@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
 from .models import Advertisement
+from games.cart import Cart
 
 
 def home_view(request):
@@ -11,6 +12,7 @@ def home_view(request):
     print("資料庫入面到底有幾多條廣告：", active_ads.count())
     
     context = {
-        'advertisements': active_ads
+        'advertisements': active_ads,
+        'cart' : Cart(request), 
     }
     return render(request, 'recommendations/home.html', context)

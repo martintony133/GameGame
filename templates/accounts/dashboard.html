@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 <!-- Showcase -->
-        	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        	<div class="page-header text-center" style="background-image: url('{% static 'images/backgrounds/page-header-bg.jpg' %}')">
         		<div class="container">
         			<h1 class="page-title">My Account<span>Shop</span></h1>
         		</div><!-- End .container -->
@@ -9,8 +10,7 @@
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item"><a href="{% url "pages:index" %}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">My Account</li>
                     </ol>
                 </div><!-- End .container -->
@@ -57,7 +57,7 @@
                           <span style="color: red; font-weight: bold;">Pending</span>
                       {% endif %}
                   </td>
-                  <td><a class="btn btn-outline-danger btn-sm" href="#">View Restaurant</a></td>
+                  <td><a class="btn btn-outline-danger btn-sm" href="#">View</a></td>
                 </tr>
                 {% endfor %}
               </tbody>

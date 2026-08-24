@@ -14,7 +14,7 @@
     <h1>{{ post.title }}</h1>
     <p style="font-size: 1.2em; color: #333;">{{ post.content }}</p>
     <hr>
-        <!-- 1. 顯示現有留言嘅清單 -->
+        
     <h3>Community Comments</h3>
     <div class="comment-list-container">
         {% include 'community/partials/comment_list.html' %}
@@ -22,15 +22,15 @@
 
         <br><br>
 
-        <!-- 2. 留新留言嘅 Form 表單 -->
+        
         <h4>Leave a Comment</h4>
         {% if user.is_authenticated %}
-            <!-- 呢度會將資料直接發送到後端 add_comment 視圖 -->
+            
             <form method="POST" action="{% url 'community:add_comment' post.id %}">
                 {% csrf_token %}
 
                 <div class="form-group">
-                    <!-- 必須要有 name="content" -->
+                    
                     <textarea name="content" rows="4" style="width: 100%; margin-bottom: 10px;" required placeholder="Write a comment...        "></textarea>
                 </div>
 

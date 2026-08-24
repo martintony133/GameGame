@@ -9,15 +9,14 @@
 </head>
 
 <body>
-    <!-- 1. Header & Navigation Hub -->
     <header style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;">
-    <!-- 頂部背景區塊 -->
+
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg'); width: 100%; padding: 40px 0;">
         <div class="container">
             <h1>GameGame Community</h1>
             <p style="margin: 5px 0 0; color: #666;">Explore categories, join threads, and chat simultaneously.</p>
             
-            <!-- 將個掣擺喺 container 入面，跟喺文字下面 -->
+            
             <div style="margin-top: 20px;">
                 <a href="{% url 'community:post_create' %}" style="padding: 10px 15px; background-color: #333333; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
                     + Create New Post
@@ -28,33 +27,32 @@
     </header>
 
 
-    <!-- 2. Main Live Post Feed Section -->
+    
     <main style="max-width: 1200px; margin: 0 auto; padding: 0 15px;">
         <h3 style="margin-bottom: 20px;">All Discussion Threads</h3>
 
         <div id="global-feed">
             {% for post in posts %}
-                <!-- Single Post Card -->
+                
                 <div style="background-color: white; border: 1px solid #e1e1e1; padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                     
-                    <!-- Category Badge -->
+                    
                     <span style="display: inline-block; background-color: #e2eafc; color: #3f37c9; padding: 3px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; margin-bottom: 10px;">
                         # {{ post.category.name }}
                     </span>
 
-                    <!-- Clickable Title: Hyperlinks user directly into the detailed thread -->
+                    
                     <h2 style="margin: 0 0 10px 0; font-size: 1.5em;">
                         <a href="{% url 'community:post_detail' post.id %}" style="text-decoration: none; hover: underline;">
                             {{ post.title }}
                         </a>
                     </h2>
 
-                    <!-- Content Snippet: Truncates content preview cleanly to 120 characters -->
+                    
                     <p style="color: #555; line-height: 1.5; margin: 0 0 15px 0;">
                         {{ post.content|truncatechars:120 }}
                     </p>
 
-                    <!-- Card Footer Metrics & Metadata -->
                     <footer style="background-color: #f7f7f7; color: #fff; padding: 4px 0;">
                         <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px; display: flex; justify-content: space-between;">
                             By <strong>{{ post.author.username }}</strong> 
@@ -68,7 +66,6 @@
 
                 </div>
             {% empty %}
-                <!-- Empty Fallback Layout -->
                 <div style="text-align: center; padding: 4px 0; color: #888;">
                     <p style="font-size: 1.2em;">No community posts have been published yet.</p>
                     <p>Be the very first one to launch a conversation!</p>
